@@ -1,0 +1,396 @@
+<div class="sidebar-wrapper active">
+    <div class="sidebar-header position-relative">
+        <div class="d-flex justify-content-between align-items-center">
+            <div class="logo">
+                <a href="{{ path('home') }}"><img src="{{ asset('build/images/logo/logo.png') }}" alt="Logo" srcset=""></a>
+            </div>
+            <div class="theme-toggle d-flex gap-2  align-items-center mt-2">
+                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                     aria-hidden="true" role="img" class="iconify iconify--system-uicons" width="20" height="20"
+                     preserveAspectRatio="xMidYMid meet" viewBox="0 0 21 21">
+                    <g fill="none" fill-rule="evenodd" stroke="currentColor" stroke-linecap="round"
+                       stroke-linejoin="round">
+                        <path d="M10.5 14.5c2.219 0 4-1.763 4-3.982a4.003 4.003 0 0 0-4-4.018c-2.219 0-4 1.781-4 4c0 2.219 1.781 4 4 4zM4.136 4.136L5.55 5.55m9.9 9.9l1.414 1.414M1.5 10.5h2m14 0h2M4.135 16.863L5.55 15.45m9.899-9.9l1.414-1.415M10.5 19.5v-2m0-14v-2"
+                              opacity=".3"></path>
+                        <g transform="translate(-210 -1)">
+                            <path d="M220.5 2.5v2m6.5.5l-1.5 1.5"></path>
+                            <circle cx="220.5" cy="11.5" r="4"></circle>
+                            <path d="m214 5l1.5 1.5m5 14v-2m6.5-.5l-1.5-1.5M214 18l1.5-1.5m-4-5h2m14 0h2"></path>
+                        </g>
+                    </g>
+                </svg>
+                <div class="form-check form-switch fs-6">
+                    <input class="form-check-input  me-0" type="checkbox" id="toggle-dark">
+                    <label class="form-check-label"></label>
+                </div>
+                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                     aria-hidden="true" role="img" class="iconify iconify--mdi" width="20" height="20"
+                     preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24">
+                    <path fill="currentColor"
+                          d="m17.75 4.09l-2.53 1.94l.91 3.06l-2.63-1.81l-2.63 1.81l.91-3.06l-2.53-1.94L12.44 4l1.06-3l1.06 3l3.19.09m3.5 6.91l-1.64 1.25l.59 1.98l-1.7-1.17l-1.7 1.17l.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95l2.06.05m-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85c-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14c.4-.4.82-.76 1.27-1.08c.75-.53 1.93.36 1.85 1.19c-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82c-2.81 3.14-2.7 7.96.31 10.98c3.02 3.01 7.84 3.12 10.98.31Z"></path>
+                </svg>
+            </div>
+            <div class="sidebar-toggler  x">
+                <a href="#" class="sidebar-hide d-xl-none d-block"><i class="bi bi-x bi-middle"></i></a>
+            </div>
+        </div>
+    </div>
+    <div class="sidebar-menu">
+        <ul class="menu">
+            <li class="sidebar-title">Menu</li>
+
+            <li class="sidebar-item {{ is_active('home') }} ">
+                <a href="{{ path('home') }}" class='sidebar-link'>
+                    <i class="bi bi-grid-fill"></i>
+                    <span>Dashboard</span>
+                </a>
+            </li>
+            {% if is_granted('VIEW', 'ADMINISTRACIÓN')  %}
+            <li class="sidebar-item {{ is_active('usuarios') }} {{ is_active('personal') }} {{ is_active('permission_index') }} has-sub">
+                <a href="#" class='sidebar-link'>
+                    <i class="bi bi-stack"></i>
+                    <span>Administración</span>
+                </a>
+                <ul class="submenu {{ is_active('usuarios') }} {{ is_active('personal') }} {{ is_active('permission_index') }}">
+                    <li class="submenu-item {{ is_active('usuarios') }}">
+                        <a href="{{ path('usuarios') }}">Usuarios</a>
+                    </li>
+                    <li class="submenu-item {{ is_active('permission_index') }}">
+                        <a href="{{ path('permission_index') }}">Permisos</a>
+                    </li>
+                    <li class="submenu-item {{ is_active('personal') }}">
+                        <a href="{{ path('personal') }}">Personal</a>
+                    </li>
+                </ul>
+            </li>
+            {% endif %}
+            {% if is_granted('VIEW', 'CONFIGURACIÓN')  %}
+            <li class="sidebar-item  has-sub">
+                <a href="#" class='sidebar-link'>
+                    <i class="bi bi-gear-fill"></i>
+                    <span>Configuración</span>
+                </a>
+                <ul class="submenu ">
+                    <li class="submenu-item ">
+                        <a href="component-alert.html">Categorías producto</a>
+                    </li>
+                    <li class="submenu-item ">
+                        <a href="component-badge.html">Categorías M. prima</a>
+                    </li>
+                    <li class="submenu-item ">
+                        <a href="component-breadcrumb.html">Categorías distribución</a>
+                    </li>
+                    <li class="submenu-item ">
+                        <a href="component-button.html">Productos</a>
+                    </li>
+                    <li class="submenu-item ">
+                        <a href="component-card.html">Materias primas</a>
+                    </li>
+                    <li class="submenu-item ">
+                        <a href="component-carousel.html">Envase</a>
+                    </li>
+                    <li class="submenu-item ">
+                        <a href="component-collapse.html">Válvulas y tapas</a>
+                    </li>
+                    <li class="submenu-item ">
+                        <a href="component-dropdown.html">Etiquetas</a>
+                    </li>
+                    <li class="submenu-item ">
+                        <a href="component-list-group.html">Precios</a>
+                    </li>
+                    <li class="submenu-item ">
+                        <a href="component-modal.html">Presentación producto</a>
+                    </li>
+                    <li class="submenu-item ">
+                        <a href="component-navs.html">Distribución</a>
+                    </li>
+                    <li class="submenu-item ">
+                        <a href="component-pagination.html">Servicios</a>
+                    </li>
+                    <li class="submenu-item ">
+                        <a href="component-progress.html">Rel envase distribución</a>
+                    </li>
+                    <li class="submenu-item ">
+                        <a href="component-spinner.html">Relación paca producto</a>
+                    </li>
+                    <li class="submenu-item ">
+                        <a href="component-tooltip.html">Tipos de provedores</a>
+                    </li>
+                    <li class="submenu-item ">
+                        <a href="component-tooltip.html">Tipos de cliente</a>
+                    </li>
+                </ul>
+            </li>
+            {% endif %}
+            {% if is_granted('VIEW', 'COMPRAS')  %}
+            <li class="sidebar-item  has-sub">
+                <a href="#" class='sidebar-link'>
+                    <i class="bi bi-bag"></i>
+                    <span>Compras</span>
+                </a>
+                <ul class="submenu ">
+                    <li class="submenu-item ">
+                        <a href="layout-default.html">Proveedores</a>
+                    </li>
+                    <li class="submenu-item ">
+                        <a href="layout-vertical-1-column.html">Materia prima</a>
+                    </li>
+                    <li class="submenu-item">
+                        <a href="layout-vertical-navbar.html">Envase-Válvulas-Tapas</a>
+                    </li>
+                    <li class="submenu-item ">
+                        <a href="layout-rtl.html">Etiquetas</a>
+                    </li>
+                    <li class="submenu-item ">
+                        <a href="layout-horizontal.html">Distribución</a>
+                    </li>
+                    <li class="submenu-item ">
+                        <a href="layout-horizontal.html">Gastos</a>
+                    </li>
+                    <li class="submenu-item ">
+                        <a href="layout-horizontal.html">Consultas</a>
+                    </li>
+                </ul>
+            </li>
+            {% endif %}
+            {% if is_granted('VIEW', 'TESORERÍA')  %}
+            <li class="sidebar-item  has-sub">
+                <a href="#" class='sidebar-link'>
+                    <i class="bi bi-wallet2"></i>
+                    <span>Tesorería</span>
+                </a>
+                <ul class="submenu ">
+                    <li class="submenu-item ">
+                        <a href="layout-default.html">Facturas X pagar</a>
+                    </li>
+                    <li class="submenu-item ">
+                        <a href="layout-default.html">Consulta egreso</a>
+                    </li>
+                    <li class="submenu-item ">
+                        <a href="layout-vertical-1-column.html">Histórico egresos</a>
+                    </li>
+                </ul>
+            </li>
+            {% endif %}
+
+            {% if is_granted('VIEW', 'PRODUCCIÓN')  %}
+            <li class="sidebar-item  has-sub">
+                <a href="#" class='sidebar-link'>
+                    <i class="bi bi-wrench-adjustable"></i>
+                    <span>Producción</span>
+                </a>
+                <ul class="submenu ">
+                    <li class="submenu-item ">
+                        <a href="form-element-input.html">Formulaciones producto</a>
+                    </li>
+                    <li class="submenu-item ">
+                        <a href="form-element-input-group.html">Formulaciones color</a>
+                    </li>
+                    <li class="submenu-item ">
+                        <a href="form-element-select.html">Formulaciones materia prima</a>
+                    </li>
+                    <li class="submenu-item ">
+                        <a href="form-element-radio.html">Órdenes producción</a>
+                    </li>
+                    <li class="submenu-item ">
+                        <a href="form-element-checkbox.html">Órdenes materia prima</a>
+                    </li>
+                    <li class="submenu-item ">
+                        <a href="form-element-textarea.html">Control de calidad</a>
+                    </li>
+                    <li class="submenu-item ">
+                        <a href="form-element-textarea.html">Consulta</a>
+                    </li>
+                </ul>
+            </li>
+            {% endif %}
+            {% if is_granted('VIEW', 'ENVASADO')  %}
+            <li class="sidebar-item  has-sub">
+                <a href="#" class='sidebar-link'>
+                    <i class="bi bi-trash2-fill"></i>
+                    <span>Envasado</span>
+                </a>
+                <ul class="submenu ">
+                    <li class="submenu-item ">
+                        <a href="form-element-input.html">Ingresar envasado por lote</a>
+                    </li>
+                    <li class="submenu-item ">
+                        <a href="form-element-input-group.html">Órdenes por envasar</a>
+                    </li>
+                    </li>
+                    <li class="submenu-item ">
+                        <a href="form-element-textarea.html">Reenvase</a>
+                    </li>
+                    <li class="submenu-item ">
+                        <a href="form-element-textarea.html">Envasado distribución</a>
+                    </li>
+                </ul>
+            </li>
+            {% endif %}
+            {% if is_granted('VIEW', 'KITS')  %}
+            <li class="sidebar-item  has-sub">
+                <a href="#" class='sidebar-link'>
+                    <i class="bi bi-bounding-box"></i>
+                    <span>Kits</span>
+                </a>
+                <ul class="submenu ">
+                    <li class="submenu-item ">
+                        <a href="form-validation-parsley.html">Crear kit</a>
+                    </li>
+                    <li class="submenu-item ">
+                        <a href="form-validation-parsley.html">Modificar kit</a>
+                    </li>
+                    <li class="submenu-item ">
+                        <a href="form-validation-parsley.html">Listar kits</a>
+                    </li>
+                    <li class="submenu-item ">
+                        <a href="form-validation-parsley.html">Armar kit</a>
+                    </li>
+                    <li class="submenu-item ">
+                        <a href="form-validation-parsley.html">Listar kit armados</a>
+                    </li>
+                    <li class="submenu-item ">
+                        <a href="form-validation-parsley.html">Desarmar kit</a>
+                    </li>
+                    <li class="submenu-item ">
+                        <a href="form-validation-parsley.html">Listar kit desarmados</a>
+                    </li>
+                </ul>
+            </li>
+            {% endif %}
+            {% if is_granted('VIEW', 'INVENTARIOS')  %}
+
+            <li class="sidebar-item  has-sub">
+                <a href="#" class='sidebar-link'>
+                    <i class="bi bi-list-check"></i>
+                    <span>Inventarios</span>
+                </a>
+                <ul class="submenu ">
+                    <li class="submenu-item ">
+                        <a href="form-validation-parsley.html">Actuales</a>
+                    </li>
+                    <li class="submenu-item ">
+                        <a href="form-validation-parsley.html">En Fecha</a>
+                    </li>
+                    <li class="submenu-item ">
+                        <a href="form-validation-parsley.html">Consulta de stock</a>
+                    </li>
+                    <li class="submenu-item ">
+                        <a href="form-validation-parsley.html">Ajuste de inventario</a>
+                    </li>
+                    <li class="submenu-item ">
+                        <a href="form-validation-parsley.html">Salida productos</a>
+                    </li>
+                    <li class="submenu-item ">
+                        <a href="form-validation-parsley.html">Desempaque productos</a>
+                    </li>
+                    <li class="submenu-item ">
+                        <a href="form-validation-parsley.html">Envase a distribución</a>
+                    </li>
+                    <li class="submenu-item ">
+                        <a href="form-validation-parsley.html">Trazabilidad</a>
+                    </li>
+                    <li class="submenu-item ">
+                        <a href="form-validation-parsley.html">Cargar inventarios</a>
+                    </li>
+                </ul>
+            </li>
+            {% endif %}
+            {% if is_granted('VIEW', 'VENTAS')  %}
+
+            <li class="sidebar-item  has-sub">
+                <a href="#" class='sidebar-link'>
+                    <i class="bi bi-currency-dollar"></i>
+                    <span>Ventas</span>
+                </a>
+                <ul class="submenu ">
+                    <li class="submenu-item ">
+                        <a href="form-editor-quill.html">Clientes</a>
+                    </li>
+                    <li class="submenu-item ">
+                        <a href="form-editor-ckeditor.html">Cotizaciones</a>
+                    </li>
+                    <li class="submenu-item ">
+                        <a href="form-editor-summernote.html">Pedidos</a>
+                    </li>
+                    <li class="submenu-item ">
+                        <a href="form-editor-tinymce.html">Salidas por remisión</a>
+                    </li>
+                    <li class="submenu-item ">
+                        <a href="form-editor-tinymce.html">Factura</a>
+                    </li>
+                    <li class="submenu-item ">
+                        <a href="form-editor-tinymce.html">Rutero</a>
+                    </li>
+                    <li class="submenu-item ">
+                        <a href="form-editor-tinymce.html">Notas crédito</a>
+                    </li>
+                    <li class="submenu-item ">
+                        <a href="form-editor-tinymce.html">Consulta</a>
+                    </li>
+                </ul>
+            </li>
+            {% endif %}
+            {% if is_granted('VIEW', 'HISTÓRICO')  %}
+
+            <li class="sidebar-item  has-sub">
+                <a href="#" class='sidebar-link'>
+                    <i class="bi bi-currency-dollar"></i>
+                    <span>Histórico Ventas</span>
+                </a>
+                <ul class="submenu ">
+                    <li class="submenu-item ">
+                        <a href="form-editor-quill.html">Clientes</a>
+                    </li>
+                    <li class="submenu-item ">
+                        <a href="form-editor-ckeditor.html">Cotizaciones</a>
+                    </li>
+                    <li class="submenu-item ">
+                        <a href="form-editor-summernote.html">Pedidos</a>
+                    </li>
+                    <li class="submenu-item ">
+                        <a href="form-editor-tinymce.html">Salidas por remisión</a>
+                    </li>
+                    <li class="submenu-item ">
+                        <a href="form-editor-tinymce.html">Factura</a>
+                    </li>
+                    <li class="submenu-item ">
+                        <a href="form-editor-tinymce.html">Rutero</a>
+                    </li>
+                    <li class="submenu-item ">
+                        <a href="form-editor-tinymce.html">Notas crédito</a>
+                    </li>
+                    <li class="submenu-item ">
+                        <a href="form-editor-tinymce.html">Consulta</a>
+                    </li>
+                </ul>
+            </li>
+            {% endif %}
+            {% if is_granted('VIEW', 'CARTERA')  %}
+            <li class="sidebar-item  has-sub">
+                <a href="#" class='sidebar-link'>
+                    <i class="bi bi-cash-coin"></i>
+                    <span>Cartera</span>
+                </a>
+                <ul class="submenu ">
+                    <li class="submenu-item ">
+                        <a href="layout-default.html">Cartera General</a>
+                    </li>
+                    <li class="submenu-item ">
+                        <a href="layout-default.html">Cartera acum por cliente</a>
+                    </li>
+                    <li class="submenu-item ">
+                        <a href="layout-vertical-1-column.html">Estado de Cuenta Cliente</a>
+                    </li>
+                    <li class="submenu-item ">
+                        <a href="layout-vertical-1-column.html">Histórico Recibos de Caja</a>
+                    </li>
+                    <li class="submenu-item ">
+                        <a href="layout-vertical-1-column.html">Consulta Recibo de Caja</a>
+                    </li>
+                </ul>
+            </li>
+            {% endif %}
+        </ul>
+    </div>
+</div>
