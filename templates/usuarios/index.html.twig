@@ -1,0 +1,84 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Usuarios{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('datatables') }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('datatables') }}
+{% endblock %}
+
+{% block content %}
+    <h2>Lista de usuarios</h2>
+    <div class="row my-3">
+        <div class="offset-10 col-2">
+            <a class="btn btn-primary w-100" href=" {{ path('user_new') }} ">Crear usuario</a>
+        </div>
+        {% for flash_error in app.flashes('verify_email_error') %}
+            <div class="alert alert-danger" role="alert">{{ flash_error }}</div>
+        {% endfor %}
+    </div>
+
+    <table class="table" id="usersDatatable">
+        <thead>
+        <tr>
+            <th class="text-center">Id</th>
+            <th>Correo electrónico</th>
+            <th>Perfil</th>
+            <th>Fecha de creación</th>
+            <th class="text-center">Estado</th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for user in users %}
+            <tr>
+                <td>{{ user.id }}</td>
+                <td>{{ user.email }}</td>
+                <td>{{ user.perfil.descripcion }}</td>
+                <td>{{ user.getFCreacion()|date("Y-m-d") }}</td>
+                <td>
+                    {% if user.activo == 1 %}
+                        <i class="bi bi-check-circle-fill activo"></i>
+                    {% else %}
+                        <i class="bi bi-x-circle-fill inactivo"></i>
+                    {% endif %}
+                </td>
+                <td>
+                    <div class="dropdown">
+                        <a class="btn btn-primary dropdown-toggle w-100" href="#" role="button" id="dropdownMenuLink"
+                           data-bs-toggle="dropdown" aria-expanded="false">
+                            Acciones
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                            {% if user.activo == 1 %}
+                                <li>
+                                    <a class="dropdown-item" href=" {{ path('user_deactivate', {'id': user.id}) }} ">Desactivar</a>
+                                </li>
+                            {% else %}
+                                <li>
+                                    <a class="dropdown-item" href=" {{ path('user_activate', {'id': user.id}) }} ">Activar</a>
+                                </li>
+                            {% endif %}
+                            <li>
+                                <a class="dropdown-item" href=" {{ path('user_edit', {'id': user.id}) }} ">Editar</a>
+                            </li>
+                        </ul>
+
+                    </div>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+
+{% endblock %}

@@ -1,0 +1,81 @@
+<div class="row">
+    <div class="col-md-6 col-12">
+        <div class="card">
+            <div class="card-content">
+                <div class="card-body">
+                    <form class="form form-vertical" method="post" data-parsley-validate
+                          action="{% if user.id is defined %}{{ path('user_update', {'id':  user.id }) }}{% else %}{{ path('user_update', {'id':  0 }) }}{% endif %}"
+                    >
+                        <input type="hidden" name="action" id="action" value="{{ action }}">
+                        <div class="form-body">
+                            <div class="row">
+                                <div class="col-12 mb-3">
+                                    <div class="form-check form-switch">
+                                        <input class="form-check-input" type="checkbox" name="activo" value="1" {{ user is defined and user.activo == true ? 'checked' : ''}} role="switch" id="activo">
+                                        <label class="form-check-label" for="activo">Activar usuario</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <label for="email">Email</label>
+                                        <div class="position-relative has-validation">
+                                            <input type="text" class="form-control" placeholder="nombre@example.com"
+                                                   id="email" name="email"
+                                                   pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" required
+                                                   data-parsley-required="true"
+                                                   value="{% if user.email is defined %}{{ user.email }}{% endif %}">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <label for="role">Perfil</label>
+                                        <fieldset class="form-group">
+                                            <select class="form-select" id="role" name="role" required>
+                                                <option value="" disabled {% if action=='insert' %}selected{% endif %}>
+                                                    Seleccione el perfil
+                                                </option>
+                                                {% for perfil in perfiles %}
+                                                    <option value="{{ perfil.id }}-{{ perfil.code }}" {{ user is defined and user.perfil.id == perfil.id ? 'selected' : ''}} >{{ perfil.descripcion }} </option>
+                                                {% endfor %}
+                                            </select>
+                                        </fieldset>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <label for="password-id-icon">Contraseña</label>
+                                        <div class="position-relative">
+                                            <input type="password" class="form-control" placeholder="Contraseña"
+                                                   pattern=".{8,}" title="Ocho o más caracteres"
+                                                   id="password"
+                                                   name="password" {% if action=='insert' %} required {% endif %}>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <label for="password-id-icon">Confirmar contraseña</label>
+                                        <div class="position-relative">
+                                            <input type="password" class="form-control"
+                                                   placeholder="Confirmar contraseña" pattern=".{8,}"
+                                                   title="Ocho o más caracteres"
+                                                   id="password-confirmation"
+                                                   name="password-confirmation" {% if action=='insert' %} required {% endif %}>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 d-flex justify-content-end mt-3">
+                                    <button type="submit" class="btn btn-primary me-1 mb-1">Guardar</button>
+                                    <button type="reset" class="btn btn-light-secondary me-1 mb-1">Reiniciar</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

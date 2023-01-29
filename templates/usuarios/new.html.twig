@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Nuevo usuario{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('parsley') }}
+
+{% endblock %}
+
+{% block content %}
+
+
+
+    <h2 class="ps-3">Crear usuario</h2>
+
+
+    {{ include('usuarios/_form.html.twig') }}
+
+    <div class="row my-3">
+        <div class="offset-4 col-2">
+            <a class="btn btn-primary w-100" href="{{ path('usuarios') }}">Volver a la lista</a>
+        </div>
+    </div>
+
+{% endblock %}

@@ -1,0 +1,33 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Permission index{% endblock %}
+
+{% block content %}
+    <h2>Seleccionar perfil</h2>
+
+        <table class="table w-50 table-striped">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Perfil</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for perfil in perfiles %}
+            <tr>
+                <td>{{ perfil.id }}</td>
+                <td>{{ perfil.descripcion }}</td>
+                <td>
+                    <a class="btn btn-primary w-100" href="{{ path('permission_show', {'slug': perfil.slug}) }}">Ver/Modificar permisos</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="6">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}

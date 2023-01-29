@@ -1,0 +1,84 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Permisos {{ perfil.descripcion|capitalize }}{% endblock %}
+{% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('sweetalert2') }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('sweetalert2') }}
+{% endblock %}
+{% block content %}
+    <h2>Permisos {{ perfil.descripcion|capitalize }}</h2>
+    {% for message in app.flashes('success') %}
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            {{ message }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    {% endfor %}
+    {% for message in app.flashes('error') %}
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            {{ message }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    {% endfor %}
+    <form class="form" id="permisos-form" action="{{ path('permission_edit', {'slug':  perfil.slug }) }}" method="post">
+        <div class="card mt-4">
+            <div class="card-content">
+                <div class="card-body">
+                    <div class="row align-items-center">
+                        {% for modulo in modulos %}
+                            <div class="card-header col-md-2 col-12">
+                                <h4 class="card-title">{{ modulo }}</h4>
+                            </div>
+                            <div class="col-md-2 col-12">
+                                <div class="form-group">
+                                    <div class='form-check'>
+                                        <div class="checkbox">
+                                            <input type="checkbox" id="VIEW_{{ modulo }}" value="1"
+                                                   class='form-check-input' name="permisos[VIEW_{{ modulo }}]"
+                                                    {{ permisos['VIEW_'~modulo] is defined and permisos['VIEW_'~modulo] == '1' ? 'checked' : '' }}>
+                                            <label for="VIEW_{{ modulo }}">Ver</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-2 col-12">
+                                <div class="form-group">
+                                    <div class='form-check'>
+                                        <div class="checkbox">
+                                            <input type="checkbox" id="EDIT_{{ modulo }}" value="1"
+                                                   class='form-check-input' name="permisos[EDIT_{{ modulo }}]"
+                                                    {{ permisos['EDIT_'~modulo]  is defined and permisos['EDIT_'~modulo] == '1' ? 'checked' : '' }}>
+                                            <label for="EDIT_{{ modulo }}">Editar</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+            <div class="card-content">
+                <div class="card-body">
+                    <div class="col-12 d-flex justify-content-end">
+                        <button type="submit" class="btn btn-primary me-1 mb-1">Guardar</button>
+                        <button type="reset" class="btn btn-light-secondary me-1 mb-1">Reiniciar
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+    <div class="row my-3">
+        <div class="offset-4 col-2">
+            <a class="btn btn-primary w-100" href="{{ path('permission_index') }}">Volver a la lista</a>
+        </div>
+    </div>
+
+    {# <a href="{{ path('permission_edit', {'id': permission.id}) }}">edit</a> #}
+
+    {# {{ include('permission/_delete_form.html.twig') }} #}
+{% endblock %}
