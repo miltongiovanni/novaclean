@@ -2,12 +2,12 @@
 
 namespace App\Entity;
 
-use App\Repository\AfcRepository;
+use App\Repository\EpsRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: AfcRepository::class)]
-class Afc
+#[ORM\Entity(repositoryClass: EpsRepository::class)]
+class Eps
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -26,8 +26,11 @@ class Afc
     #[ORM\Column(nullable: true)]
     private ?int $extension = null;
 
+    #[ORM\Column(nullable: true)]
+    private ?int $celular = null;
+
     #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
-    private ?\DateTimeInterface $fecha_creation = null;
+    private ?\DateTimeInterface $fecha_creacion = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
     private ?\DateTimeInterface $fecha_actualizacion = null;
@@ -35,9 +38,6 @@ class Afc
     #[ORM\ManyToOne]
     #[ORM\JoinColumn(nullable: false)]
     private ?User $user = null;
-
-    #[ORM\Column(nullable: true)]
-    private ?int $celular = null;
 
     public function getId(): ?int
     {
@@ -92,14 +92,26 @@ class Afc
         return $this;
     }
 
-    public function getFechaCreation(): ?\DateTimeInterface
+    public function getCelular(): ?int
     {
-        return $this->fecha_creation;
+        return $this->celular;
     }
 
-    public function setFechaCreation(?\DateTimeInterface $fecha_creation): self
+    public function setCelular(?int $celular): self
     {
-        $this->fecha_creation = $fecha_creation;
+        $this->celular = $celular;
+
+        return $this;
+    }
+
+    public function getFechaCreacion(): ?\DateTimeInterface
+    {
+        return $this->fecha_creacion;
+    }
+
+    public function setFechaCreacion(?\DateTimeInterface $fecha_creacion): self
+    {
+        $this->fecha_creacion = $fecha_creacion;
 
         return $this;
     }
@@ -124,18 +136,6 @@ class Afc
     public function setUser(?User $user): self
     {
         $this->user = $user;
-
-        return $this;
-    }
-
-    public function getCelular(): ?int
-    {
-        return $this->celular;
-    }
-
-    public function setCelular(?int $celular): self
-    {
-        $this->celular = $celular;
 
         return $this;
     }
