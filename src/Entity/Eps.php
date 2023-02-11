@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\EpsRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -38,6 +40,14 @@ class Eps
     #[ORM\ManyToOne]
     #[ORM\JoinColumn(nullable: false)]
     private ?User $user = null;
+
+    #[ORM\OneToMany(mappedBy: 'eps', targetEntity: Personal::class)]
+    private Collection $personals;
+
+    public function __construct()
+    {
+        $this->personals = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -136,6 +146,36 @@ class Eps
     public function setUser(?User $user): self
     {
         $this->user = $user;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Personal>
+     */
+    public function getPersonals(): Collection
+    {
+        return $this->personals;
+    }
+
+    public function addPersonal(Personal $personal): self
+    {
+        if (!$this->personals->contains($personal)) {
+            $this->personals->add($personal);
+            $personal->setEps($this);
+        }
+
+        return $this;
+    }
+
+    public function removePersonal(Personal $personal): self
+    {
+        if ($this->personals->removeElement($personal)) {
+            // set the owning side to null (unless already changed)
+            if ($personal->getEps() === $this) {
+                $personal->setEps(null);
+            }
+        }
 
         return $this;
     }
