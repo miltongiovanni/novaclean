@@ -1,0 +1,61 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Personal index{% endblock %}
+
+{% block body %}
+    <h1>Personal index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Identificacion</th>
+                <th>Lugar_expedicion</th>
+                <th>Nombre</th>
+                <th>Apellido</th>
+                <th>Numero_cuenta</th>
+                <th>Salario_basico</th>
+                <th>Bono</th>
+                <th>Direccion</th>
+                <th>Telefono</th>
+                <th>Correo_electronico</th>
+                <th>Celular</th>
+                <th>F_nacimiento</th>
+                <th>F_ingreso</th>
+                <th>F_examen_ingreso</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for personal in personals %}
+            <tr>
+                <td>{{ personal.id }}</td>
+                <td>{{ personal.identificacion }}</td>
+                <td>{{ personal.lugarExpedicion }}</td>
+                <td>{{ personal.nombre }}</td>
+                <td>{{ personal.apellido }}</td>
+                <td>{{ personal.numeroCuenta }}</td>
+                <td>{{ personal.salarioBasico }}</td>
+                <td>{{ personal.bono }}</td>
+                <td>{{ personal.direccion }}</td>
+                <td>{{ personal.telefono }}</td>
+                <td>{{ personal.correoElectronico }}</td>
+                <td>{{ personal.celular }}</td>
+                <td>{{ personal.fNacimiento ? personal.fNacimiento|date('Y-m-d') : '' }}</td>
+                <td>{{ personal.fIngreso ? personal.fIngreso|date('Y-m-d') : '' }}</td>
+                <td>{{ personal.fExamenIngreso ? personal.fExamenIngreso|date('Y-m-d') : '' }}</td>
+                <td>
+                    <a href="{{ path('app_personal_show', {'id': personal.id}) }}">show</a>
+                    <a href="{{ path('app_personal_edit', {'id': personal.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="16">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_personal_new') }}">Create new</a>
+{% endblock %}

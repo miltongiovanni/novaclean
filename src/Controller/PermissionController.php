@@ -15,7 +15,7 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route('/permisos')]
 class PermissionController extends AbstractController
 {
-    public const MODULOS = ['ADMINISTRACIÓN', 'CONFIGURACIÓN', 'COMPRAS', 'PROVEEDORES', 'CLIENTES', 'TESORERÍA', 'CARTERA', 'PRODUCCIÓN', 'ENVASADO', 'KITS', 'INVENTARIOS', 'VENTAS', 'HISTÓRICO'];
+    public const MODULOS = ['ADMINISTRACIÓN', 'CONFIGURACIÓN', 'PERSONAL', 'CONTRATO', 'NÓMINA', 'COMPRAS', 'PROVEEDORES', 'CLIENTES', 'TESORERÍA', 'CARTERA',  'INVENTARIOS', 'VENTAS', 'HISTÓRICO'];
 
     #[Route('/', name: 'permission_index', methods: ['GET'])]
     public function index(PermissionRepository $permissionRepository, PerfilesRepository $perfilesRepository): Response
@@ -49,9 +49,14 @@ class PermissionController extends AbstractController
     {
         $perfil = $perfilesRepository->findOneBy(['slug' => $slug]);
         $permisosActivos = $permissionRepository->findByPerfilId($perfil->getId());
-        foreach ($permisosActivos as $permisoActivo){
-            $permisosActivosFormato[$permisoActivo['atributo'].'_'.$permisoActivo['modulo']]=$permisoActivo['activo']? '1': '0';
+        if (count($permisosActivos) > 0){
+            foreach ($permisosActivos as $permisoActivo){
+                $permisosActivosFormato[$permisoActivo['atributo'].'_'.$permisoActivo['modulo']]=$permisoActivo['activo']? '1': '0';
+            }
+        }else{
+            $permisosActivosFormato = null;
         }
+
         return $this->render('permission/show.html.twig', [
             'permisos' => $permisosActivosFormato,
             'perfil' => $perfil,
