@@ -1,0 +1,66 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Cliente{% endblock %}
+
+{% block body %}
+    <h1>Cliente</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ cliente.id }}</td>
+            </tr>
+            <tr>
+                <th>Ceco</th>
+                <td>{{ cliente.ceco }}</td>
+            </tr>
+            <tr>
+                <th>Nit</th>
+                <td>{{ cliente.nit }}</td>
+            </tr>
+            <tr>
+                <th>Nombre</th>
+                <td>{{ cliente.nombre }}</td>
+            </tr>
+            <tr>
+                <th>Direccion</th>
+                <td>{{ cliente.direccion }}</td>
+            </tr>
+            <tr>
+                <th>Telefono</th>
+                <td>{{ cliente.telefono }}</td>
+            </tr>
+            <tr>
+                <th>Administrador</th>
+                <td>{{ cliente.administrador }}</td>
+            </tr>
+            <tr>
+                <th>Celular</th>
+                <td>{{ cliente.celular }}</td>
+            </tr>
+            <tr>
+                <th>Correo_electronico</th>
+                <td>{{ cliente.correoElectronico }}</td>
+            </tr>
+            <tr>
+                <th>Observaciones</th>
+                <td>{{ cliente.observaciones }}</td>
+            </tr>
+            <tr>
+                <th>F_creacion</th>
+                <td>{{ cliente.fCreacion ? cliente.fCreacion|date('Y-m-d') : '' }}</td>
+            </tr>
+            <tr>
+                <th>F_actualizacion</th>
+                <td>{{ cliente.fActualizacion ? cliente.fActualizacion|date('Y-m-d') : '' }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_cliente_index') }}">back to list</a>
+
+    <a href="{{ path('app_cliente_edit', {'id': cliente.id}) }}">edit</a>
+
+    {{ include('cliente/_delete_form.html.twig') }}
+{% endblock %}

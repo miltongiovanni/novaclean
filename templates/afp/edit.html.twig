@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit Afp{% endblock %}
+
+{% block body %}
+    <h1>Edit Afp</h1>
+
+    {{ include('afp/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('app_afp_index') }}">back to list</a>
+
+    {{ include('afp/_delete_form.html.twig') }}
+{% endblock %}

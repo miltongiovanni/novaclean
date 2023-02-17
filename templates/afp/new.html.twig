@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Afp{% endblock %}
+
+{% block body %}
+    <h1>Create new Afp</h1>
+
+    {{ include('afp/_form.html.twig') }}
+
+    <a href="{{ path('app_afp_index') }}">back to list</a>
+{% endblock %}

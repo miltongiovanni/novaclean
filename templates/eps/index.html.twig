@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Eps index{% endblock %}
+
+{% block body %}
+    <h1>Eps index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nombre</th>
+                <th>Contacto</th>
+                <th>Telefono</th>
+                <th>Extension</th>
+                <th>Celular</th>
+                <th>Fecha_creacion</th>
+                <th>Fecha_actualizacion</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for ep in eps %}
+            <tr>
+                <td>{{ ep.id }}</td>
+                <td>{{ ep.nombre }}</td>
+                <td>{{ ep.contacto }}</td>
+                <td>{{ ep.telefono }}</td>
+                <td>{{ ep.extension }}</td>
+                <td>{{ ep.celular }}</td>
+                <td>{{ ep.fechaCreacion ? ep.fechaCreacion|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ ep.fechaActualizacion ? ep.fechaActualizacion|date('Y-m-d H:i:s') : '' }}</td>
+                <td>
+                    <a href="{{ path('app_eps_show', {'id': ep.id}) }}">show</a>
+                    <a href="{{ path('app_eps_edit', {'id': ep.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="9">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_eps_new') }}">Create new</a>
+{% endblock %}

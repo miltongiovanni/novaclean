@@ -1,0 +1,50 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Eps{% endblock %}
+
+{% block body %}
+    <h1>Eps</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ ep.id }}</td>
+            </tr>
+            <tr>
+                <th>Nombre</th>
+                <td>{{ ep.nombre }}</td>
+            </tr>
+            <tr>
+                <th>Contacto</th>
+                <td>{{ ep.contacto }}</td>
+            </tr>
+            <tr>
+                <th>Telefono</th>
+                <td>{{ ep.telefono }}</td>
+            </tr>
+            <tr>
+                <th>Extension</th>
+                <td>{{ ep.extension }}</td>
+            </tr>
+            <tr>
+                <th>Celular</th>
+                <td>{{ ep.celular }}</td>
+            </tr>
+            <tr>
+                <th>Fecha_creacion</th>
+                <td>{{ ep.fechaCreacion ? ep.fechaCreacion|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Fecha_actualizacion</th>
+                <td>{{ ep.fechaActualizacion ? ep.fechaActualizacion|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_eps_index') }}">back to list</a>
+
+    <a href="{{ path('app_eps_edit', {'id': ep.id}) }}">edit</a>
+
+    {{ include('eps/_delete_form.html.twig') }}
+{% endblock %}

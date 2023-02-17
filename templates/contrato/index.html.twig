@@ -1,0 +1,51 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Contrato index{% endblock %}
+
+{% block body %}
+    <h1>Contrato index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>N_contrato</th>
+                <th>F_inicio</th>
+                <th>F_fin</th>
+                <th>Poliza_salario</th>
+                <th>Poliza_cumplimiento</th>
+                <th>N_poliza</th>
+                <th>Aseguradora</th>
+                <th>Vencimiento_poliza</th>
+                <th>Observaciones</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for contrato in contratos %}
+            <tr>
+                <td>{{ contrato.id }}</td>
+                <td>{{ contrato.nContrato }}</td>
+                <td>{{ contrato.fInicio ? contrato.fInicio|date('Y-m-d') : '' }}</td>
+                <td>{{ contrato.fFin ? contrato.fFin|date('Y-m-d') : '' }}</td>
+                <td>{{ contrato.polizaSalario ? 'Yes' : 'No' }}</td>
+                <td>{{ contrato.polizaCumplimiento ? 'Yes' : 'No' }}</td>
+                <td>{{ contrato.nPoliza }}</td>
+                <td>{{ contrato.aseguradora }}</td>
+                <td>{{ contrato.vencimientoPoliza ? contrato.vencimientoPoliza|date('Y-m-d') : '' }}</td>
+                <td>{{ contrato.observaciones }}</td>
+                <td>
+                    <a href="{{ path('app_contrato_show', {'id': contrato.id}) }}">show</a>
+                    <a href="{{ path('app_contrato_edit', {'id': contrato.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="11">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_contrato_new') }}">Create new</a>
+{% endblock %}

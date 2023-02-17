@@ -1,0 +1,55 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Cliente index{% endblock %}
+
+{% block body %}
+    <h1>Cliente index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Ceco</th>
+                <th>Nit</th>
+                <th>Nombre</th>
+                <th>Direccion</th>
+                <th>Telefono</th>
+                <th>Administrador</th>
+                <th>Celular</th>
+                <th>Correo_electronico</th>
+                <th>Observaciones</th>
+                <th>F_creacion</th>
+                <th>F_actualizacion</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for cliente in clientes %}
+            <tr>
+                <td>{{ cliente.id }}</td>
+                <td>{{ cliente.ceco }}</td>
+                <td>{{ cliente.nit }}</td>
+                <td>{{ cliente.nombre }}</td>
+                <td>{{ cliente.direccion }}</td>
+                <td>{{ cliente.telefono }}</td>
+                <td>{{ cliente.administrador }}</td>
+                <td>{{ cliente.celular }}</td>
+                <td>{{ cliente.correoElectronico }}</td>
+                <td>{{ cliente.observaciones }}</td>
+                <td>{{ cliente.fCreacion ? cliente.fCreacion|date('Y-m-d') : '' }}</td>
+                <td>{{ cliente.fActualizacion ? cliente.fActualizacion|date('Y-m-d') : '' }}</td>
+                <td>
+                    <a href="{{ path('app_cliente_show', {'id': cliente.id}) }}">show</a>
+                    <a href="{{ path('app_cliente_edit', {'id': cliente.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="13">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_cliente_new') }}">Create new</a>
+{% endblock %}

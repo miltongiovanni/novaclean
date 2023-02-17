@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Afc index{% endblock %}
+
+{% block body %}
+    <h1>Afc index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nombre</th>
+                <th>Contacto</th>
+                <th>Telefono</th>
+                <th>Extension</th>
+                <th>Fecha_creation</th>
+                <th>Fecha_actualizacion</th>
+                <th>Celular</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for afc in afcs %}
+            <tr>
+                <td>{{ afc.id }}</td>
+                <td>{{ afc.nombre }}</td>
+                <td>{{ afc.contacto }}</td>
+                <td>{{ afc.telefono }}</td>
+                <td>{{ afc.extension }}</td>
+                <td>{{ afc.fechaCreation ? afc.fechaCreation|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ afc.fechaActualizacion ? afc.fechaActualizacion|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ afc.celular }}</td>
+                <td>
+                    <a href="{{ path('app_afc_show', {'id': afc.id}) }}">show</a>
+                    <a href="{{ path('app_afc_edit', {'id': afc.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="9">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_afc_new') }}">Create new</a>
+{% endblock %}
