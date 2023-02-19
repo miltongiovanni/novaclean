@@ -14,21 +14,21 @@ class TallaBotas
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $nombre = null;
+    private ?string $talla = null;
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getNombre(): ?string
+    public function getTalla(): ?string
     {
-        return $this->nombre;
+        return $this->talla;
     }
 
-    public function setNombre(string $nombre): self
+    public function setTalla(string $talla): self
     {
-        $this->nombre = $nombre;
+        $this->talla = $talla;
 
         return $this;
     }

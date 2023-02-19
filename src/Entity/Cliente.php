@@ -28,14 +28,14 @@ class Cliente
     #[ORM\Column(length: 255)]
     private ?string $direccion = null;
 
-    #[ORM\Column]
-    private ?int $telefono = null;
+    #[ORM\Column(nullable: true)]
+    private ?string $telefono = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $administrador = null;
+    private ?string $contacto = null;
 
     #[ORM\Column(nullable: true)]
-    private ?int $celular = null;
+    private ?string $celular = null;
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $correo_electronico = null;
@@ -55,6 +55,12 @@ class Cliente
 
     #[ORM\OneToMany(mappedBy: 'cliente', targetEntity: Contrato::class)]
     private Collection $contratos;
+
+    #[ORM\Column]
+    private ?bool $estado = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $telefono2 = null;
 
     public function __construct()
     {
@@ -114,36 +120,36 @@ class Cliente
         return $this;
     }
 
-    public function getTelefono(): ?int
+    public function getTelefono(): ?string
     {
         return $this->telefono;
     }
 
-    public function setTelefono(int $telefono): self
+    public function setTelefono(string $telefono): self
     {
         $this->telefono = $telefono;
 
         return $this;
     }
 
-    public function getAdministrador(): ?string
+    public function getContacto(): ?string
     {
-        return $this->administrador;
+        return $this->contacto;
     }
 
-    public function setAdministrador(string $administrador): self
+    public function setContacto(string $contacto): self
     {
-        $this->administrador = $administrador;
+        $this->contacto = $contacto;
 
         return $this;
     }
 
-    public function getCelular(): ?int
+    public function getCelular(): ?string
     {
         return $this->celular;
     }
 
-    public function setCelular(?int $celular): self
+    public function setCelular(?string $celular): self
     {
         $this->celular = $celular;
 
@@ -236,6 +242,30 @@ class Cliente
                 $contrato->setCliente(null);
             }
         }
+
+        return $this;
+    }
+
+    public function isEstado(): ?bool
+    {
+        return $this->estado;
+    }
+
+    public function setEstado(bool $estado): self
+    {
+        $this->estado = $estado;
+
+        return $this;
+    }
+
+    public function getTelefono2(): ?string
+    {
+        return $this->telefono2;
+    }
+
+    public function setTelefono2(?string $telefono2): self
+    {
+        $this->telefono2 = $telefono2;
 
         return $this;
     }
