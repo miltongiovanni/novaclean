@@ -46,81 +46,55 @@
                 </a>
             </li>
             {% if is_granted('VIEW', 'ADMINISTRACIÓN')  %}
-            <li class="sidebar-item {{ is_active('usuarios') }} {{ is_active('personal') }} {{ is_active('permission_index') }} has-sub">
+            <li class="sidebar-item {{ is_active('usuarios') }} {{ is_active('permission_index') }} has-sub">
                 <a href="#" class='sidebar-link'>
                     <i class="bi bi-stack"></i>
                     <span>Administración</span>
                 </a>
-                <ul class="submenu {{ is_active('usuarios') }} {{ is_active('personal') }} {{ is_active('permission_index') }}">
+                <ul class="submenu {{ is_active('usuarios') }} {{ is_active('permission_index') }}">
                     <li class="submenu-item {{ is_active('usuarios') }}">
                         <a href="{{ path('usuarios') }}">Usuarios</a>
                     </li>
                     <li class="submenu-item {{ is_active('permission_index') }}">
                         <a href="{{ path('permission_index') }}">Permisos</a>
                     </li>
-                    <li class="submenu-item {{ is_active('personal') }}">
-                        <a href="{{ path('personal_index') }}">Personal</a>
-                    </li>
                 </ul>
             </li>
             {% endif %}
             {% if is_granted('VIEW', 'CONFIGURACIÓN')  %}
-            <li class="sidebar-item  has-sub">
+            <li class="sidebar-item {{ is_active('app_afc_index') }}  {{ is_active('app_afp_index') }}  {{ is_active('app_eps_index') }} {{ is_active('app_cargo_index') }} has-sub">
                 <a href="#" class='sidebar-link'>
                     <i class="bi bi-gear-fill"></i>
                     <span>Configuración</span>
                 </a>
-                <ul class="submenu ">
-                    <li class="submenu-item ">
-                        <a href="component-alert.html">Categorías producto</a>
+                <ul class="submenu {{ is_active('app_afc_index') }}  {{ is_active('app_afp_index') }}  {{ is_active('app_eps_index') }} {{ is_active('app_cargo_index') }}">
+                    <li class="submenu-item {{ is_active('app_afc_index') }}">
+                        <a href="{{ path('app_afc_index') }}">Afc</a>
                     </li>
-                    <li class="submenu-item ">
-                        <a href="component-badge.html">Categorías M. prima</a>
+                    <li class="submenu-item {{ is_active('app_afp_index') }}">
+                        <a href="{{ path('app_afp_index') }}">Afp</a>
                     </li>
-                    <li class="submenu-item ">
-                        <a href="component-breadcrumb.html">Categorías distribución</a>
+                    <li class="submenu-item {{ is_active('app_eps_index') }}">
+                        <a href="{{ path('app_eps_index') }}">Eps</a>
                     </li>
-                    <li class="submenu-item ">
-                        <a href="component-button.html">Productos</a>
-                    </li>
-                    <li class="submenu-item ">
-                        <a href="component-card.html">Materias primas</a>
-                    </li>
-                    <li class="submenu-item ">
-                        <a href="component-carousel.html">Envase</a>
-                    </li>
-                    <li class="submenu-item ">
-                        <a href="component-collapse.html">Válvulas y tapas</a>
-                    </li>
-                    <li class="submenu-item ">
-                        <a href="component-dropdown.html">Etiquetas</a>
-                    </li>
-                    <li class="submenu-item ">
-                        <a href="component-list-group.html">Precios</a>
-                    </li>
-                    <li class="submenu-item ">
-                        <a href="component-modal.html">Presentación producto</a>
-                    </li>
-                    <li class="submenu-item ">
-                        <a href="component-navs.html">Distribución</a>
-                    </li>
-                    <li class="submenu-item ">
-                        <a href="component-pagination.html">Servicios</a>
-                    </li>
-                    <li class="submenu-item ">
-                        <a href="component-progress.html">Rel envase distribución</a>
-                    </li>
-                    <li class="submenu-item ">
-                        <a href="component-spinner.html">Relación paca producto</a>
-                    </li>
-                    <li class="submenu-item ">
-                        <a href="component-tooltip.html">Tipos de provedores</a>
-                    </li>
-                    <li class="submenu-item ">
-                        <a href="component-tooltip.html">Tipos de cliente</a>
+                    <li class="submenu-item {{ is_active('app_cargo_index') }}">
+                        <a href="{{ path('app_cargo_index') }}">Cargos</a>
                     </li>
                 </ul>
             </li>
+            {% endif %}
+            {% if is_granted('VIEW', 'PERSONAL')  %}
+                <li class="sidebar-item  {{ is_active('personal') }}  has-sub">
+                    <a href="#" class='sidebar-link'>
+                        <i class="bi bi-stack"></i>
+                        <span>Personal</span>
+                    </a>
+                    <ul class="submenu {{ is_active('personal_index') }}">
+                        <li class="submenu-item {{ is_active('personal') }}">
+                            <a href="{{ path('personal_index') }}">Lista</a>
+                        </li>
+                    </ul>
+                </li>
             {% endif %}
             {% if is_granted('VIEW', 'COMPRAS')  %}
             <li class="sidebar-item  has-sub">
@@ -173,91 +147,6 @@
             </li>
             {% endif %}
 
-            {% if is_granted('VIEW', 'PRODUCCIÓN')  %}
-            <li class="sidebar-item  has-sub">
-                <a href="#" class='sidebar-link'>
-                    <i class="bi bi-wrench-adjustable"></i>
-                    <span>Producción</span>
-                </a>
-                <ul class="submenu ">
-                    <li class="submenu-item ">
-                        <a href="form-element-input.html">Formulaciones producto</a>
-                    </li>
-                    <li class="submenu-item ">
-                        <a href="form-element-input-group.html">Formulaciones color</a>
-                    </li>
-                    <li class="submenu-item ">
-                        <a href="form-element-select.html">Formulaciones materia prima</a>
-                    </li>
-                    <li class="submenu-item ">
-                        <a href="form-element-radio.html">Órdenes producción</a>
-                    </li>
-                    <li class="submenu-item ">
-                        <a href="form-element-checkbox.html">Órdenes materia prima</a>
-                    </li>
-                    <li class="submenu-item ">
-                        <a href="form-element-textarea.html">Control de calidad</a>
-                    </li>
-                    <li class="submenu-item ">
-                        <a href="form-element-textarea.html">Consulta</a>
-                    </li>
-                </ul>
-            </li>
-            {% endif %}
-            {% if is_granted('VIEW', 'ENVASADO')  %}
-            <li class="sidebar-item  has-sub">
-                <a href="#" class='sidebar-link'>
-                    <i class="bi bi-trash2-fill"></i>
-                    <span>Envasado</span>
-                </a>
-                <ul class="submenu ">
-                    <li class="submenu-item ">
-                        <a href="form-element-input.html">Ingresar envasado por lote</a>
-                    </li>
-                    <li class="submenu-item ">
-                        <a href="form-element-input-group.html">Órdenes por envasar</a>
-                    </li>
-                    </li>
-                    <li class="submenu-item ">
-                        <a href="form-element-textarea.html">Reenvase</a>
-                    </li>
-                    <li class="submenu-item ">
-                        <a href="form-element-textarea.html">Envasado distribución</a>
-                    </li>
-                </ul>
-            </li>
-            {% endif %}
-            {% if is_granted('VIEW', 'KITS')  %}
-            <li class="sidebar-item  has-sub">
-                <a href="#" class='sidebar-link'>
-                    <i class="bi bi-bounding-box"></i>
-                    <span>Kits</span>
-                </a>
-                <ul class="submenu ">
-                    <li class="submenu-item ">
-                        <a href="form-validation-parsley.html">Crear kit</a>
-                    </li>
-                    <li class="submenu-item ">
-                        <a href="form-validation-parsley.html">Modificar kit</a>
-                    </li>
-                    <li class="submenu-item ">
-                        <a href="form-validation-parsley.html">Listar kits</a>
-                    </li>
-                    <li class="submenu-item ">
-                        <a href="form-validation-parsley.html">Armar kit</a>
-                    </li>
-                    <li class="submenu-item ">
-                        <a href="form-validation-parsley.html">Listar kit armados</a>
-                    </li>
-                    <li class="submenu-item ">
-                        <a href="form-validation-parsley.html">Desarmar kit</a>
-                    </li>
-                    <li class="submenu-item ">
-                        <a href="form-validation-parsley.html">Listar kit desarmados</a>
-                    </li>
-                </ul>
-            </li>
-            {% endif %}
             {% if is_granted('VIEW', 'INVENTARIOS')  %}
 
             <li class="sidebar-item  has-sub">
@@ -305,7 +194,7 @@
                 </a>
                 <ul class="submenu ">
                     <li class="submenu-item ">
-                        <a href="form-editor-quill.html">Clientes</a>
+                        <a href="{{ path('app_cliente_index') }}">Clientes</a>
                     </li>
                     <li class="submenu-item ">
                         <a href="form-editor-ckeditor.html">Cotizaciones</a>

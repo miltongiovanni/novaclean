@@ -16,9 +16,6 @@ class Cliente
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column]
-    private ?int $ceco = null;
-
     #[ORM\Column(length: 255)]
     private ?string $nit = null;
 
@@ -70,18 +67,6 @@ class Cliente
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function getCeco(): ?int
-    {
-        return $this->ceco;
-    }
-
-    public function setCeco(int $ceco): self
-    {
-        $this->ceco = $ceco;
-
-        return $this;
     }
 
     public function getNit(): ?string

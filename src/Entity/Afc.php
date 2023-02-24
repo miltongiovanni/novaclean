@@ -29,7 +29,7 @@ class Afc
     private ?int $extension = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
-    private ?\DateTimeInterface $fecha_creation = null;
+    private ?\DateTimeInterface $fecha_creacion = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
     private ?\DateTimeInterface $fecha_actualizacion = null;
@@ -102,14 +102,14 @@ class Afc
         return $this;
     }
 
-    public function getFechaCreation(): ?\DateTimeInterface
+    public function getFechaCreacion(): ?\DateTimeInterface
     {
-        return $this->fecha_creation;
+        return $this->fecha_creacion;
     }
 
-    public function setFechaCreation(?\DateTimeInterface $fecha_creation): self
+    public function setFechaCreacion(?\DateTimeInterface $fecha_creacion): self
     {
-        $this->fecha_creation = $fecha_creation;
+        $this->fecha_creacion = $fecha_creacion;
 
         return $this;
     }

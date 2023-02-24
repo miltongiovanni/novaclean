@@ -2,24 +2,43 @@
 
 {% block title %}Afc index{% endblock %}
 
-{% block body %}
-    <h1>Afc index</h1>
+{% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('datatables') }}
+{% endblock %}
 
-    <table class="table">
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('datatables') }}
+{% endblock %}
+
+{% block content %}
+    <h2>Lista de AFCs</h2>
+    <div class="row my-3">
+        <div class="offset-10 col-2">
+            <a class="btn btn-primary w-100" href=" {{ path('app_afc_new') }} ">Crear AFC</a>
+        </div>
+        {% for flash_error in app.flashes('verify_email_error') %}
+            <div class="alert alert-danger" role="alert">{{ flash_error }}</div>
+        {% endfor %}
+    </div>
+    <table class="table" id="afcDatatable">
         <thead>
-            <tr>
-                <th>Id</th>
-                <th>Nombre</th>
-                <th>Contacto</th>
-                <th>Telefono</th>
-                <th>Extension</th>
-                <th>Fecha_creation</th>
-                <th>Fecha_actualizacion</th>
-                <th>Celular</th>
-                <th>actions</th>
-            </tr>
+        <tr>
+            <th>Id</th>
+            <th>Nombre</th>
+            <th>Contacto</th>
+            <th>Teléfono</th>
+            <th>Extensión</th>
+            <th>Celular</th>
+            <th>Responsable</th>
+            <th>Fecha creación</th>
+            <th>Fecha actualización</th>
+            <th></th>
+        </tr>
         </thead>
         <tbody>
+        {{ dump(afcs) }}
         {% for afc in afcs %}
             <tr>
                 <td>{{ afc.id }}</td>
@@ -27,12 +46,25 @@
                 <td>{{ afc.contacto }}</td>
                 <td>{{ afc.telefono }}</td>
                 <td>{{ afc.extension }}</td>
-                <td>{{ afc.fechaCreation ? afc.fechaCreation|date('Y-m-d H:i:s') : '' }}</td>
-                <td>{{ afc.fechaActualizacion ? afc.fechaActualizacion|date('Y-m-d H:i:s') : '' }}</td>
                 <td>{{ afc.celular }}</td>
-                <td>
-                    <a href="{{ path('app_afc_show', {'id': afc.id}) }}">show</a>
-                    <a href="{{ path('app_afc_edit', {'id': afc.id}) }}">edit</a>
+                <td>{{ afc.user.nombre ~' '~ afc.user.apellido }}</td>
+                <td>{{ afc.fechaCreacion ? afc.fechaCreacion|date('d-m-Y') : '' }}</td>
+                <td>{{ afc.fechaActualizacion ? afc.fechaActualizacion|date('d-m-Y') : '' }}</td>
+                <td class="pe-0">
+                    <div class="dropdown">
+                        <a class="btn btn-primary dropdown-toggle w-100" href="#" role="button" id="dropdownMenuLink"
+                           data-bs-toggle="dropdown" aria-expanded="false">
+                            Acciones
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                            <li>
+                                <a class="dropdown-item" href=" {{ path('app_afc_show', {'id': afc.id}) }} ">Ver</a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" href=" {{ path('app_afc_edit', {'id': afc.id}) }} ">Editar</a>
+                            </li>
+                        </ul>
+                    </div>
                 </td>
             </tr>
         {% else %}

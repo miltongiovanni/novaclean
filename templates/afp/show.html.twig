@@ -2,7 +2,7 @@
 
 {% block title %}Afp{% endblock %}
 
-{% block body %}
+{% block content %}
     <h1>Afp</h1>
 
     <table class="table">
@@ -41,7 +41,16 @@
             </tr>
         </tbody>
     </table>
-
+    <div class="row my-3">
+        <div class="col-2">
+            <a class="btn btn-primary w-100" href="{{ path('app_afp_index') }}">Volver a la lista</a>
+        </div>
+    </div>
+    <div class="row my-3">
+        <div class="col-2">
+            <a class="btn btn-primary w-100" href="{{ path('usuarios') }}">Volver a la lista</a>
+        </div>
+    </div>
     <a href="{{ path('app_afp_index') }}">back to list</a>
 
     <a href="{{ path('app_afp_edit', {'id': afp.id}) }}">edit</a>

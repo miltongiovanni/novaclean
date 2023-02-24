@@ -2,7 +2,7 @@
 
 {% block title %}Personal index{% endblock %}
 
-{% block body %}
+{% block content %}
     <h1>Personal index</h1>
 
     <table class="table">
@@ -45,8 +45,8 @@
                 <td>{{ personal.fIngreso ? personal.fIngreso|date('Y-m-d') : '' }}</td>
                 <td>{{ personal.fExamenIngreso ? personal.fExamenIngreso|date('Y-m-d') : '' }}</td>
                 <td>
-                    <a href="{{ path('app_personal_show', {'id': personal.id}) }}">show</a>
-                    <a href="{{ path('app_personal_edit', {'id': personal.id}) }}">edit</a>
+                    <a href="{{ path('personal_show', {'id': personal.id}) }}">show</a>
+                    <a href="{{ path('personal_edit', {'id': personal.id}) }}">edit</a>
                 </td>
             </tr>
         {% else %}
@@ -57,5 +57,5 @@
         </tbody>
     </table>
 
-    <a href="{{ path('app_personal_new') }}">Create new</a>
+    <a href="{{ path('personal_new') }}">Create new</a>
 {% endblock %}
