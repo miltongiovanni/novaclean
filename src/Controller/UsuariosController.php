@@ -105,6 +105,8 @@ class UsuariosController extends AbstractController
         }
         $action = $request->request->get('action');
         $user->setEmail($request->request->get('email'));
+        $user->setNombre($request->request->get('nombre'));
+        $user->setApellido($request->request->get('apellido'));
         $perfilValue = $request->request->get('role');
         $activo = $request->request->get('activo', false);
         $perfilArray = explode('-', $perfilValue);
@@ -138,8 +140,8 @@ class UsuariosController extends AbstractController
                 $user->getEmail()
             );
             $email = new TemplatedEmail();
-            $email->from(new Address('contacto@novaquim.com', 'Industrias Novaquim S.A.S.'));
-            $email->to($user->getEmail());
+            $email->from(new Address('no-reply@novaclean.com.co', 'Novaclean Service S.A.S.'));
+            $email->to(new Address($user->getEmail(), $user->getNombre().' '.$user->getApellido()));
             $email->subject('Please Confirm your Email');
             $email->htmlTemplate('registration/confirmation_email.html.twig');
             $email->context(['signedUrl' => $signatureComponents->getSignedUrl()]);

@@ -19,6 +19,28 @@
                             <div class="row">
                                 <div class="col-12">
                                     <div class="form-group">
+                                        <label for="nombre">Nombre(s)</label>
+                                        <div class="position-relative has-validation">
+                                            <input type="text" class="form-control"
+                                                   id="nombre" name="nombre" required
+                                                   data-parsley-required="true"
+                                                   value="{% if user.nombre is defined %}{{ user.nombre }}{% endif %}">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <label for="email">Apellido(s)</label>
+                                        <div class="position-relative has-validation">
+                                            <input type="text" class="form-control"
+                                                   id="apellido" name="apellido" required
+                                                   data-parsley-required="true"
+                                                   value="{% if user.apellido is defined %}{{ user.apellido }}{% endif %}">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="form-group">
                                         <label for="email">Email</label>
                                         <div class="position-relative has-validation">
                                             <input type="text" class="form-control" placeholder="nombre@example.com"
