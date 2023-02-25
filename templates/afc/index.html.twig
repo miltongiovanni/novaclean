@@ -16,7 +16,7 @@
     <h2>Lista de AFCs</h2>
     <div class="row my-3">
         <div class="offset-10 col-2">
-            <a class="btn btn-primary w-100" href=" {{ path('app_afc_new') }} ">Crear AFC</a>
+            <a class="btn btn-primary w-100" href=" {{ path('afc_new') }} ">Crear AFC</a>
         </div>
         {% for flash_error in app.flashes('verify_email_error') %}
             <div class="alert alert-danger" role="alert">{{ flash_error }}</div>
@@ -57,10 +57,10 @@
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
                             <li>
-                                <a class="dropdown-item" href=" {{ path('app_afc_show', {'id': afc.id}) }} ">Ver</a>
+                                <a class="dropdown-item" href=" {{ path('afc_show', {'id': afc.id}) }} ">Ver</a>
                             </li>
                             <li>
-                                <a class="dropdown-item" href=" {{ path('app_afc_edit', {'id': afc.id}) }} ">Editar</a>
+                                <a class="dropdown-item" href=" {{ path('afc_edit', {'id': afc.id}) }} ">Editar</a>
                             </li>
                         </ul>
                     </div>
@@ -74,5 +74,5 @@
         </tbody>
     </table>
 
-    <a href="{{ path('app_afc_new') }}">Create new</a>
+    <a href="{{ path('afc_new') }}">Create new</a>
 {% endblock %}
