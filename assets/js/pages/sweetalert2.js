@@ -1,33 +1,56 @@
 import Swal from 'sweetalert2'
 
-
-document.getElementById("delete-user").addEventListener("click", (e) => {
-  Swal.fire({
-    title: 'Confirmación',
-    text: "¿Está seguro de borrar el usuario?",
-    icon: 'warning',
-    showCancelButton: true,
-    confirmButtonColor: '#000066',
-    cancelButtonColor: '#dc3545',
-    confirmButtonText: 'Si',
-    cancelButtonText: 'No'
-  }).then((result) => {
-    if (result.isConfirmed) {
-      document.getElementById('deleteUserForm').submit();
-      Swal.fire(
-          'Borrado!',
-          'El usuario ha sido borrado.',
-          'success'
-      )
-    }
-  })
-})
-
-
-
-
+let deleteUser = document.getElementById("delete-user");
+if (deleteUser !== null) {
+    deleteUser.addEventListener("click", (e) => {
+        Swal.fire({
+            title: 'Confirmación',
+            text: "¿Está seguro de borrar el usuario?",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#000066',
+            cancelButtonColor: '#dc3545',
+            confirmButtonText: 'Si',
+            cancelButtonText: 'No'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                document.getElementById('deleteUserForm').submit();
+                Swal.fire(
+                    'Borrado!',
+                    'El usuario ha sido borrado.',
+                    'success'
+                )
+            }
+        })
+    })
+}
 
 
+let deleteAfc = document.getElementById("delete-afc");
+if (deleteAfc !== null) {
+    deleteAfc.addEventListener("click", (e) => {
+        Swal.fire({
+            title: 'Confirmación',
+            text: "¿Está seguro de borrar Afc?",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#000066',
+            cancelButtonColor: '#dc3545',
+            confirmButtonText: 'Si',
+            cancelButtonText: 'No'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                document.getElementById('deleteAfcForm').submit();
+                Swal.fire(
+                    'Borrado!',
+                    'Afc borrado.',
+                    'success'
+                )
+            }
+        })
+    })
+
+}
 
 
 /*

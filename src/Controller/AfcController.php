@@ -64,9 +64,9 @@ class AfcController extends AbstractController
         $afc->setCelular($request->request->get('celular'));
         $afc->setUser($this->getUser());
         if ($action == 'insert') {
-            $afc->setFechaCreacion(Carbon::now());
+            $afc->setFechaCreacion(Carbon::today());
         }
-        $afc->setFechaActualizacion(Carbon::now());
+        $afc->setFechaActualizacion(Carbon::today());
         $entityManager->persist($afc);
 
         // actually executes the queries (i.e. the INSERT query)
