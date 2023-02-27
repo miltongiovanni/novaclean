@@ -2,10 +2,21 @@
 
 {% block title %}New Afp{% endblock %}
 
-{% block body %}
-    <h1>Create new Afp</h1>
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('parsley') }}
+
+{% endblock %}
+
+{% block content %}
+    <h2 class="ps-3">Crear AFP</h2>
 
     {{ include('afp/_form.html.twig') }}
 
-    <a href="{{ path('app_afp_index') }}">back to list</a>
+    <div class="row my-3">
+        <div class="offset-4 col-2">
+            <a class="btn btn-primary w-100" href="{{ path('afp_index') }}">Volver a la lista</a>
+        </div>
+    </div>
+
 {% endblock %}

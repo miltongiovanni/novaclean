@@ -52,6 +52,32 @@ if (deleteAfc !== null) {
 
 }
 
+let deleteAfp = document.getElementById("delete-afp");
+if (deleteAfp !== null) {
+    deleteAfp.addEventListener("click", (e) => {
+        Swal.fire({
+            title: 'Confirmación',
+            text: "¿Está seguro de borrar Afp?",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#000066',
+            cancelButtonColor: '#dc3545',
+            confirmButtonText: 'Si',
+            cancelButtonText: 'No'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                document.getElementById('deleteAfpForm').submit();
+                Swal.fire(
+                    'Borrado!',
+                    'Afp borrado.',
+                    'success'
+                )
+            }
+        })
+    })
+
+}
+
 
 /*
 

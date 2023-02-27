@@ -1,7 +1,15 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}Afc{% endblock %}
+{% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('sweetalert2') }}
+{% endblock %}
 
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('sweetalert2') }}
+{% endblock %}
 {% block content %}
     <h1>Afc</h1>
 
@@ -30,6 +38,10 @@
         <tr>
             <th>Celular</th>
             <td>{{ afc.celular }}</td>
+        </tr>
+        <tr>
+            <th>Responsable</th>
+            <td>{{ afc.user.nombre ~' '~ afc.user.apellido }}</td>
         </tr>
         <tr>
             <th>Fecha creación</th>

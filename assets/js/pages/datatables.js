@@ -61,5 +61,33 @@ $(document).ready(function () {
 
         },
     });
+    let afpDatatable = $("#afpDatatable").DataTable({
+        "columnDefs":
+            [
+                {
+                    "targets": [0, 6, 7],
+                    "className": 'dt-body-center'
+                },
+                {
+                    "targets": [6, 7],
+                    "orderable": false
+                }
+            ],
+        "language": {
+            "lengthMenu": "Mostrando _MENU_ datos por página",
+            "zeroRecords": "Lo siento no encontró nada",
+            "info": "Mostrando página _PAGE_ de _PAGES_",
+            "infoEmpty": "No hay datos disponibles",
+            "search": "Búsqueda:",
+            "paginate": {
+                "first": "Primero",
+                "last": "Último",
+                "next": "Siguiente",
+                "previous": "Anterior"
+            },
+            "infoFiltered": "(Filtrado de _MAX_ en total)"
+
+        },
+    });
 });
 
