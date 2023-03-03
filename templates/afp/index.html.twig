@@ -18,9 +18,6 @@
         <div class="offset-10 col-2">
             <a class="btn btn-primary w-100" href=" {{ path('afp_new') }} ">Crear AFP</a>
         </div>
-        {% for flash_error in app.flashes('error') %}
-            <div class="alert alert-danger" role="alert">{{ flash_error }}</div>
-        {% endfor %}
     </div>
 
     <table class="table" id="afpDatatable">
@@ -29,7 +26,7 @@
                 <th>Id</th>
                 <th>Nombre</th>
                 <th>Contacto</th>
-                <th>Telefono</th>
+                <th>Teléfono</th>
                 <th>Extension</th>
                 <th>Celular</th>
                 <th>Responsable</th>

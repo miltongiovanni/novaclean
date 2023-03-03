@@ -1,11 +1,20 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}New Eps{% endblock %}
+{% block title %}Nueva Eps{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('parsley') }}
 
-{% block body %}
-    <h1>Create new Eps</h1>
+{% endblock %}
+
+{% block content %}
+    <h2 class="ps-3">Crear EPS</h2>
 
     {{ include('eps/_form.html.twig') }}
 
-    <a href="{{ path('app_eps_index') }}">back to list</a>
+    <div class="row my-3">
+        <div class="offset-4 col-2">
+            <a class="btn btn-primary w-100" href="{{ path('eps_index') }}">Volver a la lista</a>
+        </div>
+    </div>
 {% endblock %}

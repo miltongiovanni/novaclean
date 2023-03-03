@@ -1,50 +1,69 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}Eps{% endblock %}
+{% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('sweetalert2') }}
+{% endblock %}
 
-{% block body %}
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('sweetalert2') }}
+{% endblock %}
+
+{% block content %}
     <h1>Eps</h1>
 
     <table class="table">
         <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ ep.id }}</td>
-            </tr>
-            <tr>
-                <th>Nombre</th>
-                <td>{{ ep.nombre }}</td>
-            </tr>
-            <tr>
-                <th>Contacto</th>
-                <td>{{ ep.contacto }}</td>
-            </tr>
-            <tr>
-                <th>Telefono</th>
-                <td>{{ ep.telefono }}</td>
-            </tr>
-            <tr>
-                <th>Extension</th>
-                <td>{{ ep.extension }}</td>
-            </tr>
-            <tr>
-                <th>Celular</th>
-                <td>{{ ep.celular }}</td>
-            </tr>
-            <tr>
-                <th>Fecha_creacion</th>
-                <td>{{ ep.fechaCreacion ? ep.fechaCreacion|date('Y-m-d H:i:s') : '' }}</td>
-            </tr>
-            <tr>
-                <th>Fecha_actualizacion</th>
-                <td>{{ ep.fechaActualizacion ? ep.fechaActualizacion|date('Y-m-d H:i:s') : '' }}</td>
-            </tr>
+        <tr>
+            <th>Id</th>
+            <td>{{ eps.id }}</td>
+        </tr>
+        <tr>
+            <th>Nombre</th>
+            <td>{{ eps.nombre }}</td>
+        </tr>
+        <tr>
+            <th>Contacto</th>
+            <td>{{ eps.contacto }}</td>
+        </tr>
+        <tr>
+            <th>Teléfono</th>
+            <td>{{ eps.telefono }}</td>
+        </tr>
+        <tr>
+            <th>Extensión</th>
+            <td>{{ eps.extension }}</td>
+        </tr>
+        <tr>
+            <th>Celular</th>
+            <td>{{ eps.celular }}</td>
+        </tr>
+        <tr>
+            <th>Responsable</th>
+            <td>{{ eps.user.nombre ~' '~ eps.user.apellido }}</td>
+        </tr>
+        <tr>
+            <th>Fecha creación</th>
+            <td>{{ eps.fechaCreacion ? eps.fechaCreacion|date('d-m-Y') : '' }}</td>
+        </tr>
+        <tr>
+            <th>Fecha actualización</th>
+            <td>{{ eps.fechaActualizacion ? eps.fechaActualizacion|date('d-m-Y') : '' }}</td>
+        </tr>
         </tbody>
     </table>
+    <div class="row my-3">
+        <div class="col-2">
+            <a class="btn btn-primary w-100" href="{{ path('eps_index') }}">Volver a la lista</a>
+        </div>
+        <div class="col-2">
+            <a class="btn btn-primary w-100" href="{{ path('eps_edit', {'id': eps.id}) }}">Editar</a>
+        </div>
+    </div>
 
-    <a href="{{ path('app_eps_index') }}">back to list</a>
-
-    <a href="{{ path('app_eps_edit', {'id': ep.id}) }}">edit</a>
-
-    {{ include('eps/_delete_form.html.twig') }}
+    {% if is_granted('ROLE_ADMINISTRADOR') %}
+        {{ include('eps/_delete_form.html.twig') }}
+    {% endif %}
 {% endblock %}

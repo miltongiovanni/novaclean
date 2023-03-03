@@ -1,4 +1,78 @@
-{{ form_start(form) }}
-    {{ form_widget(form) }}
-    <button class="btn">{{ button_label|default('Save') }}</button>
-{{ form_end(form) }}
+<div class="row">
+    <div class="col-md-6 col-12">
+        <div class="card">
+            <div class="card-content">
+                <div class="card-body">
+                    <form class="form form-vertical" method="post" data-parsley-validate
+                          action="{% if eps.id is defined %}{{ path('eps_update', {'id':  eps.id }) }}{% else %}{{ path('eps_update', {'id':  0 }) }}{% endif %}"
+                    >
+                        <input type="hidden" name="action" id="action" value="{{ action }}">
+                        <div class="form-body">
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <label for="nombre">Nombre</label>
+                                        <div class="position-relative has-validation">
+                                            <input type="text" class="form-control"
+                                                   id="nombre" name="nombre" required
+                                                   data-parsley-required="true"
+                                                   value="{{ eps.nombre ?? '' }}">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <label for="contacto">Contacto</label>
+                                        <div class="position-relative has-validation">
+                                            <input type="text" class="form-control"
+                                                   id="contacto" name="contacto"
+                                                   data-parsley-required="false"
+                                                   value="{{ eps.contacto ?? '' }}">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <label for="contacto">Teléfono</label>
+                                        <div class="position-relative has-validation">
+                                            <input type="text" class="form-control"
+                                                   id="telefono" name="telefono"
+                                                   data-parsley-required="false"
+                                                   value="{{ eps.telefono  ?? '' }}">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <label for="contacto">Extensión</label>
+                                        <div class="position-relative has-validation">
+                                            <input type="text" class="form-control"
+                                                   id="extension" name="extension"
+                                                   data-parsley-required="false"
+                                                   value="{{ eps.extension ?? '' }}">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <label for="contacto">Celular</label>
+                                        <div class="position-relative has-validation">
+                                            <input type="text" class="form-control"
+                                                   id="celular" name="celular"
+                                                   data-parsley-required="false"
+                                                   value="{{ eps.celular  ?? '' }}">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 d-flex justify-content-end mt-3">
+                                    <button type="submit" class="btn btn-primary me-1 mb-1">Guardar</button>
+                                    <button type="reset" class="btn btn-light-secondary me-1 mb-1">Reiniciar</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

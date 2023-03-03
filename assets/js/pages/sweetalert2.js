@@ -31,7 +31,7 @@ if (deleteAfc !== null) {
     deleteAfc.addEventListener("click", (e) => {
         Swal.fire({
             title: 'Confirmación',
-            text: "¿Está seguro de borrar Afc?",
+            text: "¿Está seguro de borrar la Afc?",
             icon: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#000066',
@@ -43,7 +43,7 @@ if (deleteAfc !== null) {
                 document.getElementById('deleteAfcForm').submit();
                 Swal.fire(
                     'Borrado!',
-                    'Afc borrado.',
+                    'Afc borrada.',
                     'success'
                 )
             }
@@ -57,7 +57,7 @@ if (deleteAfp !== null) {
     deleteAfp.addEventListener("click", (e) => {
         Swal.fire({
             title: 'Confirmación',
-            text: "¿Está seguro de borrar Afp?",
+            text: "¿Está seguro de borrar la Afp?",
             icon: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#000066',
@@ -69,7 +69,34 @@ if (deleteAfp !== null) {
                 document.getElementById('deleteAfpForm').submit();
                 Swal.fire(
                     'Borrado!',
-                    'Afp borrado.',
+                    'Afp borrada.',
+                    'success'
+                )
+            }
+        })
+    })
+
+}
+
+
+let deleteEps = document.getElementById("delete-eps");
+if (deleteEps !== null) {
+    deleteEps.addEventListener("click", (e) => {
+        Swal.fire({
+            title: 'Confirmación',
+            text: "¿Está seguro de borrar la Eps?",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#000066',
+            cancelButtonColor: '#dc3545',
+            confirmButtonText: 'Si',
+            cancelButtonText: 'No'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                document.getElementById('deleteEpsForm').submit();
+                Swal.fire(
+                    'Borrado!',
+                    'Eps borrada.',
                     'success'
                 )
             }

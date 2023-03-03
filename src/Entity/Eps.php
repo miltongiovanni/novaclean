@@ -23,13 +23,13 @@ class Eps
     private ?string $contacto = null;
 
     #[ORM\Column(nullable: true)]
-    private ?int $telefono = null;
+    private ?string $telefono = null;
 
     #[ORM\Column(nullable: true)]
     private ?int $extension = null;
 
     #[ORM\Column(nullable: true)]
-    private ?int $celular = null;
+    private ?string $celular = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
     private ?\DateTimeInterface $fecha_creacion = null;
@@ -78,12 +78,12 @@ class Eps
         return $this;
     }
 
-    public function getTelefono(): ?int
+    public function getTelefono(): ?string
     {
         return $this->telefono;
     }
 
-    public function setTelefono(?int $telefono): self
+    public function setTelefono(?string $telefono): self
     {
         $this->telefono = $telefono;
 
@@ -97,17 +97,17 @@ class Eps
 
     public function setExtension(?int $extension): self
     {
-        $this->extension = $extension;
+        $this->extension = $extension !== 0 ? $extension : null;
 
         return $this;
     }
 
-    public function getCelular(): ?int
+    public function getCelular(): ?string
     {
         return $this->celular;
     }
 
-    public function setCelular(?int $celular): self
+    public function setCelular(?string $celular): self
     {
         $this->celular = $celular;
 
