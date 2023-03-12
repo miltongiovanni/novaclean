@@ -62,12 +62,12 @@
             </li>
             {% endif %}
             {% if is_granted('VIEW', 'CONFIGURACIÓN')  %}
-            <li class="sidebar-item {{ is_active('afc_index') }}  {{ is_active('afp_index') }}  {{ is_active('eps_index') }} {{ is_active('app_cargo_index') }} has-sub">
+            <li class="sidebar-item {{ is_active('afc_index') }}  {{ is_active('afp_index') }}  {{ is_active('eps_index') }} {{ is_active('cargo_index') }} has-sub">
                 <a href="#" class='sidebar-link'>
                     <i class="bi bi-gear-fill"></i>
                     <span>Configuración</span>
                 </a>
-                <ul class="submenu {{ is_active('afc_index') }}  {{ is_active('afp_index') }}  {{ is_active('eps_index') }} {{ is_active('app_cargo_index') }}">
+                <ul class="submenu {{ is_active('afc_index') }}  {{ is_active('afp_index') }}  {{ is_active('eps_index') }} {{ is_active('cargo_index') }}">
                     <li class="submenu-item {{ is_active('afc_index') }}">
                         <a href="{{ path('afc_index') }}">Afc</a>
                     </li>
@@ -77,8 +77,8 @@
                     <li class="submenu-item {{ is_active('eps_index') }}">
                         <a href="{{ path('eps_index') }}">Eps</a>
                     </li>
-                    <li class="submenu-item {{ is_active('app_cargo_index') }}">
-                        <a href="{{ path('app_cargo_index') }}">Cargos</a>
+                    <li class="submenu-item {{ is_active('cargo_index') }}">
+                        <a href="{{ path('cargo_index') }}">Cargos</a>
                     </li>
                 </ul>
             </li>

@@ -1,26 +1,42 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}Cargo{% endblock %}
+{% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('sweetalert2') }}
+{% endblock %}
 
-{% block body %}
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('sweetalert2') }}
+{% endblock %}
+
+{% block content %}
     <h1>Cargo</h1>
 
     <table class="table">
         <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ cargo.id }}</td>
-            </tr>
-            <tr>
-                <th>Descripcion</th>
-                <td>{{ cargo.descripcion }}</td>
-            </tr>
+        <tr>
+            <th class="col-1">Id</th>
+            <td class="col-4">{{ cargo.id }}</td>
+        </tr>
+        <tr>
+            <th>Descripción</th>
+            <td>{{ cargo.descripcion }}</td>
+        </tr>
         </tbody>
     </table>
-
-    <a href="{{ path('app_cargo_index') }}">back to list</a>
-
-    <a href="{{ path('app_cargo_edit', {'id': cargo.id}) }}">edit</a>
-
-    {{ include('cargo/_delete_form.html.twig') }}
+    <div class="row my-3">
+        <div class="col-2">
+            <a class="btn btn-primary w-100" href="{{ path('cargo_index') }}">Volver a la lista</a>
+        </div>
+        <div class="col-2">
+            <a class="btn btn-primary w-100" href="{{ path('cargo_edit', {'id': cargo.id}) }}">Editar</a>
+        </div>
+    </div>
+    <div class="row my-3">
+    </div>
+    {% if is_granted('ROLE_ADMINISTRADOR') %}
+        {{ include('cargo/_delete_form.html.twig') }}
+    {% endif %}
 {% endblock %}

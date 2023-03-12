@@ -1,4 +1,34 @@
-{{ form_start(form) }}
-    {{ form_widget(form) }}
-    <button class="btn">{{ button_label|default('Save') }}</button>
-{{ form_end(form) }}
+<div class="row">
+    <div class="col-md-6 col-12">
+        <div class="card">
+            <div class="card-content">
+                <div class="card-body">
+                    <form class="form form-vertical" method="post" data-parsley-validate
+                          action="{% if cargo.id is defined %}{{ path('cargo_update', {'id':  cargo.id }) }}{% else %}{{ path('cargo_update', {'id':  0 }) }}{% endif %}"
+                    >
+                        <input type="hidden" name="action" id="action" value="{{ action }}">
+                        <div class="form-body">
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <label for="descripcion">Descripción</label>
+                                        <div class="position-relative has-validation">
+                                            <input type="text" class="form-control"
+                                                   id="descripcion" name="descripcion" required
+                                                   data-parsley-required="true"
+                                                   value="{{ cargo.descripcion ?? '' }}">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 d-flex justify-content-end mt-3">
+                                    <button type="submit" class="btn btn-primary me-1 mb-1">Guardar</button>
+                                    <button type="reset" class="btn btn-light-secondary me-1 mb-1">Reiniciar</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

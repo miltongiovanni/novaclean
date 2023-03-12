@@ -121,5 +121,38 @@ $(document).ready(function () {
 
         },
     });
+    let cargoDatatable = $("#cargoDatatable").DataTable({
+        "columnDefs":
+            [
+                {
+                    "targets": [0, 2],
+                    "className": 'dt-body-center'
+                },
+                {
+                    "targets": [2],
+                    "orderable": false,
+                    "className": 'col-2'
+                },
+            ],
+        lengthMenu: [
+        [15, 30, 50, -1],
+        [15, 30, 50, 'Todo'],
+    ],
+        "language": {
+            "lengthMenu": "Mostrando _MENU_ datos por página",
+            "zeroRecords": "Lo siento no encontró nada",
+            "info": "Mostrando página _PAGE_ de _PAGES_",
+            "infoEmpty": "No hay datos disponibles",
+            "search": "Búsqueda:",
+            "paginate": {
+                "first": "Primero",
+                "last": "Último",
+                "next": "Siguiente",
+                "previous": "Anterior"
+            },
+            "infoFiltered": "(Filtrado de _MAX_ en total)"
+
+        },
+    });
 });
 

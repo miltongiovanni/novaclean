@@ -3,8 +3,9 @@
 namespace App\Controller;
 
 use App\Entity\Cargo;
-use App\Form\CargoType;
 use App\Repository\CargoRepository;
+use Carbon\Carbon;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -13,7 +14,7 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route('/cargo')]
 class CargoController extends AbstractController
 {
-    #[Route('/', name: 'app_cargo_index', methods: ['GET'])]
+    #[Route('/', name: 'cargo_index', methods: ['GET'])]
     public function index(CargoRepository $cargoRepository): Response
     {
         return $this->render('cargo/index.html.twig', [
@@ -21,26 +22,15 @@ class CargoController extends AbstractController
         ]);
     }
 
-    #[Route('/new', name: 'app_cargo_new', methods: ['GET', 'POST'])]
+    #[Route('/nuevo', name: 'cargo_new', methods: ['GET', 'POST'])]
     public function new(Request $request, CargoRepository $cargoRepository): Response
     {
-        $cargo = new Cargo();
-        $form = $this->createForm(CargoType::class, $cargo);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $cargoRepository->save($cargo, true);
-
-            return $this->redirectToRoute('app_cargo_index', [], Response::HTTP_SEE_OTHER);
-        }
-
-        return $this->renderForm('cargo/new.html.twig', [
-            'cargo' => $cargo,
-            'form' => $form,
+        return $this->render('cargo/new.html.twig', [
+            'action' => 'insert',
         ]);
     }
 
-    #[Route('/{id}', name: 'app_cargo_show', methods: ['GET'])]
+    #[Route('/{id}', name: 'cargo_show', methods: ['GET'])]
     public function show(Cargo $cargo): Response
     {
         return $this->render('cargo/show.html.twig', [
@@ -48,31 +38,47 @@ class CargoController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}/edit', name: 'app_cargo_edit', methods: ['GET', 'POST'])]
+    #[Route('/{id}/editar', name: 'cargo_edit', methods: ['GET'])]
     public function edit(Request $request, Cargo $cargo, CargoRepository $cargoRepository): Response
     {
-        $form = $this->createForm(CargoType::class, $cargo);
-        $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $cargoRepository->save($cargo, true);
-
-            return $this->redirectToRoute('app_cargo_index', [], Response::HTTP_SEE_OTHER);
-        }
-
-        return $this->renderForm('cargo/edit.html.twig', [
+        return $this->render('cargo/edit.html.twig', [
             'cargo' => $cargo,
-            'form' => $form,
+            'action' => 'update',
         ]);
     }
 
-    #[Route('/{id}', name: 'app_cargo_delete', methods: ['POST'])]
+
+    #[Route('/{id}/actualizar', name: 'cargo_update', methods: ['POST'])]
+    public function update(Request $request, int $id, CargoRepository $cargoRepository, EntityManagerInterface $entityManager): Response
+    {
+        if ($id == 0) {
+            $cargo = new Cargo();
+        } else {
+            $cargo = $cargoRepository->find($id);
+        }
+        $action = $request->request->get('action');
+        $cargo->setDescripcion(trim($request->request->get('descripcion')));
+        $entityManager->persist($cargo);
+
+        // actually executes the queries (i.e. the INSERT query)
+        $entityManager->flush();
+        if ($action == 'insert') {
+            $this->addFlash('success', 'Cargo creado correctamente');
+        } else {
+            $this->addFlash('success', 'Cargo actualizado correctamente');
+        }
+        return $this->redirectToRoute('cargo_index', [], Response::HTTP_SEE_OTHER);
+    }
+
+
+    #[Route('/{id}', name: 'cargo_delete', methods: ['POST'])]
     public function delete(Request $request, Cargo $cargo, CargoRepository $cargoRepository): Response
     {
         if ($this->isCsrfTokenValid('delete'.$cargo->getId(), $request->request->get('_token'))) {
             $cargoRepository->remove($cargo, true);
         }
 
-        return $this->redirectToRoute('app_cargo_index', [], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('cargo_index', [], Response::HTTP_SEE_OTHER);
     }
 }

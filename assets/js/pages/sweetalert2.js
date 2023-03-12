@@ -105,6 +105,32 @@ if (deleteEps !== null) {
 
 }
 
+let deleteCargo = document.getElementById("delete-cargo");
+if (deleteCargo !== null) {
+    deleteCargo.addEventListener("click", (e) => {
+        Swal.fire({
+            title: 'Confirmación',
+            text: "¿Está seguro de borrar el cargo?",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#000066',
+            cancelButtonColor: '#dc3545',
+            confirmButtonText: 'Si',
+            cancelButtonText: 'No'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                document.getElementById('deleteCargoForm').submit();
+                Swal.fire(
+                    'Borrado!',
+                    'Cargo borrado.',
+                    'success'
+                )
+            }
+        })
+    })
+
+}
+
 
 /*
 

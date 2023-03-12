@@ -1,16 +1,30 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Cargo index{% endblock %}
+{% block title %}Cargos{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('datatables') }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('datatables') }}
+{% endblock %}
 
 {% block content %}
-    <h1>Cargo index</h1>
-
-    <table class="table">
+    <h2>Lista de cargos</h2>
+    <div class="row my-3">
+        <div class="offset-10 col-2">
+            <a class="btn btn-primary w-100" href=" {{ path('cargo_new') }} ">Crear Cargo</a>
+        </div>
+    </div>
+    <table class="table" id="cargoDatatable">
         <thead>
             <tr>
                 <th>Id</th>
-                <th>Descripcion</th>
-                <th>actions</th>
+                <th>Descripción</th>
+                <th></th>
             </tr>
         </thead>
         <tbody>
@@ -18,9 +32,21 @@
             <tr>
                 <td>{{ cargo.id }}</td>
                 <td>{{ cargo.descripcion }}</td>
-                <td>
-                    <a href="{{ path('app_cargo_show', {'id': cargo.id}) }}">show</a>
-                    <a href="{{ path('app_cargo_edit', {'id': cargo.id}) }}">edit</a>
+                <td class="pe-0 ps-3">
+                    <div class="dropdown">
+                        <a class="btn btn-primary dropdown-toggle w-100" href="#" role="button" id="dropdownMenuLink"
+                           data-bs-toggle="dropdown" aria-expanded="false">
+                            Acciones
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                            <li>
+                                <a class="dropdown-item" href=" {{ path('cargo_show', {'id': cargo.id}) }} ">Ver</a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" href=" {{  path('cargo_edit', {'id': cargo.id}) }} ">Editar</a>
+                            </li>
+                        </ul>
+                    </div>
                 </td>
             </tr>
         {% else %}
@@ -31,5 +57,4 @@
         </tbody>
     </table>
 
-    <a href="{{ path('app_cargo_new') }}">Create new</a>
 {% endblock %}
