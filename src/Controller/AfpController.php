@@ -58,11 +58,11 @@ class AfpController extends AbstractController
             $afp = $afpRepository->find($id);
         }
         $action = $request->request->get('action');
-        $afp->setNombre($request->request->get('nombre'));
-        $afp->setContacto($request->request->get('contacto'));
-        $afp->setTelefono($request->request->get('telefono'));
+        $afp->setNombre(trim($request->request->get('nombre')));
+        $afp->setContacto(trim($request->request->get('contacto')));
+        $afp->setTelefono(trim($request->request->get('telefono')));
         $afp->setExtension(intval($request->request->get('extension')));
-        $afp->setCelular($request->request->get('celular'));
+        $afp->setCelular(trim($request->request->get('celular')));
         $afp->setUser($this->getUser());
         if ($action == 'insert') {
             $afp->setFechaCreacion(Carbon::today());

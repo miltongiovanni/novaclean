@@ -57,11 +57,11 @@ class EpsController extends AbstractController
             $eps = $epsRepository->find($id);
         }
         $action = $request->request->get('action');
-        $eps->setNombre($request->request->get('nombre'));
-        $eps->setContacto($request->request->get('contacto'));
-        $eps->setTelefono($request->request->get('telefono'));
+        $eps->setNombre(trim($request->request->get('nombre')));
+        $eps->setContacto(trim($request->request->get('contacto')));
+        $eps->setTelefono(trim($request->request->get('telefono')));
         $eps->setExtension(intval($request->request->get('extension')));
-        $eps->setCelular($request->request->get('celular'));
+        $eps->setCelular(trim($request->request->get('celular')));
         $eps->setUser($this->getUser());
         if ($action == 'insert') {
             $eps->setFechaCreacion(Carbon::today());

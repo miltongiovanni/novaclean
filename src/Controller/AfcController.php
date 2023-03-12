@@ -57,11 +57,11 @@ class AfcController extends AbstractController
             $afc = $afcRepository->find($id);
         }
         $action = $request->request->get('action');
-        $afc->setNombre($request->request->get('nombre'));
-        $afc->setContacto($request->request->get('contacto'));
-        $afc->setTelefono($request->request->get('telefono'));
+        $afc->setNombre(trim($request->request->get('nombre')));
+        $afc->setContacto(trim($request->request->get('contacto')));
+        $afc->setTelefono(trim($request->request->get('telefono')));
         $afc->setExtension(intval($request->request->get('extension')));
-        $afc->setCelular($request->request->get('celular'));
+        $afc->setCelular(trim($request->request->get('celular')));
         $afc->setUser($this->getUser());
         if ($action == 'insert') {
             $afc->setFechaCreacion(Carbon::today());

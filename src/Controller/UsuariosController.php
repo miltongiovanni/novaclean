@@ -104,9 +104,9 @@ class UsuariosController extends AbstractController
             $user = $userRepository->find($id);
         }
         $action = $request->request->get('action');
-        $user->setEmail($request->request->get('email'));
-        $user->setNombre($request->request->get('nombre'));
-        $user->setApellido($request->request->get('apellido'));
+        $user->setEmail(trim($request->request->get('email')));
+        $user->setNombre(trim($request->request->get('nombre')));
+        $user->setApellido(trim($request->request->get('apellido')));
         $perfilValue = $request->request->get('role');
         $activo = $request->request->get('activo', false);
         $perfilArray = explode('-', $perfilValue);
