@@ -1,61 +1,47 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Personal index{% endblock %}
+{% block title %}Lista de Personal{% endblock %}
+{% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('datatables') }}
+{% endblock %}
 
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('datatables') }}
+{% endblock %}
 {% block content %}
-    <h1>Personal index</h1>
+    <h1>Lista de Personal</h1>
+    <div class="row my-3">
+        <div class="offset-10 col-2">
+            <a class="btn btn-primary w-100" href=" {{ path('personal_new') }} ">Crear Personal</a>
+        </div>
+    </div>
 
-    <table class="table">
+    <table class="table" id="personalDatatable">
         <thead>
             <tr>
+                <th></th>
                 <th>Id</th>
-                <th>Identificacion</th>
-                <th>Lugar_expedicion</th>
-                <th>Nombre</th>
-                <th>Apellido</th>
-                <th>Numero_cuenta</th>
-                <th>Salario_basico</th>
+                <th>Nombre(s)</th>
+                <th>Apellido(s)</th>
+                <th>Identificación</th>
+                <th>Lugar expedición</th>
+                <th>F ingreso</th>
+                <th>Salario básico</th>
                 <th>Bono</th>
-                <th>Direccion</th>
-                <th>Telefono</th>
-                <th>Correo_electronico</th>
+                <th>Estado</th>
+
+                {#<th>Dirección</th>
+                <th>Teléfono</th>
+                <th>Correo electrónico</th>
+                <th>Cuenta</th>
                 <th>Celular</th>
-                <th>F_nacimiento</th>
-                <th>F_ingreso</th>
-                <th>F_examen_ingreso</th>
+                <th>F nacimiento</th>
+                <th>F examen_ingreso</th>#}
                 <th>actions</th>
             </tr>
         </thead>
-        <tbody>
-        {% for personal in personals %}
-            <tr>
-                <td>{{ personal.id }}</td>
-                <td>{{ personal.identificacion }}</td>
-                <td>{{ personal.lugarExpedicion }}</td>
-                <td>{{ personal.nombre }}</td>
-                <td>{{ personal.apellido }}</td>
-                <td>{{ personal.numeroCuenta }}</td>
-                <td>{{ personal.salarioBasico }}</td>
-                <td>{{ personal.bono }}</td>
-                <td>{{ personal.direccion }}</td>
-                <td>{{ personal.telefono }}</td>
-                <td>{{ personal.correoElectronico }}</td>
-                <td>{{ personal.celular }}</td>
-                <td>{{ personal.fNacimiento ? personal.fNacimiento|date('Y-m-d') : '' }}</td>
-                <td>{{ personal.fIngreso ? personal.fIngreso|date('Y-m-d') : '' }}</td>
-                <td>{{ personal.fExamenIngreso ? personal.fExamenIngreso|date('Y-m-d') : '' }}</td>
-                <td>
-                    <a href="{{ path('personal_show', {'id': personal.id}) }}">show</a>
-                    <a href="{{ path('personal_edit', {'id': personal.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="16">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
     </table>
 
-    <a href="{{ path('personal_new') }}">Create new</a>
 {% endblock %}

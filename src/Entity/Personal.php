@@ -34,20 +34,20 @@ class Personal
     #[ORM\Column]
     private ?int $salario_basico = null;
 
-    #[ORM\Column]
+    #[ORM\Column(nullable: true)]
     private ?int $bono = null;
 
     #[ORM\Column(length: 255)]
     private ?string $direccion = null;
 
     #[ORM\Column(nullable: true)]
-    private ?int $telefono = null;
+    private ?string $telefono = null;
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $correo_electronico = null;
 
     #[ORM\Column(nullable: true)]
-    private ?int $celular = null;
+    private ?string $celular = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
     private ?\DateTimeInterface $f_nacimiento = null;
@@ -55,7 +55,7 @@ class Personal
     #[ORM\Column(type: Types::DATE_MUTABLE)]
     private ?\DateTimeInterface $f_ingreso = null;
 
-    #[ORM\Column(type: Types::DATE_MUTABLE)]
+    #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
     private ?\DateTimeInterface $f_examen_ingreso = null;
 
     #[ORM\ManyToOne]
@@ -83,11 +83,11 @@ class Personal
     private ?TipoCuenta $tipo_cuenta = null;
 
     #[ORM\ManyToOne]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\JoinColumn(nullable: true)]
     private ?TallaUniforme $talla_uniforme = null;
 
     #[ORM\ManyToOne]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\JoinColumn(nullable: true)]
     private ?TallaBotas $talla_botas = null;
 
     #[ORM\ManyToOne(inversedBy: 'personals')]
@@ -95,22 +95,22 @@ class Personal
     private ?Cargo $cargo = null;
 
     #[ORM\ManyToOne]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\JoinColumn(nullable: true)]
     private ?TallaGuantes $talla_guantes = null;
 
     #[ORM\ManyToOne(inversedBy: 'personals')]
     private ?CursoEspecializado $curso_especializado = null;
 
     #[ORM\ManyToOne]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\JoinColumn(nullable: true)]
     private ?TallaCamisa $talla_camisa = null;
 
     #[ORM\ManyToOne]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\JoinColumn(nullable: true)]
     private ?TallaPantalon $talla_pantalon = null;
 
     #[ORM\ManyToOne]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\JoinColumn(nullable: true)]
     private ?TallaCalzado $talla_calzado = null;
 
     #[ORM\ManyToOne]
@@ -122,6 +122,9 @@ class Personal
 
     #[ORM\OneToMany(mappedBy: 'personal', targetEntity: ContratoPersonal::class)]
     private Collection $contratoPersonals;
+
+    #[ORM\Column]
+    private ?bool $activo = null;
 
     public function __construct()
     {
@@ -230,12 +233,12 @@ class Personal
         return $this;
     }
 
-    public function getTelefono(): ?int
+    public function getTelefono(): ?string
     {
         return $this->telefono;
     }
 
-    public function setTelefono(?int $telefono): self
+    public function setTelefono(?string $telefono): self
     {
         $this->telefono = $telefono;
 
@@ -254,12 +257,12 @@ class Personal
         return $this;
     }
 
-    public function getCelular(): ?int
+    public function getCelular(): ?string
     {
         return $this->celular;
     }
 
-    public function setCelular(?int $celular): self
+    public function setCelular(?string $celular): self
     {
         $this->celular = $celular;
 
@@ -540,5 +543,49 @@ class Personal
         }
 
         return $this;
+    }
+
+    public function isActivo(): ?bool
+    {
+        return $this->activo;
+    }
+
+    public function setActivo(bool $activo): self
+    {
+        $this->activo = $activo;
+
+        return $this;
+    }
+
+    public function toArray()
+    {
+        return [
+            'id' => $this->getId(),
+            'identificacion' => $this->getIdentificacion(),
+            'lugar_expedicion' => $this->getLugarExpedicion(),
+            'nombre' => $this->getNombre(),
+            'apellido' => $this->getApellido(),
+            'numero_cuenta' => $this->getNumeroCuenta(),
+            'salario_basico' => $this->getSalarioBasico(),
+            'bono' => $this->getBono(),
+            'direccion' => $this->getDireccion(),
+            'telefono' => $this->getTelefono(),
+            'celular' => $this->getCorreoElectronico(),
+            'f_nacimiento' => $this->getFNacimiento()->format('d/m/Y'),
+            'f_ingreso' => $this->getFIngreso() != null ? $this->getFIngreso()->format('d/m/Y') : $this->getFIngreso(),
+            'f_examen_ingreso' => $this->getFExamenIngreso() != null ? $this->getFExamenIngreso()->format('d/m/Y') : $this->getFExamenIngreso(),
+            'sexo' => $this->getSexo()->getSexo(),
+            'tipo_nomina' => $this->getTipoNomina()->getNombre(),
+            'afp' => $this->getAfp()->getNombre(),
+            'eps' => $this->getEps()->getNombre(),
+            'afc' => $this->getAfc()->getNombre(),
+            'tipo_cuenta' => $this->getTipoCuenta()->getNombre(),
+            'talla_uniforme' => $this->getTallaUniforme() != null ? $this->getTallaUniforme()->getTalla() : $this->getTallaUniforme(),
+            'talla_botas' => $this->getTallaBotas() != null ? $this->getTallaBotas()->getTalla() : $this->getTallaBotas(),
+            'cargo' => $this->getCargo()->getDescripcion(),
+            'talla_guantes' => $this->getTallaGuantes() != null ? $this->getTallaGuantes()->getTalla() : $this->getTallaGuantes(),
+            'curso_especializado' => $this->getCursoEspecializado() != null ? $this->getCursoEspecializado()->getNombre() : $this->getCursoEspecializado(),
+            'activo' => $this->isActivo(),
+        ];
     }
 }
