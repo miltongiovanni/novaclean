@@ -1,9 +1,11 @@
-import 'datatables.net';
-import 'datatables.net-bs5';
-import 'datatables.net-bs5/css/dataTables.bootstrap5.css';
-import 'jszip';
+import DataTable from 'datatables.net-bs5';
 import 'datatables.net-buttons-bs5';
-import 'datatables.net-buttons/js/buttons.html5.mjs';
+import jsZip  from 'jszip';
+import 'datatables.net-bs5/css/dataTables.bootstrap5.css';
+import 'datatables.net-buttons/js/buttons.html5.min.mjs';
+
+// This line was the one missing
+window.JSZip = jsZip;
 
 $(document).ready(function () {
     let usersDatatable = $("#usersDatatable").DataTable({
@@ -160,22 +162,24 @@ $(document).ready(function () {
     function format(d) {
         // `d` is the original data object for the row
         return (
-            '<table cellpadding="5" cellspacing="0" border="0" style="padding-left:50px;">' +
+            '<table style="padding-left:50px; width: 100%">' +
             '<tr>' +
-            '<td>Sexo:</td>' +
-            '<td>' +
-            d.sexo +
-            '</td>' +
+            '<th>Sexo</th>' +'<th>Tipo de nómina</th>' +'<th>AFP</th>' +'<th>EPS</th>' +'<th>AFC</th>' +'<th>Tipo de cuenta</th>' +'<th>Número de cuenta</th>' +
             '</tr>' +
             '<tr>' +
-            '<td>Afp:</td>' +
-            '<td>' +
-            d.afp +
-            '</td>' +
+            '<td class="py-3">' + d.sexo + '</td>' +'<td>' + d.tipo_nomina + '</td>' +'<td>' + d.afp + '</td>' +'<td>' + d.eps + '</td>' +'<td>' + d.afc + '</td>' +'<td>' + d.tipo_cuenta + '</td>' +'<td>' + d.numero_cuenta + '</td>' +
             '</tr>' +
             '<tr>' +
-            '<td>Eps:</td>' +
-            '<td>' + d.eps + '</td>' +
+            '<th colspan="2">Correo electrónico</th>' +'<th>Celular</th>' +'<th>Teléfono</th>' +'<th colspan="2">Dirección</th>' +'<th>Fecha nacimiento</th>' +
+            '</tr>' +
+            '<tr>' +
+            '<td class="py-3" colspan="2">' + d.correo_electronico + '</td>' +'<td>' + d.celular + '</td>' +'<td>' + (d.telefono ?? '') + '</td>' +'<td colspan="2">' + d.direccion + '</td>' + '<td>' + d.f_nacimiento + '</td>' +
+            '</tr>' +
+            '<tr>' +
+            '<th>Talla botas</th>' +'<th>Talla guantes</th>' +'<th>Talla uniforme</th>' +'<th>Talla calzado</th>' +'<th>Talla pantalón</th>' +'<th>Tipo de cuenta</th>' +'<th>Número de cuenta</th>' +
+            '</tr>' +
+            '<tr>' +
+            '<td class="py-3">' + d.talla_botas + '</td>' +'<td>' + d.talla_guantes + '</td>' +'<td>' + d.talla_uniforme + '</td>' +'<td>' + d.talla_calzado + '</td>' +'<td>' + (d.talla_pantalon ?? '') + '</td>' +'<td>' + d.tipo_cuenta + '</td>' +'<td>' + d.numero_cuenta + '</td>' +
             '</tr>' +
             '</table>'
         );
@@ -200,8 +204,24 @@ $(document).ready(function () {
             {data: 'identificacion'},
             {data: 'lugar_expedicion'},
             {data: 'f_ingreso'},
-            {data: 'salario_basico'},
-            {data: 'bono'},
+            {
+                data: 'salario_basico',
+                render: function (data, type) {
+                    var number = $.fn.dataTable.render
+                        .number(',', '.', 0, '$')
+                        .display(data);
+                    return number;
+                },
+            },
+            {
+                data: 'bono',
+                render: function (data, type) {
+                    var number = $.fn.dataTable.render
+                        .number(',', '.', 0, '$')
+                        .display(data);
+                    return number;
+                },
+            },
             {data: 'estado'},
             {data: 'actions'}
         ],
@@ -212,6 +232,10 @@ $(document).ready(function () {
                     "className": 'dt-body-center'
                 },
                 {
+                    "targets": [7, 8 ],
+                    "className": 'dt-body-right'
+                },
+                {
                     "targets": [0, 9, 10],
                     "orderable": false,
                 },
@@ -220,6 +244,7 @@ $(document).ready(function () {
             [15, 30, 50, -1],
             [15, 30, 50, 'Todo'],
         ],
+        "order": [[1, 'asc']],
         "language": {
             "lengthMenu": "Mostrando _MENU_ datos por página",
             "zeroRecords": "Lo siento no encontró nada",
@@ -235,6 +260,16 @@ $(document).ready(function () {
             "infoFiltered": "(Filtrado de _MAX_ en total)"
 
         },
+        dom: 'Bfrtip',
+        buttons: [
+            {
+                extend: 'excelHtml5',
+                text: 'Exportar a excel',
+                exportOptions: {
+                    columns: [ 1, 2, 3, 4, 5, 6, 7, 8 ]
+                }
+            }
+        ]
     });
     // Add event listener for opening and closing details
     $('#personalDatatable tbody').on('click', 'td.dt-control', function () {
