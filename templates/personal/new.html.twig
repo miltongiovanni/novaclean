@@ -1,11 +1,26 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}New Personal{% endblock %}
+{% block title %}Creación Personal{% endblock %}
+{% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('sweetalert2') }}
+{% endblock %}
 
-{% block body %}
-    <h1>Create new Personal</h1>
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('parsley') }}
+    {{ encore_entry_script_tags('sweetalert2') }}
+{% endblock %}
+
+{% block content %}
+    <h2 class="ps-3">Creación de un nuevo personal</h2>
 
     {{ include('personal/_form.html.twig') }}
 
-    <a href="{{ path('app_personal_index') }}">back to list</a>
+    <div class="row my-3">
+        <div class="col-2">
+            <a class="btn btn-primary w-100" href="{{ path('personal_index') }}">Volver a la lista</a>
+        </div>
+    </div>
+
 {% endblock %}

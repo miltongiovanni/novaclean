@@ -126,6 +126,12 @@ class Personal
     #[ORM\Column]
     private ?bool $activo = null;
 
+    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
+    private ?\DateTimeInterface $fecha_creacion = null;
+
+    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
+    private ?\DateTimeInterface $fecha_actualizacion = null;
+
     public function __construct()
     {
         $this->contratos = new ArrayCollection();
@@ -216,7 +222,7 @@ class Personal
 
     public function setBono(int $bono): self
     {
-        $this->bono = $bono;
+        $this->bono = $bono != 0 ? $bono : null;
 
         return $this;
     }
@@ -590,5 +596,29 @@ class Personal
             'curso_especializado' => $this->getCursoEspecializado() != null ? $this->getCursoEspecializado()->getNombre() : $this->getCursoEspecializado(),
             'activo' => $this->isActivo(),
         ];
+    }
+
+    public function getFechaCreacion(): ?\DateTimeInterface
+    {
+        return $this->fecha_creacion;
+    }
+
+    public function setFechaCreacion(?\DateTimeInterface $fecha_creacion): self
+    {
+        $this->fecha_creacion = $fecha_creacion;
+
+        return $this;
+    }
+
+    public function getFechaActualizacion(): ?\DateTimeInterface
+    {
+        return $this->fecha_actualizacion;
+    }
+
+    public function setFechaActualizacion(?\DateTimeInterface $fecha_actualizacion): self
+    {
+        $this->fecha_actualizacion = $fecha_actualizacion;
+
+        return $this;
     }
 }

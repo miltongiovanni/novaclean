@@ -11,7 +11,7 @@
     {{ encore_entry_script_tags('datatables') }}
 {% endblock %}
 {% block content %}
-    <h1>Lista de Personal</h1>
+    <h2>Lista de Personal</h2>
     <div class="row my-3">
         <div class="offset-10 col-2">
             <a class="btn btn-primary w-100" href=" {{ path('personal_new') }} ">Crear Personal</a>
@@ -28,6 +28,7 @@
                 <th>Identificación</th>
                 <th>Lugar expedición</th>
                 <th>F ingreso</th>
+                <th>Cargo</th>
                 <th>Salario básico</th>
                 <th>Bono</th>
                 <th>Estado</th>

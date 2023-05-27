@@ -204,6 +204,7 @@ $(document).ready(function () {
             {data: 'identificacion'},
             {data: 'lugar_expedicion'},
             {data: 'f_ingreso'},
+            {data: 'cargo'},
             {
                 data: 'salario_basico',
                 render: function (data, type) {
@@ -232,11 +233,11 @@ $(document).ready(function () {
                     "className": 'dt-body-center'
                 },
                 {
-                    "targets": [7, 8 ],
+                    "targets": [8, 9 ],
                     "className": 'dt-body-right'
                 },
                 {
-                    "targets": [0, 9, 10],
+                    "targets": [0, 10, 11],
                     "orderable": false,
                 },
             ],

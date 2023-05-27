@@ -48,21 +48,43 @@ class PersonalController extends AbstractController
     }
 
     #[Route('/new', name: 'personal_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, PersonalRepository $personalRepository): Response
+    public function new(Request                      $request, SexoRepository $sexoRepository, TipoNominaRepository $tipoNominaRepository, AfpRepository $afpRepository,
+                        EpsRepository                $epsRepository, AfcRepository $afcRepository, TipoCuentaRepository $tipoCuentaRepository, TallaUniformeRepository $tallaUniformeRepository,
+                        TallaBotasRepository         $tallaBotasRepository, CargoRepository $cargoRepository, TallaGuantesRepository $tallaGuantesRepository,
+                        CursoEspecializadoRepository $cursoEspecializadoRepository, TallaCamisaRepository $tallaCamisaRepository, TallaPantalonRepository $tallaPantalonRepository,
+                        TallaCalzadoRepository       $tallaCalzadoRepository): Response
     {
-        $personal = new Personal();
-        $form = $this->createForm(PersonalType::class, $personal);
-        $form->handleRequest($request);
+        $sexos = $sexoRepository->findAll();
+        $tiposNomina = $tipoNominaRepository->findAll();
+        $afps = $afpRepository->findAll();
+        $epss = $epsRepository->findAll();
+        $afcs = $afcRepository->findAll();
+        $tiposCuenta = $tipoCuentaRepository->findAll();
+        $tallasUniforme = $tallaUniformeRepository->findAll();
+        $tallasBotas = $tallaBotasRepository->findAll();
+        $cargos = $cargoRepository->findAll();
+        $tallasGuantes = $tallaGuantesRepository->findAll();
+        $cursosEspecializados = $cursoEspecializadoRepository->findAll();
+        $tallasCamisa = $tallaCamisaRepository->findAll();
+        $tallasPantalon = $tallaPantalonRepository->findAll();
+        $tallasCalzado = $tallaCalzadoRepository->findAll();
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $personalRepository->save($personal, true);
-
-            return $this->redirectToRoute('personal_index', [], Response::HTTP_SEE_OTHER);
-        }
-
-        return $this->renderForm('personal/new.html.twig', [
-            'personal' => $personal,
-            'form' => $form,
+        return $this->render('personal/new.html.twig', [
+            'action' => 'insert',
+            'sexos' => $sexos,
+            'afps' => $afps,
+            'epss' => $epss,
+            'afcs' => $afcs,
+            'tiposCuenta' => $tiposCuenta,
+            'tallasUniforme' => $tallasUniforme,
+            'tallasBotas' => $tallasBotas,
+            'cargos' => $cargos,
+            'tallasGuantes' => $tallasGuantes,
+            'cursosEspecializados' => $cursosEspecializados,
+            'tiposNomina' => $tiposNomina,
+            'tallasCamisa' => $tallasCamisa,
+            'tallasPantalon' => $tallasPantalon,
+            'tallasCalzado' => $tallasCalzado,
         ]);
     }
 
@@ -106,11 +128,11 @@ class PersonalController extends AbstractController
     }
 
     #[Route('/{id}/editar', name: 'personal_edit', methods: ['GET'])]
-    public function edit(Request $request, Personal $personal, SexoRepository $sexoRepository, TipoNominaRepository $tipoNominaRepository, AfpRepository $afpRepository,
-                         EpsRepository $epsRepository, AfcRepository $afcRepository, TipoCuentaRepository $tipoCuentaRepository, TallaUniformeRepository $tallaUniformeRepository,
-                         TallaBotasRepository $tallaBotasRepository, CargoRepository $cargoRepository, TallaGuantesRepository $tallaGuantesRepository,
+    public function edit(Request                      $request, Personal $personal, SexoRepository $sexoRepository, TipoNominaRepository $tipoNominaRepository, AfpRepository $afpRepository,
+                         EpsRepository                $epsRepository, AfcRepository $afcRepository, TipoCuentaRepository $tipoCuentaRepository, TallaUniformeRepository $tallaUniformeRepository,
+                         TallaBotasRepository         $tallaBotasRepository, CargoRepository $cargoRepository, TallaGuantesRepository $tallaGuantesRepository,
                          CursoEspecializadoRepository $cursoEspecializadoRepository, TallaCamisaRepository $tallaCamisaRepository, TallaPantalonRepository $tallaPantalonRepository,
-                         TallaCalzadoRepository $tallaCalzadoRepository,   ): Response
+                         TallaCalzadoRepository       $tallaCalzadoRepository): Response
     {
         $sexos = $sexoRepository->findAll();
         $tiposNomina = $tipoNominaRepository->findAll();
@@ -126,7 +148,6 @@ class PersonalController extends AbstractController
         $tallasCamisa = $tallaCamisaRepository->findAll();
         $tallasPantalon = $tallaPantalonRepository->findAll();
         $tallasCalzado = $tallaCalzadoRepository->findAll();
-
 
 
         return $this->render('personal/edit.html.twig', [
@@ -151,35 +172,93 @@ class PersonalController extends AbstractController
 
 
     #[Route('/{id}/actualizar', name: 'personal_update', methods: ['POST'])]
-    public function update(Request $request, int $id, PersonalRepository $personalRepository, EntityManagerInterface $entityManager): Response
+    public function update(Request               $request, int $id, PersonalRepository $personalRepository, EntityManagerInterface $entityManager, SexoRepository $sexoRepository,
+                           TipoNominaRepository  $tipoNominaRepository, AfpRepository $afpRepository, EpsRepository $epsRepository, AfcRepository $afcRepository,
+                           TipoCuentaRepository  $tipoCuentaRepository, TallaUniformeRepository $tallaUniformeRepository, TallaBotasRepository $tallaBotasRepository,
+                           CargoRepository       $cargoRepository, TallaGuantesRepository $tallaGuantesRepository, CursoEspecializadoRepository $cursoEspecializadoRepository,
+                           TallaCamisaRepository $tallaCamisaRepository, TallaPantalonRepository $tallaPantalonRepository, TallaCalzadoRepository $tallaCalzadoRepository): Response
     {
         if ($id == 0) {
-            $afc = new Personal();
+            $personal = new Personal();
         } else {
-            $afc = $personalRepository->find($id);
+            $personal = $personalRepository->find($id);
         }
-        dd($request->request);
         $action = $request->request->get('action');
-        $afc->setNombre(trim($request->request->get('nombre')));
-        $afc->setContacto(trim($request->request->get('contacto')));
-        $afc->setTelefono(trim($request->request->get('telefono')));
-        $afc->setExtension(intval($request->request->get('extension')));
-        $afc->setCelular(trim($request->request->get('celular')));
-        $afc->setUser($this->getUser());
-        if ($action == 'insert') {
-            $afc->setFechaCreacion(Carbon::today());
+        $personal->setNombre(trim($request->request->get('nombre')));
+        $personal->setActivo(trim($request->request->get('activo')));
+        $telefono = trim($request->request->get('telefono'));
+        $personal->setTelefono($telefono != '' ? $telefono : null);
+        $personal->setApellido(trim($request->request->get('apellido')));
+        $personal->setDireccion(trim($request->request->get('direccion')));
+        $personal->setIdentificacion(trim($request->request->get('identificacion')));
+        $personal->setLugarExpedicion(trim($request->request->get('lugar_expedicion')));
+        $personal->setFNacimiento(Carbon::createFromFormat('Y-m-d', trim($request->request->get('fNacimiento'))));
+        $celular = trim($request->request->get('celular'));
+        $personal->setCelular($celular != '' ? $celular : null);
+        $correo_electronico = trim($request->request->get('correo_electronico'));
+        $personal->setCorreoElectronico($correo_electronico != '' ? $correo_electronico : null);
+        $personal->setSexo($sexoRepository->find(trim($request->request->get('sexo'))));
+        $personal->setAfp($afpRepository->find(trim($request->request->get('afp'))));
+        $personal->setAfc($afcRepository->find(trim($request->request->get('afc'))));
+        $personal->setEps($epsRepository->find(trim($request->request->get('eps'))));
+        $personal->setUser($this->getUser());
+        $f_examen_ingreso = $request->request->get('f_examen_ingreso');
+        if ($f_examen_ingreso != '') {
+            $personal->setFExamenIngreso(Carbon::createFromFormat('Y-m-d', $f_examen_ingreso));
         }
-        $afc->setFechaActualizacion(Carbon::today());
-        $entityManager->persist($afc);
+        $personal->setFIngreso(Carbon::createFromFormat('Y-m-d', trim($request->request->get('f_ingreso'))));
+        $personal->setSalarioBasico(trim($request->request->get('salario_basico')));
+        $bono = trim($request->request->get('bono'));
+        $personal->setBono($bono != '' ? $bono : 0);
+        $personal->setTipoCuenta($tipoCuentaRepository->find(trim($request->request->get('tipo_cuenta'))));
+        $personal->setNumeroCuenta(trim($request->request->get('numero_cuenta')));
+        $personal->setCargo($cargoRepository->find(trim($request->request->get('cargo'))));
+        $personal->setTipoNomina($tipoNominaRepository->find(trim($request->request->get('tipo_nomina'))));
+        $talla_camisa = $request->request->get('talla_camisa');
+        if ($talla_camisa != null) {
+            $personal->setTallaCamisa($tallaCamisaRepository->find($talla_camisa));
+        }
+        $talla_uniforme = $request->request->get('talla_uniforme');
+        if ($talla_uniforme != null) {
+            $personal->setTallaUniforme($tallaUniformeRepository->find($talla_uniforme));
+        }
+        $talla_botas = $request->request->get('talla_botas');
+        if ($talla_botas != null) {
+            $personal->setTallaBotas($tallaBotasRepository->find($talla_botas));
+        }
+        $talla_guantes = $request->request->get('talla_guantes');
+        if ($talla_guantes != null) {
+            $personal->setTallaGuantes($tallaGuantesRepository->find($talla_guantes));
+        }
+        $talla_pantalon = $request->request->get('talla_pantalon');
+        if ($talla_pantalon != null) {
+            $personal->setTallaPantalon($tallaPantalonRepository->find($talla_pantalon));
+        }
+        $talla_calzado = $request->request->get('talla_calzado');
+        if ($talla_calzado != null) {
+            $personal->setTallaCalzado($tallaCalzadoRepository->find($talla_calzado));
+        }
+        $curso_especializado = $request->request->get('curso_especializado');
+        if ($curso_especializado != null) {
+            $personal->setCursoEspecializado($cursoEspecializadoRepository->find($curso_especializado));
+        }
+
+
+        if ($action == 'insert') {
+            $personal->setFechaCreacion(Carbon::now());
+        }
+        $personal->setFechaActualizacion(Carbon::now());
+
+        $entityManager->persist($personal);
 
         // actually executes the queries (i.e. the INSERT query)
         $entityManager->flush();
         if ($action == 'insert') {
-            $this->addFlash('success', 'AFC creada correctamente');
+            $this->addFlash('success', 'Personal creado correctamente');
         } else {
-            $this->addFlash('success', 'AFC actualizada correctamente');
+            $this->addFlash('success', 'Personal actualizado correctamente');
         }
-        return $this->redirectToRoute('afc_index', [], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('personal_index', [], Response::HTTP_SEE_OTHER);
     }
 
     #[Route('/{id}', name: 'personal_delete', methods: ['POST'])]
