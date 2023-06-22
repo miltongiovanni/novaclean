@@ -241,4 +241,24 @@ class Contrato
 
         return $this;
     }
+
+    public function toArray()
+    {
+        return [
+            'id' => $this->getId(),
+            'cliente_id' => $this->getCliente()->getId(),
+            'cliente' => $this->getCliente()->getNombre(),
+            'supervisor_id' => $this->getPersonal()->getId(),
+            'supervisor' => $this->getPersonal()->getNombre() . ' ' . $this->getPersonal()->getApellido(),
+            'contrato_id' => $this->getNContrato(),
+            'f_inicio' => $this->getFInicio()->format('d/m/Y'),
+            'f_fin' => $this->getFFin()->format('d/m/Y'),
+            'tiene_poliza_salario' => $this->isPolizaSalario(),
+            'tiene_poliza_cumplimiento' => $this->isPolizaCumplimiento(),
+            'no_poliza' => $this->getNPoliza() ?? '',
+            'aseguradora' => $this->getAseguradora() ?? '',
+            'vencimiento_poliza' => $this->getVencimientoPoliza() ? $this->getVencimientoPoliza()->format('d/m/Y') : null,
+            'observaciones' => $this->getObservaciones() ?? '',
+        ];
+    }
 }

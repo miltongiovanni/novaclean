@@ -1,4 +1,194 @@
-{{ form_start(form) }}
-    {{ form_widget(form) }}
-    <button class="btn">{{ button_label|default('Save') }}</button>
-{{ form_end(form) }}
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-content">
+                <div class="card-body">
+                    {{ dump(contrato) }}
+                    <form class="form form-vertical" method="post" data-parsley-validate
+                          action="{% if personal.id is defined %}{{ path('personal_update', {'id':  personal.id }) }}{% else %}{{ path('personal_update', {'id':  0 }) }}{% endif %}"
+                    >
+                        <input type="hidden" name="action" id="action" value="{{ action }}">
+                        <div class="form-body">
+                            <div class="row">
+                                <div class="col-12 mb-3">
+                                    <div class="form-check form-switch">
+                                        <input class="form-check-input" type="checkbox" name="activo"
+                                               value="1" {{ personal is defined and personal.activo == true ? 'checked' : '' }} role="switch" id="activo">
+                                        <label class="form-check-label" for="activo">Personal activo</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row my-3">
+                                <div class="col-12">
+                                    <h4>Información general</h4>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-2 mb-3">
+                                    <div class="form-group">
+                                        <label for="nombre">Nombre(s)</label>
+                                        <div class="position-relative has-validation">
+                                            <input type="text" class="form-control" id="nombre" name="nombre" required data-parsley-required="true"
+                                                   value="{{ personal.nombre ?? '' }}">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-2 mb-3">
+                                    <div class="form-group">
+                                        <label for="apellido">Apellido(s)</label>
+                                        <div class="position-relative has-validation">
+                                            <input type="text" class="form-control" id="apellido" name="apellido" required data-parsley-required="true"
+                                                   value="{{ personal.apellido ?? '' }}">
+                                        </div>
+                                    </div>
+                                </div>
+                                {#<div class="col-2 mb-3">
+                                    <div class="form-group">
+                                        <label for="sexo">Sexo</label>
+                                        <fieldset class="form-group">
+                                            <select class="form-select" id="sexo" name="sexo" required>
+                                                <option value="" disabled {% if action=='insert' %}selected{% endif %}>
+                                                    Escoja el sexo
+                                                </option>
+                                                {% for sexo in sexos %}
+                                                    <option value="{{ sexo.id }}" {{ personal is defined and personal.sexo.id == sexo.id ? 'selected' : '' }} >{{ sexo.sexo }} </option>
+                                                {% endfor %}
+                                            </select>
+                                        </fieldset>
+                                    </div>
+                                </div>#}
+                                <div class="col-2 mb-3">
+                                    <div class="form-group">
+                                        <label for="identificacion">Identificación</label>
+                                        <div class="position-relative has-validation">
+                                            <input type="text" class="form-control" id="identificacion" name="identificacion" required data-parsley-required="true"
+                                                   value="{{ personal.identificacion ?? '' }}">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-2 mb-3">
+                                    <div class="form-group">
+                                        <label for="lugar_expedicion">Lugar de expedición</label>
+                                        <div class="position-relative has-validation">
+                                            <input type="text" class="form-control" id="lugar_expedicion" name="lugar_expedicion" required data-parsley-required="true"
+                                                   value="{{ personal.lugarExpedicion ?? '' }}">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-2 mb-3">
+                                    <div class="form-group">
+                                        <label for="fNacimiento">Fecha nacimiento</label>
+                                        <div class="position-relative has-validation">
+                                            <input type="date" class="form-control" id="fNacimiento" name="fNacimiento" required data-parsley-required="true" min="1940-01-01" max="3000-12-31"
+                                                   value="{{ personal.fNacimiento is defined ? personal.fNacimiento|date("Y-m-d") : '' }}">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-3 mb-3">
+                                    <div class="form-group">
+                                        <label for="correo_electronico">Correo electrónico</label>
+                                        <div class="position-relative has-validation">
+                                            <input type="email" class="form-control" placeholder="nombre@ejemplo.com" id="correo_electronico" name="correo_electronico" required
+                                                   data-parsley-required="true" value="{{ personal.correoElectronico ?? '' }}">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-2 mb-3">
+                                    <div class="form-group">
+                                        <label for="telefono">Teléfono</label>
+                                        <div class="position-relative has-validation">
+                                            <input type="text" class="form-control" id="telefono" name="telefono" value="{{ personal.telefono ?? '' }}">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-2 mb-3">
+                                    <div class="form-group">
+                                        <label for="celular">Celular</label>
+                                        <div class="position-relative has-validation">
+                                            <input type="text" class="form-control" id="celular" name="celular" value="{{ personal.celular ?? '' }}">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-3 mb-3">
+                                    <div class="form-group">
+                                        <label for="direccion">Dirección</label>
+                                        <div class="position-relative has-validation">
+                                            <input type="text" class="form-control" id="direccion" name="direccion" required data-parsley-required="true"
+                                                   value="{{ personal.direccion ?? '' }}">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row my-3">
+                                <div class="col-12">
+                                    <h4>Información laboral</h4>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-2 mb-3">
+                                    <div class="form-group">
+                                        <label for="salario_basico">Salario Básico</label>
+                                        <div class="position-relative has-validation">
+                                            <input type="text" class="form-control" id="salario_basico" name="salario_basico" required data-parsley-required="true"
+                                                   value="{{ personal.salarioBasico ?? '' }}">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-2 mb-3">
+                                    <div class="form-group">
+                                        <label for="bono">Bono</label>
+                                        <div class="position-relative has-validation">
+                                            <input type="text" class="form-control" id="bono" name="bono"  value="{{ personal.bono ?? '' }}">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-2 mb-3">
+                                    <div class="form-group">
+                                        <label for="tipo_cuenta">Tipo de cuenta</label>
+                                        <fieldset class="form-group">
+                                            <select class="form-select" id="tipo_cuenta" name="tipo_cuenta" required>
+                                                {#<option value="" disabled {% if action=='insert' %}selected{% endif %}>
+                                                    Escoja tipo de cuenta
+                                                </option>
+                                                {% for tipoCuenta in tiposCuenta %}
+                                                    <option value="{{ tipoCuenta.id }}" {{ personal is defined and personal.tipoCuenta.id == tipoCuenta.id ? 'selected' : '' }} >{{ tipoCuenta.nombre }} </option>
+                                                {% endfor %}#}
+                                            </select>
+                                        </fieldset>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row my-3">
+                                <div class="col-12">
+                                    <h4>Otros</h4>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-2 mb-3">
+                                    <div class="form-group">
+                                        <label for="curso_especializado">Curso especializado</label>
+                                        <fieldset class="form-group">
+                                            <select class="form-select" id="curso_especializado" name="curso_especializado" >
+                                                {#<option value="" disabled {% if action=='insert' or personal.cursoEspecializado == null %}selected{% endif %}>
+                                                    Escoja curso
+                                                </option>
+                                                {% for cursoEspecializado in cursosEspecializados %}
+                                                    <option value="{{ cursoEspecializado.id }}" {{ personal is defined and personal.cursoEspecializado != null and personal.cursoEspecializado.id == cursoEspecializado.id ? 'selected' : '' }} >{{ cursoEspecializado.nombre }} </option>
+                                                {% endfor %}#}
+                                            </select>
+                                        </fieldset>
+                                    </div>
+                                </div>
+                                <div class="col-12 d-flex justify-content-end mt-3">
+                                    <button type="submit" class="btn btn-primary me-1 mb-1">Guardar</button>
+                                    <button type="reset" class="btn btn-light-secondary me-1 mb-1">Reiniciar</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

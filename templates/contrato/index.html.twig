@@ -1,51 +1,42 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Contrato index{% endblock %}
+{% block title %}Lista de contratos{% endblock %}
+{% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('datatables') }}
+{% endblock %}
 
-{% block body %}
-    <h1>Contrato index</h1>
-
-    <table class="table">
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('datatables') }}
+{% endblock %}
+{% block content %}
+    <h2>Lista de contratos</h2>
+    <div class="row my-3">
+        <div class="offset-10 col-2">
+            <a class="btn btn-primary w-100" href=" {{ path('contrato_new') }} ">Crear Contrato</a>
+        </div>
+    </div>
+    <table class="table" id="contratosDatatable">
         <thead>
             <tr>
+                <th></th>
                 <th>Id</th>
-                <th>N_contrato</th>
-                <th>F_inicio</th>
-                <th>F_fin</th>
-                <th>Poliza_salario</th>
-                <th>Poliza_cumplimiento</th>
-                <th>N_poliza</th>
-                <th>Aseguradora</th>
-                <th>Vencimiento_poliza</th>
+                <th>Número de contrato</th>
+                <th>Cliente</th>
+                <th>Fecha inicio</th>
+                <th>Fecha fin</th>
+{#                <th>Poliza salario</th>#}
+{#                <th>Poliza cumplimiento</th>#}
+{#                <th>N_poliza</th>#}
+{#                <th>Aseguradora</th>#}
+{#                <th>Vencimiento_poliza</th>#}
+                <th>Supervisor</th>
+                <th>Estado</th>
                 <th>Observaciones</th>
-                <th>actions</th>
+                <th></th>
             </tr>
         </thead>
-        <tbody>
-        {% for contrato in contratos %}
-            <tr>
-                <td>{{ contrato.id }}</td>
-                <td>{{ contrato.nContrato }}</td>
-                <td>{{ contrato.fInicio ? contrato.fInicio|date('Y-m-d') : '' }}</td>
-                <td>{{ contrato.fFin ? contrato.fFin|date('Y-m-d') : '' }}</td>
-                <td>{{ contrato.polizaSalario ? 'Yes' : 'No' }}</td>
-                <td>{{ contrato.polizaCumplimiento ? 'Yes' : 'No' }}</td>
-                <td>{{ contrato.nPoliza }}</td>
-                <td>{{ contrato.aseguradora }}</td>
-                <td>{{ contrato.vencimientoPoliza ? contrato.vencimientoPoliza|date('Y-m-d') : '' }}</td>
-                <td>{{ contrato.observaciones }}</td>
-                <td>
-                    <a href="{{ path('app_contrato_show', {'id': contrato.id}) }}">show</a>
-                    <a href="{{ path('app_contrato_edit', {'id': contrato.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="11">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
     </table>
 
-    <a href="{{ path('app_contrato_new') }}">Create new</a>
 {% endblock %}

@@ -2,7 +2,7 @@
 
 {% block title %}Contrato{% endblock %}
 
-{% block body %}
+{% block content %}
     <h1>Contrato</h1>
 
     <table class="table">
@@ -50,9 +50,9 @@
         </tbody>
     </table>
 
-    <a href="{{ path('app_contrato_index') }}">back to list</a>
+    <a href="{{ path('contrato_index') }}">back to list</a>
 
-    <a href="{{ path('app_contrato_edit', {'id': contrato.id}) }}">edit</a>
+    <a href="{{ path('contrato_edit', {'id': contrato.id}) }}">edit</a>
 
     {{ include('contrato/_delete_form.html.twig') }}
 {% endblock %}

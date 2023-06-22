@@ -1,0 +1,14 @@
+<div class="dropdown">
+    <a class="btn btn-primary dropdown-toggle w-100" href="#" role="button" id="dropdownMenuLink"
+       data-bs-toggle="dropdown" aria-expanded="false">
+        Acciones
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+        <li>
+            <a class="dropdown-item" href="{{ path('contrato_show', {'id': contrato.id}) }}">Ver</a>
+        </li>
+        <li>
+            <a class="dropdown-item" href="{{ path('contrato_edit', {'id': contrato.id}) }}">Editar</a>
+        </li>
+    </ul>
+</div>

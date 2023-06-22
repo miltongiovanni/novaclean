@@ -96,10 +96,23 @@
                     </ul>
                 </li>
             {% endif %}
+            {% if is_granted('VIEW', 'CONTRATO')  %}
+                <li class="sidebar-item  {{ is_active('contrato') }}  has-sub">
+                    <a href="#" class='sidebar-link'>
+                        <i class="bi bi-briefcase"></i>
+                        <span>Contrato</span>
+                    </a>
+                    <ul class="submenu {{ is_active('contrato_index') }}">
+                        <li class="submenu-item {{ is_active('contrato') }}">
+                            <a href="{{ path('contrato_index') }}">Lista</a>
+                        </li>
+                    </ul>
+                </li>
+            {% endif %}
             {% if is_granted('VIEW', 'COMPRAS')  %}
             <li class="sidebar-item  has-sub">
                 <a href="#" class='sidebar-link'>
-                    <i class="bi bi-bag"></i>
+                    <i class="bi bi-cart4"></i>
                     <span>Compras</span>
                 </a>
                 <ul class="submenu ">
@@ -130,7 +143,7 @@
             {% if is_granted('VIEW', 'TESORERÍA')  %}
             <li class="sidebar-item  has-sub">
                 <a href="#" class='sidebar-link'>
-                    <i class="bi bi-wallet2"></i>
+                    <i class="bi bi-cash-coin"></i>
                     <span>Tesorería</span>
                 </a>
                 <ul class="submenu ">
