@@ -207,9 +207,6 @@ class PersonalController extends AbstractController
             $personal->setFExamenIngreso(Carbon::createFromFormat('Y-m-d', $f_examen_ingreso));
         }
         $personal->setFIngreso(Carbon::createFromFormat('Y-m-d', trim($request->request->get('f_ingreso'))));
-        $personal->setSalarioBasico(trim($request->request->get('salario_basico')));
-        $bono = trim($request->request->get('bono'));
-        $personal->setBono($bono != '' ? $bono : 0);
         $personal->setTipoCuenta($tipoCuentaRepository->find(trim($request->request->get('tipo_cuenta'))));
         $personal->setNumeroCuenta(trim($request->request->get('numero_cuenta')));
         $personal->setCargo($cargoRepository->find(trim($request->request->get('cargo'))));

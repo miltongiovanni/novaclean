@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Contrato;
 use App\Form\ContratoType;
+use App\Repository\ClienteRepository;
 use App\Repository\ContratoRepository;
 use App\Repository\PersonalRepository;
 use Carbon\Carbon;
@@ -18,10 +19,12 @@ class ContratoController extends AbstractController
 {
     private ContratoRepository $contratoRepository;
     const SUPERVISOR_ID = 14;
+
     public function __construct(ContratoRepository $contratoRepository)
     {
         $this->contratoRepository = $contratoRepository;
     }
+
     #[Route('/', name: 'contrato_index', methods: ['GET'])]
     public function index(ContratoRepository $contratoRepository): Response
     {
@@ -29,6 +32,7 @@ class ContratoController extends AbstractController
             'contratos' => $contratoRepository->findAll(),
         ]);
     }
+
     #[Route('/lista', name: 'contrato_lista', methods: ['POST'])]
     public function lista(): JsonResponse
     {
@@ -63,22 +67,15 @@ class ContratoController extends AbstractController
     }
 
 
-    #[Route('/new', name: 'contrato_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, ContratoRepository $contratoRepository): Response
+    #[Route('/new', name: 'contrato_new', methods: ['GET'])]
+    public function new(Request $request, PersonalRepository $personalRepository, ClienteRepository $clienteRepository): Response
     {
-        $contrato = new Contrato();
-        $form = $this->createForm(ContratoType::class, $contrato);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $contratoRepository->save($contrato, true);
-
-            return $this->redirectToRoute('contrato_index', [], Response::HTTP_SEE_OTHER);
-        }
-
-        return $this->renderForm('contrato/new.html.twig', [
-            'contrato' => $contrato,
-            'form' => $form,
+        $supervisores = $personalRepository->findBy(['cargo' => self::SUPERVISOR_ID], ['nombre' => 'asc']);
+        $clientes = $clienteRepository->findBy(['estado' => true], ['nombre' => 'asc']);
+        return $this->render('contrato/new.html.twig', [
+            'supervisores' => $supervisores,
+            'clientes' => $clientes,
+            'action' => 'insert',
         ]);
     }
 
@@ -91,9 +88,49 @@ class ContratoController extends AbstractController
     }
 
     #[Route('/{id}/editar', name: 'contrato_edit', methods: ['GET'])]
-    public function edit(Request $request, Contrato $contrato, ContratoRepository $contratoRepository, PersonalRepository $personalRepository): Response
+    public function edit(Request $request, Contrato $contrato, ClienteRepository $clienteRepository, PersonalRepository $personalRepository): Response
     {
-        $supervisores = $personalRepository->findBy(['cargo'=>self::SUPERVISOR_ID], ['nombre'=>'asc']);
+        $supervisores = $personalRepository->findBy(['cargo' => self::SUPERVISOR_ID], ['nombre' => 'asc']);
+        $clientes = $clienteRepository->findBy(['estado' => true], ['nombre' => 'asc']);
+        return $this->render('contrato/edit.html.twig', [
+            'contrato' => $contrato->toArray(),
+            'supervisores' => $supervisores,
+            'clientes' => $clientes,
+            'action' => 'update',
+        ]);
+    }
+
+    #[Route('/{id}/actualizar', name: 'contrato_update', methods: ['POST'])]
+    public function update(int $id, Request $request,  ContratoRepository $contratoRepository, ClienteRepository $clienteRepository, PersonalRepository $personalRepository): Response
+    {
+        if ($id == 0) {
+            $contrato = new Contrato();
+        } else {
+            $contrato = $contratoRepository->find($id);
+        }
+        $action = $request->request->get('action');
+        $contrato->setNContrato($request->request->get('contrato_id'));
+        $cliente = $clienteRepository->find($request->request->get('cliente_id'));
+        $contrato->setCliente($cliente);
+        $supervisor = $personalRepository->find($request->request->get('cliente_id'));
+        $contrato->setPersonal($supervisor);
+        $contrato->setUser($this->getUser());
+        $f_inicio = $request->request->get('f_inicio');
+        if ($f_inicio != ''){
+            $contrato->setFInicio(Carbon::createFromFormat('Y-m-d', $f_inicio));
+        }
+        $f_fin = $request->request->get('f_fin');
+        if ($f_fin != ''){
+            $contrato->setFFin(Carbon::createFromFormat('Y-m-d', $f_fin));
+        }
+        $tiene_poliza_salario = $request->request->get('tiene_poliza_salario', 0);
+        $contrato->setPolizaSalario($tiene_poliza_salario);
+        $tiene_poliza_cumplimiento = $request->request->get('tiene_poliza_cumplimiento', 0);
+        $contrato->setPolizaCumplimiento($tiene_poliza_cumplimiento);
+
+
+        dd($contrato, $tiene_poliza_salario, $tiene_poliza_cumplimiento );
+        $supervisores = $personalRepository->findBy(['cargo' => self::SUPERVISOR_ID], ['nombre' => 'asc']);
 
         return $this->render('contrato/edit.html.twig', [
             'contrato' => $contrato,
@@ -105,7 +142,7 @@ class ContratoController extends AbstractController
     #[Route('/{id}', name: 'contrato_delete', methods: ['POST'])]
     public function delete(Request $request, Contrato $contrato, ContratoRepository $contratoRepository): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$contrato->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $contrato->getId(), $request->request->get('_token'))) {
             $contratoRepository->remove($contrato, true);
         }
 

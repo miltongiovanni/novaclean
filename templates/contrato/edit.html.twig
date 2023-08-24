@@ -1,13 +1,27 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Edit Contrato{% endblock %}
+{% block title %}Modificar Contrato{% endblock %}
+{% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('sweetalert2') }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('parsley') }}
+    {{ encore_entry_script_tags('sweetalert2') }}
+{% endblock %}
 
 {% block content %}
-    <h1>Edit Contrato</h1>
+    <h2 class="ps-3">Edit Contrato</h2>
 
     {{ include('contrato/_form.html.twig', {'button_label': 'Update'}) }}
 
-    <a href="{{ path('contrato_index') }}">back to list</a>
+    <div class="row my-3">
+        <div class="col-2">
+            <a class="btn btn-primary w-100" href="{{ path('contrato_index') }}">Volver a la lista</a>
+        </div>
+    </div>
 
     {{ include('contrato/_delete_form.html.twig') }}
 {% endblock %}

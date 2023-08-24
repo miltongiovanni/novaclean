@@ -31,12 +31,6 @@ class Personal
     #[ORM\Column(length: 255)]
     private ?string $numero_cuenta = null;
 
-    #[ORM\Column]
-    private ?int $salario_basico = null;
-
-    #[ORM\Column(nullable: true)]
-    private ?int $bono = null;
-
     #[ORM\Column(length: 255)]
     private ?string $direccion = null;
 
@@ -202,31 +196,6 @@ class Personal
 
         return $this;
     }
-
-    public function getSalarioBasico(): ?int
-    {
-        return $this->salario_basico;
-    }
-
-    public function setSalarioBasico(int $salario_basico): self
-    {
-        $this->salario_basico = $salario_basico;
-
-        return $this;
-    }
-
-    public function getBono(): ?int
-    {
-        return $this->bono;
-    }
-
-    public function setBono(int $bono): self
-    {
-        $this->bono = $bono != 0 ? $bono : null;
-
-        return $this;
-    }
-
     public function getDireccion(): ?string
     {
         return $this->direccion;
@@ -572,8 +541,6 @@ class Personal
             'nombre' => $this->getNombre(),
             'apellido' => $this->getApellido(),
             'numero_cuenta' => $this->getNumeroCuenta(),
-            'salario_basico' => $this->getSalarioBasico(),
-            'bono' => $this->getBono(),
             'direccion' => $this->getDireccion(),
             'telefono' => $this->getTelefono(),
             'celular' => $this->getCelular(),

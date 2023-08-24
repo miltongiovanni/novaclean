@@ -21,6 +21,12 @@ class ContratoPersonal
     #[ORM\JoinColumn(nullable: false)]
     private ?Contrato $contrato = null;
 
+    #[ORM\Column]
+    private ?int $salario_basico = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?int $bono = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -49,4 +55,29 @@ class ContratoPersonal
 
         return $this;
     }
+
+    public function getSalarioBasico(): ?int
+    {
+        return $this->salario_basico;
+    }
+
+    public function setSalarioBasico(int $salario_basico): self
+    {
+        $this->salario_basico = $salario_basico;
+
+        return $this;
+    }
+
+    public function getBono(): ?int
+    {
+        return $this->bono;
+    }
+
+    public function setBono(int $bono): self
+    {
+        $this->bono = $bono != 0 ? $bono : null;
+
+        return $this;
+    }
+
 }

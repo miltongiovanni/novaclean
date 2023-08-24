@@ -205,39 +205,39 @@ $(document).ready(function () {
             {data: 'lugar_expedicion'},
             {data: 'f_ingreso'},
             {data: 'cargo'},
-            {
-                data: 'salario_basico',
-                render: function (data, type) {
-                    var number = $.fn.dataTable.render
-                        .number(',', '.', 0, '$')
-                        .display(data);
-                    return number;
-                },
-            },
-            {
-                data: 'bono',
-                render: function (data, type) {
-                    var number = $.fn.dataTable.render
-                        .number(',', '.', 0, '$')
-                        .display(data);
-                    return number;
-                },
-            },
+            // {
+            //     data: 'salario_basico',
+            //     render: function (data, type) {
+            //         var number = $.fn.dataTable.render
+            //             .number(',', '.', 0, '$')
+            //             .display(data);
+            //         return number;
+            //     },
+            // },
+            // {
+            //     data: 'bono',
+            //     render: function (data, type) {
+            //         var number = $.fn.dataTable.render
+            //             .number(',', '.', 0, '$')
+            //             .display(data);
+            //         return number;
+            //     },
+            // },
             {data: 'estado'},
             {data: 'actions'}
         ],
         "columnDefs":
             [
                 {
-                    "targets": [0, 1, 9, 10],
+                    "targets": [0, 1, 8, 9],
                     "className": 'dt-body-center'
                 },
-                {
-                    "targets": [8, 9],
+               /* {
+                    "targets": [6, 7],
                     "className": 'dt-body-right'
-                },
+                },*/
                 {
-                    "targets": [0, 10, 11],
+                    "targets": [0, 8, 9],
                     "orderable": false,
                 },
             ],
@@ -267,7 +267,7 @@ $(document).ready(function () {
                 extend: 'excelHtml5',
                 text: 'Exportar a excel',
                 exportOptions: {
-                    columns: [1, 2, 3, 4, 5, 6, 7, 8]
+                    columns: [1, 2, 3, 4, 5, 6]
                 }
             }
         ]
