@@ -18,7 +18,7 @@ class PermissionVoter implements VoterInterface
         $this->permissionRepository = $permissionRepository;
     }
 
-    public function vote(TokenInterface $token, $subject, array $attributes)
+    public function vote(TokenInterface $token, $subject, array $attributes): int
     {
         $attribute = $attributes[0];
         $user = $token->getUser();

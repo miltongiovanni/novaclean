@@ -22,7 +22,7 @@ class TwigFilterExtension extends AbstractExtension
         $this->request = $requestStack->getCurrentRequest();
     }
 
-    public function getFunctions()
+    public function getFunctions(): array
     {
         return array(
             new TwigFunction('is_active', array($this, 'isActiveFunction')),

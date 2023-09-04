@@ -56,10 +56,6 @@ class Personal
     #[ORM\JoinColumn(nullable: false)]
     private ?Sexo $sexo = null;
 
-    #[ORM\ManyToOne(inversedBy: 'personals')]
-    #[ORM\JoinColumn(nullable: false)]
-    private ?TipoNomina $tipo_nomina = null;
-
     #[ORM\ManyToOne]
     #[ORM\JoinColumn(nullable: false)]
     private ?Afp $afp = null;
@@ -288,18 +284,6 @@ class Personal
     public function setSexo(?Sexo $sexo): self
     {
         $this->sexo = $sexo;
-
-        return $this;
-    }
-
-    public function getTipoNomina(): ?TipoNomina
-    {
-        return $this->tipo_nomina;
-    }
-
-    public function setTipoNomina(?TipoNomina $tipo_nomina): self
-    {
-        $this->tipo_nomina = $tipo_nomina;
 
         return $this;
     }

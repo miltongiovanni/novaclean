@@ -17,7 +17,7 @@ class ContratoPersonal
     #[ORM\JoinColumn(nullable: false)]
     private ?Personal $personal = null;
 
-    #[ORM\ManyToOne(inversedBy: 'contratoPersonals')]
+    #[ORM\ManyToOne(inversedBy: 'contratos')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Contrato $contrato = null;
 
@@ -27,6 +27,10 @@ class ContratoPersonal
     #[ORM\Column(nullable: true)]
     private ?int $bono = null;
 
+
+    #[ORM\ManyToOne(inversedBy: 'contratoPersonals')]
+    #[ORM\JoinColumn(nullable: true)]
+    private ?TipoNomina $tipo_nomina = null;
     public function getId(): ?int
     {
         return $this->id;
@@ -76,6 +80,18 @@ class ContratoPersonal
     public function setBono(int $bono): self
     {
         $this->bono = $bono != 0 ? $bono : null;
+
+        return $this;
+    }
+
+    public function getTipoNomina(): ?TipoNomina
+    {
+        return $this->tipo_nomina;
+    }
+
+    public function setTipoNomina(?TipoNomina $tipo_nomina): self
+    {
+        $this->tipo_nomina = $tipo_nomina;
 
         return $this;
     }

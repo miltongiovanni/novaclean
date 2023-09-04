@@ -18,12 +18,12 @@ class TipoNomina
     #[ORM\Column(length: 255)]
     private ?string $nombre = null;
 
-    #[ORM\OneToMany(mappedBy: 'tipo_nomina', targetEntity: Personal::class)]
-    private Collection $personals;
+    #[ORM\OneToMany(mappedBy: 'tipo_nomina', targetEntity: ContratoPersonal::class)]
+    private Collection $contratoPersonals;
 
     public function __construct()
     {
-        $this->personals = new ArrayCollection();
+        $this->contratoPersonals = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -46,27 +46,27 @@ class TipoNomina
     /**
      * @return Collection<int, Personal>
      */
-    public function getPersonals(): Collection
+    public function getContratoPersonals(): Collection
     {
-        return $this->personals;
+        return $this->contratoPersonals;
     }
 
-    public function addPersonal(Personal $personal): self
+    public function addContratoPersonal(ContratoPersonal $contratoPersonal): self
     {
-        if (!$this->personals->contains($personal)) {
-            $this->personals->add($personal);
-            $personal->setTipoNomina($this);
+        if (!$this->contratoPersonals->contains($contratoPersonal)) {
+            $this->contratoPersonals->add($contratoPersonal);
+            $contratoPersonal->setTipoNomina($this);
         }
 
         return $this;
     }
 
-    public function removePersonal(Personal $personal): self
+    public function removeContratoPersonal(ContratoPersonal $contratoPersonal): self
     {
-        if ($this->personals->removeElement($personal)) {
+        if ($this->contratoPersonals->removeElement($contratoPersonal)) {
             // set the owning side to null (unless already changed)
-            if ($personal->getTipoNomina() === $this) {
-                $personal->setTipoNomina(null);
+            if ($contratoPersonal->getTipoNomina() === $this) {
+                $contratoPersonal->setTipoNomina(null);
             }
         }
 
