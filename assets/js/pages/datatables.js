@@ -164,10 +164,10 @@ $(document).ready(function () {
         return (
             '<table style="padding-left:50px; width: 100%">' +
             '<tr>' +
-            '<th>Sexo</th>' + '<th>Tipo de nómina</th>' + '<th>AFP</th>' + '<th>EPS</th>' + '<th>AFC</th>' + '<th>Tipo de cuenta</th>' + '<th>Número de cuenta</th>' +
+            '<th>Sexo</th>' + '<th>AFP</th>' + '<th>EPS</th>' + '<th>AFC</th>' + '<th>Tipo de cuenta</th>' + '<th>Número de cuenta</th>' +
             '</tr>' +
             '<tr>' +
-            '<td class="py-3">' + d.sexo + '</td>' + '<td>' + d.tipo_nomina + '</td>' + '<td>' + d.afp + '</td>' + '<td>' + d.eps + '</td>' + '<td>' + d.afc + '</td>' + '<td>' + d.tipo_cuenta + '</td>' + '<td>' + d.numero_cuenta + '</td>' +
+            '<td class="py-3">' + d.sexo + '</td>' + '<td>' + d.afp + '</td>' + '<td>' + d.eps + '</td>' + '<td>' + d.afc + '</td>' + '<td>' + d.tipo_cuenta + '</td>' + '<td>' + d.numero_cuenta + '</td>' +
             '</tr>' +
             '<tr>' +
             '<th colspan="2">Correo electrónico</th>' + '<th>Celular</th>' + '<th>Teléfono</th>' + '<th colspan="2">Dirección</th>' + '<th>Fecha nacimiento</th>' +

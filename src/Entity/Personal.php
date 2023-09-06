@@ -533,7 +533,6 @@ class Personal
             'f_ingreso' => $this->getFIngreso() != null ? $this->getFIngreso()->format('d/m/Y') : $this->getFIngreso(),
             'f_examen_ingreso' => $this->getFExamenIngreso() != null ? $this->getFExamenIngreso()->format('d/m/Y') : $this->getFExamenIngreso(),
             'sexo' => $this->getSexo()->getSexo(),
-            'tipo_nomina' => $this->getTipoNomina()->getNombre(),
             'afp' => $this->getAfp()->getNombre(),
             'eps' => $this->getEps()->getNombre(),
             'afc' => $this->getAfc()->getNombre(),

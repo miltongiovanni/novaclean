@@ -55,7 +55,6 @@ class PersonalController extends AbstractController
                         TallaCalzadoRepository       $tallaCalzadoRepository): Response
     {
         $sexos = $sexoRepository->findAll();
-        $tiposNomina = $tipoNominaRepository->findAll();
         $afps = $afpRepository->findAll();
         $epss = $epsRepository->findAll();
         $afcs = $afcRepository->findAll();
@@ -81,7 +80,6 @@ class PersonalController extends AbstractController
             'cargos' => $cargos,
             'tallasGuantes' => $tallasGuantes,
             'cursosEspecializados' => $cursosEspecializados,
-            'tiposNomina' => $tiposNomina,
             'tallasCamisa' => $tallasCamisa,
             'tallasPantalon' => $tallasPantalon,
             'tallasCalzado' => $tallasCalzado,
@@ -128,14 +126,13 @@ class PersonalController extends AbstractController
     }
 
     #[Route('/{id}/editar', name: 'personal_edit', methods: ['GET'])]
-    public function edit(Request                      $request, Personal $personal, SexoRepository $sexoRepository, TipoNominaRepository $tipoNominaRepository, AfpRepository $afpRepository,
+    public function edit(Request                      $request, Personal $personal, SexoRepository $sexoRepository, AfpRepository $afpRepository,
                          EpsRepository                $epsRepository, AfcRepository $afcRepository, TipoCuentaRepository $tipoCuentaRepository, TallaUniformeRepository $tallaUniformeRepository,
                          TallaBotasRepository         $tallaBotasRepository, CargoRepository $cargoRepository, TallaGuantesRepository $tallaGuantesRepository,
                          CursoEspecializadoRepository $cursoEspecializadoRepository, TallaCamisaRepository $tallaCamisaRepository, TallaPantalonRepository $tallaPantalonRepository,
                          TallaCalzadoRepository       $tallaCalzadoRepository): Response
     {
         $sexos = $sexoRepository->findAll();
-        $tiposNomina = $tipoNominaRepository->findAll();
         $afps = $afpRepository->findAll();
         $epss = $epsRepository->findAll();
         $afcs = $afcRepository->findAll();
@@ -163,7 +160,6 @@ class PersonalController extends AbstractController
             'cargos' => $cargos,
             'tallasGuantes' => $tallasGuantes,
             'cursosEspecializados' => $cursosEspecializados,
-            'tiposNomina' => $tiposNomina,
             'tallasCamisa' => $tallasCamisa,
             'tallasPantalon' => $tallasPantalon,
             'tallasCalzado' => $tallasCalzado,
@@ -173,7 +169,7 @@ class PersonalController extends AbstractController
 
     #[Route('/{id}/actualizar', name: 'personal_update', methods: ['POST'])]
     public function update(Request               $request, int $id, PersonalRepository $personalRepository, EntityManagerInterface $entityManager, SexoRepository $sexoRepository,
-                           TipoNominaRepository  $tipoNominaRepository, AfpRepository $afpRepository, EpsRepository $epsRepository, AfcRepository $afcRepository,
+                           AfpRepository $afpRepository, EpsRepository $epsRepository, AfcRepository $afcRepository,
                            TipoCuentaRepository  $tipoCuentaRepository, TallaUniformeRepository $tallaUniformeRepository, TallaBotasRepository $tallaBotasRepository,
                            CargoRepository       $cargoRepository, TallaGuantesRepository $tallaGuantesRepository, CursoEspecializadoRepository $cursoEspecializadoRepository,
                            TallaCamisaRepository $tallaCamisaRepository, TallaPantalonRepository $tallaPantalonRepository, TallaCalzadoRepository $tallaCalzadoRepository): Response
@@ -210,7 +206,6 @@ class PersonalController extends AbstractController
         $personal->setTipoCuenta($tipoCuentaRepository->find(trim($request->request->get('tipo_cuenta'))));
         $personal->setNumeroCuenta(trim($request->request->get('numero_cuenta')));
         $personal->setCargo($cargoRepository->find(trim($request->request->get('cargo'))));
-        $personal->setTipoNomina($tipoNominaRepository->find(trim($request->request->get('tipo_nomina'))));
         $talla_camisa = $request->request->get('talla_camisa');
         if ($talla_camisa != null) {
             $personal->setTallaCamisa($tallaCamisaRepository->find($talla_camisa));
