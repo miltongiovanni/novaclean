@@ -101,11 +101,7 @@ class PersonalController extends AbstractController
         $personalsToArray = [];
         foreach ($personals as $key => $personal) {
             $personalsToArray[$key] = $personal->toArray();
-            if ($personalsToArray[$key]['activo'] == true) {
-                $personalsToArray[$key]['estado'] = '<i class="bi bi-check-circle-fill activo"></i>';
-            } else {
-                $personalsToArray[$key]['estado'] = '<i class="bi bi-x-circle-fill inactivo"></i>';
-            }
+            $personalsToArray[$key]['estado'] = $personalsToArray[$key]['activo'] == true ? '<i class="bi bi-check-circle-fill activo"></i>' : '<i class="bi bi-x-circle-fill inactivo"></i>';
             $personalsToArray[$key]['actions'] = $this->renderView('personal/_personal.buttons.html.twig', ['empleado' => $personalsToArray[$key]]);
         }
 
@@ -261,5 +257,33 @@ class PersonalController extends AbstractController
         }
 
         return $this->redirectToRoute('personal_index', [], Response::HTTP_SEE_OTHER);
+    }
+
+
+    #[Route('/{idContrato}/lista', name: 'personal_contrato_lista', methods: ['POST'])]
+    public function lista_contrato(): JsonResponse
+    {
+        $personals = $this->personalRepository->findAll();
+        $personalsToArray = [];
+        foreach ($personals as $key => $personal) {
+            $personalsToArray[$key] = $personal->toArray();
+            $personalsToArray[$key]['estado'] = $personalsToArray[$key]['activo'] == true ? '<i class="bi bi-check-circle-fill activo"></i>' : '<i class="bi bi-x-circle-fill inactivo"></i>';
+            $personalsToArray[$key]['actions'] = $this->renderView('personal/_personal.buttons.html.twig', ['empleado' => $personalsToArray[$key]]);
+        }
+
+        //To array
+//        $personalsToArray = array_map(function ($personal) {
+//            /** @var Personal $personal */
+//            $arr = $personal->toArray();
+//            return $arr;
+//        }, $personals);
+        $return = [
+            'draw' => 0,
+            'recordsTotal' => count($personalsToArray),
+            'recordsFiltered' => count($personalsToArray),
+            'data' => $personalsToArray
+        ];
+
+        return $this->json($return);
     }
 }

@@ -7,6 +7,8 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Types\UuidType;
+use Symfony\Component\Uid\Uuid;
 
 #[ORM\Entity(repositoryClass: ContratoRepository::class)]
 class Contrato
@@ -58,9 +60,13 @@ class Contrato
     #[ORM\OneToMany(mappedBy: 'contrato', targetEntity: ContratoPersonal::class)]
     private Collection $contratoPersonals;
 
+    #[ORM\Column(type: UuidType::NAME, nullable: true)]
+    private ?Uuid $slug;
+
     public function __construct()
     {
         $this->contratoPersonals = new ArrayCollection();
+        $this->slug = Uuid::v7();
     }
 
     public function getId(): ?int
@@ -260,5 +266,17 @@ class Contrato
             'vencimiento_poliza' => $this->getVencimientoPoliza() ? $this->getVencimientoPoliza()->format('d/m/Y') : null,
             'observaciones' => $this->getObservaciones() ?? '',
         ];
+    }
+
+    public function getSlug(): ?Uuid
+    {
+        return $this->slug;
+    }
+
+    public function setSlug(?Uuid $slug): static
+    {
+        $this->slug = $slug;
+
+        return $this;
     }
 }

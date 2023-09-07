@@ -61,15 +61,15 @@
                         <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
                             {% if user.activo == 1 %}
                                 <li>
-                                    <a class="dropdown-item" href=" {{ path('user_deactivate', {'id': user.id}) }} ">Desactivar</a>
+                                    <a class="dropdown-item" href=" {{ path('user_deactivate', {'slug': user.slug.toRfc4122()}) }} ">Desactivar</a>
                                 </li>
                             {% else %}
                                 <li>
-                                    <a class="dropdown-item" href=" {{ path('user_activate', {'id': user.id}) }} ">Activar</a>
+                                    <a class="dropdown-item" href=" {{ path('user_activate', {'slug': user.slug.toRfc4122()}) }} ">Activar</a>
                                 </li>
                             {% endif %}
                             <li>
-                                <a class="dropdown-item" href=" {{ path('user_edit', {'id': user.id}) }} ">Editar</a>
+                                <a class="dropdown-item" href=" {{ path('user_edit', {'slug': user.slug.toRfc4122()}) }} ">Editar</a>
                             </li>
                         </ul>
 

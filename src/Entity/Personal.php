@@ -7,6 +7,8 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Types\UuidType;
+use Symfony\Component\Uid\Uuid;
 
 #[ORM\Entity(repositoryClass: PersonalRepository::class)]
 class Personal
@@ -122,10 +124,14 @@ class Personal
     #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
     private ?\DateTimeInterface $fecha_actualizacion = null;
 
+    #[ORM\Column(type: UuidType::NAME, nullable: true)]
+    private ?Uuid $slug;
+
     public function __construct()
     {
         $this->contratos = new ArrayCollection();
         $this->contratoPersonals = new ArrayCollection();
+        $this->slug = Uuid::v7();
     }
 
     public function getId(): ?int
@@ -568,6 +574,18 @@ class Personal
     public function setFechaActualizacion(?\DateTimeInterface $fecha_actualizacion): self
     {
         $this->fecha_actualizacion = $fecha_actualizacion;
+
+        return $this;
+    }
+
+    public function getSlug(): ?Uuid
+    {
+        return $this->slug;
+    }
+
+    public function setSlug(?Uuid $slug): static
+    {
+        $this->slug = $slug;
 
         return $this;
     }

@@ -7,6 +7,8 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Types\UuidType;
+use Symfony\Component\Uid\Uuid;
 
 #[ORM\Entity(repositoryClass: ClienteRepository::class)]
 class Cliente
@@ -59,9 +61,13 @@ class Cliente
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $telefono2 = null;
 
+    #[ORM\Column(type: UuidType::NAME, nullable: true)]
+    private ?Uuid $slug;
+
     public function __construct()
     {
         $this->contratos = new ArrayCollection();
+        $this->slug = Uuid::v7();
     }
 
     public function getId(): ?int
@@ -251,6 +257,18 @@ class Cliente
     public function setTelefono2(?string $telefono2): self
     {
         $this->telefono2 = $telefono2;
+
+        return $this;
+    }
+
+    public function getSlug(): ?Uuid
+    {
+        return $this->slug;
+    }
+
+    public function setSlug(?Uuid $slug): static
+    {
+        $this->slug = $slug;
 
         return $this;
     }

@@ -79,7 +79,7 @@
                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton"
                         style="min-width: 11rem;">
                         <li>
-                            <a class="dropdown-item" href="{{ path('user_edit', {'id': app.user.id}) }}"><i class="icon-mid bi bi-person me-2"></i> Mi perfil</a>
+                            <a class="dropdown-item" href="{{ path('user_edit', {'slug': app.user.slug.toRfc4122()}) }}"><i class="icon-mid bi bi-person me-2"></i> Mi perfil</a>
                         </li>
                         <li>
                             <hr class="dropdown-divider">

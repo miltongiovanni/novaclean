@@ -14,6 +14,7 @@ use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Address;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Uid\Uuid;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use SymfonyCasts\Bundle\VerifyEmail\Exception\VerifyEmailExceptionInterface;
 use SymfonyCasts\Bundle\VerifyEmail\VerifyEmailHelperInterface;
@@ -51,11 +52,12 @@ class UsuariosController extends AbstractController
         ]);
     }
 
-    #[Route('/usuario/{id}/editar', name: 'user_edit', methods: ['GET'])]
-    public function edit(Request $request, int $id, UserRepository $userRepository, PerfilesRepository $perfilesRepository): Response
+    #[Route('/usuario/{slug}/editar', name: 'user_edit', methods: ['GET'])]
+    public function edit(Request $request, string $slug, UserRepository $userRepository, PerfilesRepository $perfilesRepository): Response
     {
         $perfiles = $perfilesRepository->findAll();
-        $user = $userRepository->find($id);
+        $user = $userRepository->findOneBy(['slug' => Uuid::fromString($slug) ]);
+        //dd($user->getSlug()->toRfc4122());
 
         return $this->render('usuarios/edit.html.twig', [
             'user' => $user,
@@ -64,10 +66,10 @@ class UsuariosController extends AbstractController
         ]);
     }
 
-    #[Route('/usuario/{id}/activar', name: 'user_activate', methods: ['GET'])]
-    public function activate(Request $request, int $id, EntityManagerInterface $entityManager, UserRepository $userRepository): Response
+    #[Route('/usuario/{slug}/activar', name: 'user_activate', methods: ['GET'])]
+    public function activate(Request $request, string $slug, EntityManagerInterface $entityManager, UserRepository $userRepository): Response
     {
-        $user = $userRepository->find($id);
+        $user = $userRepository->findOneBy(['slug' => Uuid::fromString($slug) ]);
         $user->setActivo(true);
         $entityManager->persist($user);
 
@@ -79,10 +81,10 @@ class UsuariosController extends AbstractController
         return $this->redirectToRoute('usuarios', [], Response::HTTP_SEE_OTHER);
 
     }
-    #[Route('/usuario/{id}/desactivar', name: 'user_deactivate', methods: ['GET'])]
-    public function deactivate(Request $request, int $id, EntityManagerInterface $entityManager, UserRepository $userRepository): Response
+    #[Route('/usuario/{slug}/desactivar', name: 'user_deactivate', methods: ['GET'])]
+    public function deactivate(Request $request, string $slug, EntityManagerInterface $entityManager, UserRepository $userRepository): Response
     {
-        $user = $userRepository->find($id);
+        $user = $userRepository->findOneBy(['slug' => Uuid::fromString($slug) ]);
         $user->setActivo(false);
         $entityManager->persist($user);
 
@@ -102,6 +104,9 @@ class UsuariosController extends AbstractController
             $user = new User();
         } else {
             $user = $userRepository->find($id);
+            if ($user->getSlug() == null){
+                $user->setSlug(Uuid::v7());
+            }
         }
         $action = $request->request->get('action');
         $user->setEmail(trim($request->request->get('email')));
