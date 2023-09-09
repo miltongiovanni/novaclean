@@ -52,7 +52,7 @@
 
     <a href="{{ path('contrato_index') }}">back to list</a>
 
-    <a href="{{ path('contrato_edit', {'id': contrato.id}) }}">edit</a>
+    <a href="{{ path('contrato_edit', {'slug': contrato.slug.toRfc4122()}) }}">edit</a>
 
     {{ include('contrato/_delete_form.html.twig') }}
 {% endblock %}

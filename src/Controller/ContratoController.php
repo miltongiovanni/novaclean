@@ -8,11 +8,13 @@ use App\Repository\ClienteRepository;
 use App\Repository\ContratoRepository;
 use App\Repository\PersonalRepository;
 use Carbon\Carbon;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Uid\Uuid;
 
 #[Route('/contrato')]
 class ContratoController extends AbstractController
@@ -26,7 +28,7 @@ class ContratoController extends AbstractController
     }
 
     #[Route('/', name: 'contrato_index', methods: ['GET'])]
-    public function index(ContratoRepository $contratoRepository): Response
+    public function index(ContratoRepository $contratoRepository, EntityManagerInterface $entityManager): Response
     {
         return $this->render('contrato/index.html.twig', [
             'contratos' => $contratoRepository->findAll(),
@@ -79,17 +81,19 @@ class ContratoController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'contrato_show', methods: ['GET'])]
-    public function show(Contrato $contrato): Response
+    #[Route('/{slug}', name: 'contrato_show', methods: ['GET'])]
+    public function show(string $slug, ContratoRepository $contratoRepository): Response
     {
+        $contrato = $contratoRepository->findOneBy(['slug' => Uuid::fromString($slug) ]);
         return $this->render('contrato/show.html.twig', [
             'contrato' => $contrato,
         ]);
     }
 
-    #[Route('/{id}/editar', name: 'contrato_edit', methods: ['GET'])]
-    public function edit(Request $request, Contrato $contrato, ClienteRepository $clienteRepository, PersonalRepository $personalRepository): Response
+    #[Route('/{slug}/editar', name: 'contrato_edit', methods: ['GET'])]
+    public function edit(Request $request, string $slug, ContratoRepository $contratoRepository, ClienteRepository $clienteRepository, PersonalRepository $personalRepository): Response
     {
+        $contrato = $contratoRepository->findOneBy(['slug' => Uuid::fromString($slug) ]);
         $supervisores = $personalRepository->findBy(['cargo' => self::SUPERVISOR_ID], ['nombre' => 'asc']);
         $clientes = $clienteRepository->findBy(['estado' => true], ['nombre' => 'asc']);
         return $this->render('contrato/edit.html.twig', [

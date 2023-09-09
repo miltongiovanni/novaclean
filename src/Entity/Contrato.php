@@ -265,6 +265,7 @@ class Contrato
             'aseguradora' => $this->getAseguradora() ?? '',
             'vencimiento_poliza' => $this->getVencimientoPoliza() ? $this->getVencimientoPoliza()->format('d/m/Y') : null,
             'observaciones' => $this->getObservaciones() ?? '',
+            'slug' => $this->getSlug(),
         ];
     }
 

@@ -5,10 +5,10 @@
     </a>
     <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
         <li>
-            <a class="dropdown-item" href="{{ path('personal_show', {'id': empleado.id}) }}">Ver</a>
+            <a class="dropdown-item" href="{{ path('personal_show', {'slug': empleado.slug.toRfc4122()}) }}">Ver</a>
         </li>
         <li>
-            <a class="dropdown-item" href="{{ path('personal_edit', {'id': empleado.id}) }}">Editar</a>
+            <a class="dropdown-item" href="{{ path('personal_edit', {'slug': empleado.slug.toRfc4122()}) }}">Editar</a>
         </li>
     </ul>
 </div>

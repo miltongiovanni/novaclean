@@ -64,7 +64,7 @@
 
     <a href="{{ path('personal_index') }}">back to list</a>
 
-    <a href="{{ path('personal_edit', {'id': personal.id}) }}">edit</a>
+    <a href="{{ path('personal_edit', {'slug': personal.slug.toRfc4122()}) }}">edit</a>
 
     {{ include('personal/_delete_form.html.twig') }}
 {% endblock %}

@@ -96,6 +96,41 @@
                     </ul>
                 </li>
             {% endif %}
+            {% if is_granted('VIEW', 'CLIENTES')  %}
+
+                <li class="sidebar-item  has-sub">
+                    <a href="#" class='sidebar-link'>
+                        <i class="bi  bi-c-square"></i>
+                        <span>Clientes</span>
+                    </a>
+                    <ul class="submenu ">
+                        <li class="submenu-item ">
+                            <a href="{{ path('app_cliente_index') }}">lista</a>
+                        </li>
+                        <li class="submenu-item ">
+                            <a href="form-editor-ckeditor.html">Cotizaciones</a>
+                        </li>
+                        <li class="submenu-item ">
+                            <a href="form-editor-summernote.html">Pedidos</a>
+                        </li>
+                        <li class="submenu-item ">
+                            <a href="form-editor-tinymce.html">Salidas por remisión</a>
+                        </li>
+                        <li class="submenu-item ">
+                            <a href="form-editor-tinymce.html">Factura</a>
+                        </li>
+                        <li class="submenu-item ">
+                            <a href="form-editor-tinymce.html">Rutero</a>
+                        </li>
+                        <li class="submenu-item ">
+                            <a href="form-editor-tinymce.html">Notas crédito</a>
+                        </li>
+                        <li class="submenu-item ">
+                            <a href="form-editor-tinymce.html">Consulta</a>
+                        </li>
+                    </ul>
+                </li>
+            {% endif %}
             {% if is_granted('VIEW', 'CONTRATO')  %}
                 <li class="sidebar-item  {{ is_active('contrato') }}  has-sub">
                     <a href="#" class='sidebar-link'>
@@ -207,7 +242,7 @@
                 </a>
                 <ul class="submenu ">
                     <li class="submenu-item ">
-                        <a href="{{ path('app_cliente_index') }}">Clientes</a>
+                        <a href="{{ path('app_cliente_index') }}">lista</a>
                     </li>
                     <li class="submenu-item ">
                         <a href="form-editor-ckeditor.html">Cotizaciones</a>

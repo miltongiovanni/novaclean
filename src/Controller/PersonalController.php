@@ -26,6 +26,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Uid\Uuid;
 
 #[Route('/personal')]
 class PersonalController extends AbstractController
@@ -86,9 +87,10 @@ class PersonalController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'personal_show', methods: ['GET'])]
-    public function show(Personal $personal): Response
+    #[Route('/{slug}', name: 'personal_show', methods: ['GET'])]
+    public function show(string $slug): Response
     {
+        $personal = $this->personalRepository->findOneBy(['slug' => Uuid::fromString($slug) ]);
         return $this->render('personal/show.html.twig', [
             'personal' => $personal,
         ]);
@@ -121,13 +123,14 @@ class PersonalController extends AbstractController
         return $this->json($return);
     }
 
-    #[Route('/{id}/editar', name: 'personal_edit', methods: ['GET'])]
-    public function edit(Request                      $request, Personal $personal, SexoRepository $sexoRepository, AfpRepository $afpRepository,
+    #[Route('/{slug}/editar', name: 'personal_edit', methods: ['GET'])]
+    public function edit(Request                      $request, string $slug, SexoRepository $sexoRepository, AfpRepository $afpRepository,
                          EpsRepository                $epsRepository, AfcRepository $afcRepository, TipoCuentaRepository $tipoCuentaRepository, TallaUniformeRepository $tallaUniformeRepository,
                          TallaBotasRepository         $tallaBotasRepository, CargoRepository $cargoRepository, TallaGuantesRepository $tallaGuantesRepository,
                          CursoEspecializadoRepository $cursoEspecializadoRepository, TallaCamisaRepository $tallaCamisaRepository, TallaPantalonRepository $tallaPantalonRepository,
                          TallaCalzadoRepository       $tallaCalzadoRepository): Response
     {
+        $personal = $this->personalRepository->findOneBy(['slug' => Uuid::fromString($slug) ]);
         $sexos = $sexoRepository->findAll();
         $afps = $afpRepository->findAll();
         $epss = $epsRepository->findAll();
@@ -249,7 +252,7 @@ class PersonalController extends AbstractController
         return $this->redirectToRoute('personal_index', [], Response::HTTP_SEE_OTHER);
     }
 
-    #[Route('/{id}', name: 'personal_delete', methods: ['POST'])]
+    #[Route('/{id}/borrar', name: 'personal_delete', methods: ['POST'])]
     public function delete(Request $request, Personal $personal, PersonalRepository $personalRepository): Response
     {
         if ($this->isCsrfTokenValid('delete' . $personal->getId(), $request->request->get('_token'))) {
