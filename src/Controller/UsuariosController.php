@@ -162,10 +162,10 @@ class UsuariosController extends AbstractController
 
     }
 
-    #[Route('/usuario/{id}/borrar', name: 'user_delete', methods: ['POST'])]
-    public function delete(Request $request, int $id, UserRepository $userRepository, EntityManagerInterface $entityManager): Response
+    #[Route('/usuario/{slug}/borrar', name: 'user_delete', methods: ['POST'])]
+    public function delete(Request $request, string $slug, UserRepository $userRepository, EntityManagerInterface $entityManager): Response
     {
-        $user = $userRepository->find($id);
+        $user = $userRepository->findOneBy(['slug' => Uuid::fromString($slug) ]);
         $entityManager->remove($user);
         $entityManager->flush();
 

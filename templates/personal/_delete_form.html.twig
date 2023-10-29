@@ -1,4 +1,4 @@
-<form method="post" action="{{ path('personal_delete', {'id': personal.id}) }}" id="deletePersonalForm">
+<form method="post" action="{{ path('personal_delete', {'slug': personal.slug}) }}" id="deletePersonalForm">
     <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ personal.id) }}">
     <button class="btn btn-danger mt-3 " type="button" id="delete-personal" >Borrar personal</button>
 </form>

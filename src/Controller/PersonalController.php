@@ -68,7 +68,7 @@ class PersonalController extends AbstractController
         $tallasCamisa = $tallaCamisaRepository->findAll();
         $tallasPantalon = $tallaPantalonRepository->findAll();
         $tallasCalzado = $tallaCalzadoRepository->findAll();
-
+        $slug = Uuid::v7();
         return $this->render('personal/new.html.twig', [
             'action' => 'insert',
             'sexos' => $sexos,
@@ -84,6 +84,7 @@ class PersonalController extends AbstractController
             'tallasCamisa' => $tallasCamisa,
             'tallasPantalon' => $tallasPantalon,
             'tallasCalzado' => $tallasCalzado,
+            'slug' => $slug,
         ]);
     }
 
@@ -166,18 +167,17 @@ class PersonalController extends AbstractController
     }
 
 
-    #[Route('/{id}/actualizar', name: 'personal_update', methods: ['POST'])]
-    public function update(Request               $request, int $id, PersonalRepository $personalRepository, EntityManagerInterface $entityManager, SexoRepository $sexoRepository,
+    #[Route('/{slug}/actualizar', name: 'personal_update', methods: ['POST'])]
+    public function update(Request               $request, string $slug, PersonalRepository $personalRepository, EntityManagerInterface $entityManager, SexoRepository $sexoRepository,
                            AfpRepository $afpRepository, EpsRepository $epsRepository, AfcRepository $afcRepository,
                            TipoCuentaRepository  $tipoCuentaRepository, TallaUniformeRepository $tallaUniformeRepository, TallaBotasRepository $tallaBotasRepository,
                            CargoRepository       $cargoRepository, TallaGuantesRepository $tallaGuantesRepository, CursoEspecializadoRepository $cursoEspecializadoRepository,
                            TallaCamisaRepository $tallaCamisaRepository, TallaPantalonRepository $tallaPantalonRepository, TallaCalzadoRepository $tallaCalzadoRepository): Response
     {
-        if ($id == 0) {
+        $personal = $personalRepository->findOneBy(['slug' => Uuid::fromString($slug) ]);
+        if (!$personal){
             $personal = new Personal();
-            $personal->setSlug(Uuid::v7());
-        } else {
-            $personal = $personalRepository->find($id);
+            $personal->setSlug(Uuid::fromString($slug));
         }
         $action = $request->request->get('action');
         $personal->setNombre(trim($request->request->get('nombre')));
@@ -253,9 +253,10 @@ class PersonalController extends AbstractController
         return $this->redirectToRoute('personal_index', [], Response::HTTP_SEE_OTHER);
     }
 
-    #[Route('/{id}/borrar', name: 'personal_delete', methods: ['POST'])]
-    public function delete(Request $request, Personal $personal, PersonalRepository $personalRepository): Response
+    #[Route('/{slug}/borrar', name: 'personal_delete', methods: ['POST'])]
+    public function delete(Request $request, string $slug, PersonalRepository $personalRepository): Response
     {
+        $personal = $this->personalRepository->findOneBy(['slug' => Uuid::fromString($slug) ]);
         if ($this->isCsrfTokenValid('delete' . $personal->getId(), $request->request->get('_token'))) {
             $personalRepository->remove($personal, true);
         }
