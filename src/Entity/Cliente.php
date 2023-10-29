@@ -272,4 +272,25 @@ class Cliente
 
         return $this;
     }
+
+    public function toArray()
+    {
+        return [
+            'id' => $this->getId(),
+            'nit' => $this->getNit(),
+            'nombre' => $this->getNombre(),
+            'direccion' => $this->getDireccion(),
+            'telefono' => $this->getTelefono(),
+            'contacto' => $this->getContacto(),
+            'celular' => $this->getCelular(),
+            'correo_electronico' => $this->getCorreoElectronico(),
+            'observaciones' => $this->getObservaciones(),
+            'f_creacion' => $this->getFCreacion()->format('d/m/Y'),
+            'f_actualizacion' => $this->getFActualizacion()->format('d/m/Y'),
+            'modificado_por' => $this->getUser()->getNombre().' '.$this->getUser()->getApellido(),
+            'estado' => $this->isEstado(),
+            'telefono2' => $this->getTelefono2(),
+            'slug' => $this->getSlug()
+        ];
+    }
 }

@@ -175,6 +175,7 @@ class PersonalController extends AbstractController
     {
         if ($id == 0) {
             $personal = new Personal();
+            $personal->setSlug(Uuid::v7());
         } else {
             $personal = $personalRepository->find($id);
         }

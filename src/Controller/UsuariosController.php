@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\User;
 use App\Repository\PerfilesRepository;
 use App\Repository\UserRepository;
+use Carbon\Carbon;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -44,11 +45,11 @@ class UsuariosController extends AbstractController
     public function new(Request $request, PerfilesRepository $perfilesRepository): Response
     {
         $perfiles = $perfilesRepository->findAll();
-
+        $slug = Uuid::v7();
         return $this->render('usuarios/new.html.twig', [
             'action' => 'insert',
             'perfiles' => $perfiles,
-
+            'slug' => $slug,
         ]);
     }
 
@@ -97,18 +98,16 @@ class UsuariosController extends AbstractController
 
     }
 
-    #[Route('/usuario/{id}/actualizar', name: 'user_update', methods: ['POST'])]
-    public function update(Request $request, int $id, UserPasswordHasherInterface $passwordHasher, EntityManagerInterface $entityManager, UserRepository $userRepository, PerfilesRepository $perfilesRepository): Response
+    #[Route('/usuario/{slug}/actualizar', name: 'user_update', methods: ['POST'])]
+    public function update(Request $request, string $slug, UserPasswordHasherInterface $passwordHasher, EntityManagerInterface $entityManager, UserRepository $userRepository, PerfilesRepository $perfilesRepository): Response
     {
-        if ($id == 0) {
-            $user = new User();
-        } else {
-            $user = $userRepository->find($id);
-            if ($user->getSlug() == null){
-                $user->setSlug(Uuid::v7());
-            }
-        }
         $action = $request->request->get('action');
+        $user = $userRepository->findOneBy(['slug' => Uuid::fromString($slug) ]);
+        if (!$user){
+            $user = new User();
+            $user->setSlug(Uuid::fromString($slug));
+        }
+
         $user->setEmail(trim($request->request->get('email')));
         $user->setNombre(trim($request->request->get('nombre')));
         $user->setApellido(trim($request->request->get('apellido')));
@@ -131,6 +130,7 @@ class UsuariosController extends AbstractController
         }
         $user->setIsVerified(false);
         $user->setActivo($activo);
+        $user->setFCreacion(Carbon::now());
         $entityManager->persist($user);
 
         // actually executes the queries (i.e. the INSERT query)

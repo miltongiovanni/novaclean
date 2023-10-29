@@ -3,9 +3,7 @@
         <div class="card">
             <div class="card-content">
                 <div class="card-body">
-                    <form class="form form-vertical" method="post" data-parsley-validate
-                          action="{% if user.id is defined %}{{ path('user_update', {'id':  user.id }) }}{% else %}{{ path('user_update', {'id':  0 }) }}{% endif %}"
-                    >
+                    <form class="form form-vertical" method="post" data-parsley-validate action="{{ user.slug is defined ? path('user_update', {'slug':  user.slug }) : path('user_update', {'slug':  slug }) }}">
                         <input type="hidden" name="action" id="action" value="{{ action }}">
                         <div class="form-body">
                             <div class="row">
@@ -60,7 +58,7 @@
                                                     Seleccione el perfil
                                                 </option>
                                                 {% for perfil in perfiles %}
-                                                    <option value="{{ perfil.id }}-{{ perfil.code }}" {{ user is defined and user.perfil.id == perfil.id ? 'selected' : ''}} >{{ perfil.descripcion }} </option>
+                                                    <option value="{{ perfil.id }}-{{ perfil.code }}" {{ user.perfil.id is defined and user.perfil.id == perfil.id ? 'selected' : ''}} >{{ perfil.descripcion }} </option>
                                                 {% endfor %}
                                             </select>
                                         </fieldset>

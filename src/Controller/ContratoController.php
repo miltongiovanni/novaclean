@@ -109,6 +109,7 @@ class ContratoController extends AbstractController
     {
         if ($id == 0) {
             $contrato = new Contrato();
+            $contrato->setSlug(Uuid::v7());
         } else {
             $contrato = $contratoRepository->find($id);
         }
