@@ -48,7 +48,7 @@ class PersonalController extends AbstractController
         ]);
     }
 
-    #[Route('/new', name: 'personal_new', methods: ['GET', 'POST'])]
+    #[Route('/nuevo', name: 'personal_new', methods: ['GET', 'POST'])]
     public function new(Request                      $request, SexoRepository $sexoRepository, TipoNominaRepository $tipoNominaRepository, AfpRepository $afpRepository,
                         EpsRepository                $epsRepository, AfcRepository $afcRepository, TipoCuentaRepository $tipoCuentaRepository, TallaUniformeRepository $tallaUniformeRepository,
                         TallaBotasRepository         $tallaBotasRepository, CargoRepository $cargoRepository, TallaGuantesRepository $tallaGuantesRepository,
@@ -253,6 +253,36 @@ class PersonalController extends AbstractController
         return $this->redirectToRoute('personal_index', [], Response::HTTP_SEE_OTHER);
     }
 
+    #[Route('/{slug}/activar', name: 'personal_activate', methods: ['GET'])]
+    public function activate(Request $request, string $slug, EntityManagerInterface $entityManager, PersonalRepository $personalRepository): Response
+    {
+        $personal = $personalRepository->findOneBy(['slug' => Uuid::fromString($slug) ]);
+        $personal->setActivo(true);
+        $entityManager->persist($personal);
+
+        // actually executes the queries (i.e. the INSERT query)
+        $entityManager->flush();
+
+        $this->addFlash('success', 'Personal activado correctamente');
+        //$this->addFlash('error', ' Error al actualizar el Usuario');
+        return $this->redirectToRoute('personal_index', [], Response::HTTP_SEE_OTHER);
+
+    }
+    #[Route('/{slug}/desactivar', name: 'personal_deactivate', methods: ['GET'])]
+    public function deactivate(Request $request, string $slug, EntityManagerInterface $entityManager, PersonalRepository $personalRepository): Response
+    {
+        $personal = $personalRepository->findOneBy(['slug' => Uuid::fromString($slug) ]);
+        $personal->setActivo(false);
+        $entityManager->persist($personal);
+
+        // actually executes the queries (i.e. the INSERT query)
+        $entityManager->flush();
+
+        $this->addFlash('success', 'Personal desactivado correctamente');
+        //$this->addFlash('error', ' Error al actualizar el Usuario');
+        return $this->redirectToRoute('personal_index', [], Response::HTTP_SEE_OTHER);
+
+    }
     #[Route('/{slug}/borrar', name: 'personal_delete', methods: ['POST'])]
     public function delete(Request $request, string $slug, PersonalRepository $personalRepository): Response
     {

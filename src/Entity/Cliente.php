@@ -290,7 +290,7 @@ class Cliente
             'modificado_por' => $this->getUser()->getNombre().' '.$this->getUser()->getApellido(),
             'estado' => $this->isEstado(),
             'telefono2' => $this->getTelefono2(),
-            'slug' => $this->getSlug()
+            'slug' => $this->getSlug()->toRfc4122()
         ];
     }
 }

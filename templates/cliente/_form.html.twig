@@ -1,4 +1,112 @@
-{{ form_start(form) }}
-    {{ form_widget(form) }}
-    <button class="btn">{{ button_label|default('Save') }}</button>
-{{ form_end(form) }}
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-content">
+                <div class="card-body">
+                    <form class="form form-vertical" method="post" data-parsley-validate
+                          action="{{ cliente.slug is defined ? path('cliente_update', {'slug':  cliente.slug }) : path('cliente_update', {'slug':  slug }) }}">
+                        <input type="hidden" name="action" id="action" value="{{ action }}">
+                        <div class="form-body">
+                            <div class="row">
+                                <div class="col-12 mb-3">
+                                    <div class="form-check form-switch">
+                                        <input class="form-check-input" type="checkbox" name="estado" value="1" {{ cliente is defined and cliente.estado == true ? 'checked' : '' }} role="switch"
+                                               id="estado">
+                                        <label class="form-check-label" for="estado">Cliente activo</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col-3">
+                                    <div class="form-group">
+                                        <label for="nit">Nit cliente</label>
+                                        <div class="position-relative has-validation">
+                                            <input type="text" class="form-control" id="nit" name="nit" required data-parsley-required="true"
+                                                   value="{{ cliente.nit ?? '' }}" {{ action == 'update' ? 'readonly' : '' }}>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-9">
+                                    <div class="form-group">
+                                        <label for="nombre">Nombre del cliente</label>
+                                        <div class="position-relative has-validation">
+                                            <input type="text" class="form-control" id="nombre" name="nombre" required data-parsley-required="true" value="{{ cliente.nombre ?? '' }}">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col-2">
+                                    <div class="form-group">
+                                        <label for="telefono">Teléfono cliente</label>
+                                        <div class="position-relative has-validation">
+                                            <input type="text" class="form-control" id="telefono" name="telefono" required data-parsley-required="true" value="{{ cliente.telefono ?? '' }}">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-2">
+                                    <div class="form-group">
+                                        <label for="telefono2">Teléfono cliente 2</label>
+                                        <div class="position-relative has-validation">
+                                            <input type="text" class="form-control" id="telefono2" name="telefono2" value="{{ cliente.telefono2 ?? '' }}">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-8">
+                                    <div class="form-group">
+                                        <label for="direccion">Dirección del cliente</label>
+                                        <div class="position-relative has-validation">
+                                            <input type="text" class="form-control" id="direccion" name="direccion" required data-parsley-required="true" value="{{ cliente.direccion ?? '' }}">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col-5">
+                                    <div class="form-group">
+                                        <label for="contacto">Contacto cliente</label>
+                                        <div class="position-relative has-validation">
+                                            <input type="text" class="form-control" id="contacto" name="contacto" required data-parsley-required="true" value="{{ cliente.contacto ?? '' }}">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-5">
+                                    <div class="form-group">
+                                        <label for="correo_electronico">Correo electrónico</label>
+                                        <div class="position-relative has-validation">
+                                            <input type="text" class="form-control" id="correo_electronico" name="correo_electronico" required data-parsley-required="true" value="{{ cliente.correo_electronico ?? '' }}">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-2">
+                                    <div class="form-group">
+                                        <label for="celular">Celular</label>
+                                        <div class="position-relative has-validation">
+                                            <input type="text" class="form-control" id="celular" name="celular" value="{{ cliente.celular ?? '' }}">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <label for="observaciones">Observaciones</label>
+                                        <div class="position-relative has-validation">
+                                            <textarea class="form-control" name="observaciones" id="observaciones" rows="3">{{ cliente.observaciones ?? '' }}</textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                             <div class="row">
+                                <div class="col-12 d-flex justify-content-end mt-3">
+                                    <button type="submit" class="btn btn-primary me-1 mb-1">Guardar</button>
+                                    <button type="reset" class="btn btn-light-secondary me-1 mb-1">Reiniciar</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

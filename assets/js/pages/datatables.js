@@ -12,11 +12,11 @@ $(document).ready(function () {
         "columnDefs":
             [
                 {
-                    "targets": [0, 6, 7],
+                    "targets": [ 5, 6],
                     "className": 'dt-body-center'
                 },
                 {
-                    "targets": [6, 7],
+                    "targets": [5, 6],
                     "orderable": false
                 }
             ],
@@ -198,7 +198,6 @@ $(document).ready(function () {
                 data: null,
                 defaultContent: '',
             },
-            {data: 'id'},
             {data: 'nombre'},
             {data: 'apellido'},
             {data: 'identificacion'},
@@ -229,7 +228,7 @@ $(document).ready(function () {
         "columnDefs":
             [
                 {
-                    "targets": [0, 1, 8, 9],
+                    "targets": [ 0, 7, 8],
                     "className": 'dt-body-center'
                 },
                /* {
@@ -237,7 +236,7 @@ $(document).ready(function () {
                     "className": 'dt-body-right'
                 },*/
                 {
-                    "targets": [0, 8, 9],
+                    "targets": [0, 7, 8],
                     "orderable": false,
                 },
             ],
@@ -284,6 +283,107 @@ $(document).ready(function () {
         } else {
             // Open this row
             row.child(formatPersonal(row.data())).show();
+            tr.addClass('shown');
+        }
+    });
+
+
+
+    /* Formatting function for row details - modify as you need */
+    function formatCliente(d) {
+
+        console.log(d);
+        // `d` is the original data object for the row
+        return (
+            '<table style="padding-left:50px; width: 100%">' +
+            '<tr>' +
+            '<th>Contacto</th>' + '<th>Teléfono</th>' + '<th>Teléfono 2</th>' + '<th>Celular</th>' + '<th>Correo electrónico</th>' +
+            '</tr>' +
+            '<tr>' +
+            '<td class="py-3">' + d.contacto + '</td>' + '<td>' + d.telefono + '</td>' + '<td>' + d.telefono2 + '</td>' + '<td>' + d.celular + '</td>' + '<td>' + d.correo_electronico + '</td>' + '<td>' +
+            '</tr>' +
+            '</table>'
+        );
+    }
+
+    let clientesDatatable = $("#clientesDatatable").DataTable({
+        ajax: {
+            url: '/cliente/lista',
+            type: "POST",
+            dataType: "json"
+        },
+        columns: [
+            {
+                className: 'dt-control',
+                orderable: false,
+                data: null,
+                defaultContent: '',
+            },
+            {data: 'nit'},
+            {data: 'nombre'},
+            {data: 'direccion'},
+            {data: 'observaciones'},
+            {data: 'estado_show'},
+            {data: 'actions'}
+        ],
+        "columnDefs":
+            [
+                {
+                    "targets": [ 0, 5, 6],
+                    "className": 'dt-body-center'
+                },
+               /* {
+                    "targets": [6, 7],
+                    "className": 'dt-body-right'
+                },*/
+                {
+                    "targets": [0, 5, 6],
+                    "orderable": false,
+                },
+            ],
+        lengthMenu: [
+            [15, 30, 50, -1],
+            [15, 30, 50, 'Todo'],
+        ],
+        "order": [[2, 'asc']],
+        "language": {
+            "lengthMenu": "Mostrando _MENU_ datos por página",
+            "zeroRecords": "Lo siento no encontró nada",
+            "info": "Mostrando página _PAGE_ de _PAGES_",
+            "infoEmpty": "No hay datos disponibles",
+            "search": "Búsqueda:",
+            "paginate": {
+                "first": "Primero",
+                "last": "Último",
+                "next": "Siguiente",
+                "previous": "Anterior"
+            },
+            "infoFiltered": "(Filtrado de _MAX_ en total)"
+
+        },
+        dom: 'Bfrtip',
+        buttons: [
+            {
+                extend: 'excelHtml5',
+                text: 'Exportar a excel',
+                exportOptions: {
+                    columns: [1, 2, 3, 4]
+                }
+            }
+        ]
+    });
+    // Add event listener for opening and closing details
+    $('#clientesDatatable tbody').on('click', 'td.dt-control', function () {
+        var tr = $(this).closest('tr');
+        var row = clientesDatatable.row(tr);
+
+        if (row.child.isShown()) {
+            // This row is already open - close it
+            row.child.hide();
+            tr.removeClass('shown');
+        } else {
+            // Open this row
+            row.child(formatCliente(row.data())).show();
             tr.addClass('shown');
         }
     });

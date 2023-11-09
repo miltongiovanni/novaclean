@@ -1,53 +1,62 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}Cliente index{% endblock %}
+{% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('datatables') }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('datatables') }}
+{% endblock %}
 
 {% block content %}
-    <h1>Cliente index</h1>
+    <h2>Lista de clientes</h2>
+    <div class="row my-3">
+        <div class="offset-10 col-2">
+            <a class="btn btn-primary w-100" href=" {{ path('cliente_new') }} ">Crear cliente</a>
+        </div>
+    </div>
 
-    <table class="table">
+    <table class="table w-100" id="clientesDatatable">
         <thead>
             <tr>
-                <th>Id</th>
-                <th>Nit</th>
-                <th>Nombre</th>
-                <th>Direccion</th>
-                <th>Telefono</th>
-                <th>Contacto</th>
-                <th>Celular</th>
-                <th>Correo_electronico</th>
-                <th>Observaciones</th>
-                <th>F_creacion</th>
-                <th>F_actualizacion</th>
-                <th>actions</th>
+                <th style="width: 3%"></th>
+                <th style="width: 10%">Nit</th>
+                <th style="width: 40%">Nombre</th>
+                <th style="width: 24%">Dirección</th>
+                <th style="width: 10%">Observaciones</th>
+                <th style="width: 3%">Estado</th>
+                <th style="width: 10%"></th>
             </tr>
         </thead>
-        <tbody>
-        {% for cliente in clientes %}
-            <tr>
-                <td>{{ cliente.id }}</td>
-                <td>{{ cliente.nit }}</td>
-                <td>{{ cliente.nombre }}</td>
-                <td>{{ cliente.direccion }}</td>
-                <td>{{ cliente.telefono }}</td>
-                <td>{{ cliente.contacto }}</td>
-                <td>{{ cliente.celular }}</td>
-                <td>{{ cliente.correoElectronico }}</td>
-                <td>{{ cliente.observaciones }}</td>
-                <td>{{ cliente.fCreacion ? cliente.fCreacion|date('Y-m-d') : '' }}</td>
-                <td>{{ cliente.fActualizacion ? cliente.fActualizacion|date('Y-m-d') : '' }}</td>
-                <td>
-                    <a href="{{ path('app_cliente_show', {'id': cliente.id}) }}">show</a>
-                    <a href="{{ path('app_cliente_edit', {'id': cliente.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="13">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
+{#        <tbody>#}
+{#        {% for cliente in clientes %}#}
+{#            <tr>#}
+{#                <td>{{ cliente.id }}</td>#}
+{#                <td>{{ cliente.nit }}</td>#}
+{#                <td>{{ cliente.nombre }}</td>#}
+{#                <td>{{ cliente.direccion }}</td>#}
+{#                <td>{{ cliente.telefono }}</td>#}
+{#                <td>{{ cliente.contacto }}</td>#}
+{#                <td>{{ cliente.celular }}</td>#}
+{#                <td>{{ cliente.correoElectronico }}</td>#}
+{#                <td>{{ cliente.observaciones }}</td>#}
+{#                <td>{{ cliente.fCreacion ? cliente.fCreacion|date('Y-m-d') : '' }}</td>#}
+{#                <td>{{ cliente.fActualizacion ? cliente.fActualizacion|date('Y-m-d') : '' }}</td>#}
+{#                <td>#}
+{#                    <a href="{{ path('cliente_show', {'slug': cliente.slug}) }}">show</a>#}
+{#                    <a href="{{ path('cliente_edit', {'slug': cliente.slug}) }}">edit</a>#}
+{#                </td>#}
+{#            </tr>#}
+{#        {% else %}#}
+{#            <tr>#}
+{#                <td colspan="13">no records found</td>#}
+{#            </tr>#}
+{#        {% endfor %}#}
+{#        </tbody>#}
     </table>
 
-    <a href="{{ path('app_cliente_new') }}">Create new</a>
+    <a href="{{ path('cliente_new') }}">Create new</a>
 {% endblock %}

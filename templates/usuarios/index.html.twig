@@ -26,7 +26,6 @@
     <table class="table" id="usersDatatable">
         <thead>
         <tr>
-            <th class="text-center">Id</th>
             <th>Nombre(s)</th>
             <th>Apellido(s)</th>
             <th>Correo electrónico</th>
@@ -39,7 +38,6 @@
         <tbody>
         {% for user in users %}
             <tr>
-                <td>{{ user.id }}</td>
                 <td>{{ user.nombre }}</td>
                 <td>{{ user.apellido }}</td>
                 <td>{{ user.email }}</td>

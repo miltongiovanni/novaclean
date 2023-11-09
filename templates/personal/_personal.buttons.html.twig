@@ -7,6 +7,16 @@
         <li>
             <a class="dropdown-item" href="{{ path('personal_show', {'slug': empleado.slug.toRfc4122()}) }}">Ver</a>
         </li>
+
+        {% if empleado.activo == 1 %}
+            <li>
+                <a class="dropdown-item" href=" {{ path('personal_deactivate', {'slug': empleado.slug.toRfc4122()}) }} ">Desactivar</a>
+            </li>
+        {% else %}
+            <li>
+                <a class="dropdown-item" href=" {{ path('personal_activate', {'slug': empleado.slug.toRfc4122()}) }} ">Activar</a>
+            </li>
+        {% endif %}
         <li>
             <a class="dropdown-item" href="{{ path('personal_edit', {'slug': empleado.slug.toRfc4122()}) }}">Editar</a>
         </li>
