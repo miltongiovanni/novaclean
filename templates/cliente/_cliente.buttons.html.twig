@@ -4,10 +4,6 @@
         Acciones
     </a>
     <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-        <li>
-            <a class="dropdown-item" href="{{ path('cliente_show', {'slug': cliente.slug}) }}">Ver</a>
-        </li>
-
         {% if cliente.estado == 1 %}
             <li>
                 <a class="dropdown-item" href=" {{ path('cliente_deactivate', {'slug': cliente.slug}) }} ">Desactivar</a>

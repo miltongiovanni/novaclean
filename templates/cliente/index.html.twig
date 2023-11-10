@@ -31,32 +31,5 @@
                 <th style="width: 10%"></th>
             </tr>
         </thead>
-{#        <tbody>#}
-{#        {% for cliente in clientes %}#}
-{#            <tr>#}
-{#                <td>{{ cliente.id }}</td>#}
-{#                <td>{{ cliente.nit }}</td>#}
-{#                <td>{{ cliente.nombre }}</td>#}
-{#                <td>{{ cliente.direccion }}</td>#}
-{#                <td>{{ cliente.telefono }}</td>#}
-{#                <td>{{ cliente.contacto }}</td>#}
-{#                <td>{{ cliente.celular }}</td>#}
-{#                <td>{{ cliente.correoElectronico }}</td>#}
-{#                <td>{{ cliente.observaciones }}</td>#}
-{#                <td>{{ cliente.fCreacion ? cliente.fCreacion|date('Y-m-d') : '' }}</td>#}
-{#                <td>{{ cliente.fActualizacion ? cliente.fActualizacion|date('Y-m-d') : '' }}</td>#}
-{#                <td>#}
-{#                    <a href="{{ path('cliente_show', {'slug': cliente.slug}) }}">show</a>#}
-{#                    <a href="{{ path('cliente_edit', {'slug': cliente.slug}) }}">edit</a>#}
-{#                </td>#}
-{#            </tr>#}
-{#        {% else %}#}
-{#            <tr>#}
-{#                <td colspan="13">no records found</td>#}
-{#            </tr>#}
-{#        {% endfor %}#}
-{#        </tbody>#}
     </table>
-
-    <a href="{{ path('cliente_new') }}">Create new</a>
 {% endblock %}

@@ -17,7 +17,17 @@
                                 </div>
                             </div>
                             <div class="row mb-3">
-                                <div class="col-3">
+                                {% if action == 'insert' %}
+                                    <div class="col-2">
+                                        <div class="form-group">
+                                            <label for="numero">Número nit</label>
+                                            <div class="position-relative has-validation">
+                                                <input type="text" class="form-control" onkeyup="nitClientes()" id="numero" name="numero" value="" >
+                                            </div>
+                                        </div>
+                                    </div>
+                                {% endif %}
+                                <div class="col-{{ action == 'insert' ? '2' : '4' }}">
                                     <div class="form-group">
                                         <label for="nit">Nit cliente</label>
                                         <div class="position-relative has-validation">
@@ -26,7 +36,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-9">
+                                <div class="col-8">
                                     <div class="form-group">
                                         <label for="nombre">Nombre del cliente</label>
                                         <div class="position-relative has-validation">

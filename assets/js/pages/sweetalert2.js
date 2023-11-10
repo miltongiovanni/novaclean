@@ -158,6 +158,32 @@ if (deletePersonal !== null) {
 
 }
 
+let deleteCliente = document.getElementById("delete-cliente");
+if (deleteCliente !== null) {
+    deleteCliente.addEventListener("click", (e) => {
+        Swal.fire({
+            title: 'Confirmación',
+            text: "¿Está seguro de borrar el cliente?",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#000066',
+            cancelButtonColor: '#dc3545',
+            confirmButtonText: 'Si',
+            cancelButtonText: 'No'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                document.getElementById('deleteClienteForm').submit();
+                Swal.fire(
+                    'Borrado!',
+                    'Cliente borrado.',
+                    'success'
+                )
+            }
+        })
+    })
+
+}
+
 
 /*
 
