@@ -488,5 +488,55 @@ $(document).ready(function () {
             tr.addClass('shown');
         }
     });
+
+
+    let personalContratoDatatable = $("#personalContratoDatatable").DataTable({
+        ajax: {
+            url: $("#personalContratoDatatable").attr("data-url"),
+            type: "POST",
+            dataType: "json"
+        },
+        columns: [
+            {data: 'nombre'},
+            {data: 'apellido'},
+            {data: 'cargo'},
+            {data: 'salario'},
+            {data: 'bono'},
+            {data: 'tipo_nomina'},
+            {data: 'fechaIngreso'},
+            {data: 'actions'}
+        ],
+        "columnDefs":
+            [
+                {
+                    "targets": [6, 7],
+                    "className": 'dt-body-center'
+                },
+                {
+                    "targets": [2],
+                    "orderable": false,
+                    "className": 'col-2'
+                },
+            ],
+        lengthMenu: [
+            [15, 30, 50, -1],
+            [15, 30, 50, 'Todo'],
+        ],
+        "language": {
+            "lengthMenu": "Mostrando _MENU_ datos por página",
+            "zeroRecords": "Lo siento no encontró nada",
+            "info": "Mostrando página _PAGE_ de _PAGES_",
+            "infoEmpty": "No hay datos disponibles",
+            "search": "Búsqueda:",
+            "paginate": {
+                "first": "Primero",
+                "last": "Último",
+                "next": "Siguiente",
+                "previous": "Anterior"
+            },
+            "infoFiltered": "(Filtrado de _MAX_ en total)"
+
+        },
+    });
 });
 

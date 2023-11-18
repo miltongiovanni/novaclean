@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Contrato;
 use App\Form\ContratoType;
 use App\Repository\ClienteRepository;
+use App\Repository\ContratoPersonalRepository;
 use App\Repository\ContratoRepository;
 use App\Repository\PersonalRepository;
 use Carbon\Carbon;
@@ -81,13 +82,32 @@ class ContratoController extends AbstractController
         ]);
     }
 
-    #[Route('/{slug}', name: 'contrato_show', methods: ['GET'])]
-    public function show(string $slug, ContratoRepository $contratoRepository): Response
+    #[Route('/{slug}/personal', name: 'contrato_personal', methods: ['GET'])]
+    public function contrato_personal(string $slug, ContratoRepository $contratoRepository, ContratoPersonalRepository $contratoPersonalRepository): Response
     {
         $contrato = $contratoRepository->findOneBy(['slug' => Uuid::fromString($slug) ]);
-        return $this->render('contrato/show.html.twig', [
-            'contrato' => $contrato,
+        return $this->render('contrato/personal.html.twig', [
+            'contrato' => $contrato->toArray(),
         ]);
+    }
+    #[Route('/{slug}/personal/lista', name: 'lista_contrato_personal', methods: ['POST'])]
+    public function lista_contrato_personal(string $slug, ContratoRepository $contratoRepository, ContratoPersonalRepository $contratoPersonalRepository): JsonResponse
+    {
+        $contrato = $contratoRepository->findOneBy(['slug' => Uuid::fromString($slug) ]);
+        $personalContrato = $contratoPersonalRepository->findBy(['contrato' => $contrato]);
+        $personalContratoToArray = [];
+        foreach ($personalContrato as $key => &$personal) {
+            $personalContratoToArray[$key] = $personal->toArray();
+            $personalContratoToArray[$key]['actions'] = $this->renderView('contrato/_contrato_personal.buttons.html.twig', ['personal_contrato' => $personalContratoToArray[$key]]);
+        }
+        $return = [
+            'draw' => 0,
+            'recordsTotal' => count($personalContratoToArray),
+            'recordsFiltered' => count($personalContratoToArray),
+            'data' => $personalContratoToArray
+        ];
+
+        return $this->json($return);
     }
 
     #[Route('/{slug}/editar', name: 'contrato_edit', methods: ['GET'])]

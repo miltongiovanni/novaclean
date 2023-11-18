@@ -34,6 +34,9 @@ class UsuariosController extends AbstractController
     #[Route('/usuarios', name: 'usuarios')]
     public function index(UserRepository $userRepository): Response
     {
+        if (!$this->isGranted('VIEW', 'ADMINISTRACIÓN')) {
+            return $this->redirectToRoute('home');
+        }
         return $this->render('usuarios/index.html.twig', [
             'controller_name' => 'UsuariosController',
             'users' => $userRepository->findAll(),
@@ -44,6 +47,9 @@ class UsuariosController extends AbstractController
     #[Route('/usuario/nuevo', name: 'user_new', methods: ['GET'])]
     public function new(Request $request, PerfilesRepository $perfilesRepository): Response
     {
+        if (!$this->isGranted('EDIT', 'ADMINISTRACIÓN')) {
+            return $this->redirectToRoute('home');
+        }
         $perfiles = $perfilesRepository->findAll();
         $slug = Uuid::v7();
         return $this->render('usuarios/new.html.twig', [
@@ -57,7 +63,7 @@ class UsuariosController extends AbstractController
     public function edit(Request $request, string $slug, UserRepository $userRepository, PerfilesRepository $perfilesRepository): Response
     {
         $perfiles = $perfilesRepository->findAll();
-        $user = $userRepository->findOneBy(['slug' => Uuid::fromString($slug) ]);
+        $user = $userRepository->findOneBy(['slug' => Uuid::fromString($slug)]);
         //dd($user->getSlug()->toRfc4122());
 
         return $this->render('usuarios/edit.html.twig', [
@@ -70,7 +76,7 @@ class UsuariosController extends AbstractController
     #[Route('/usuario/{slug}/activar', name: 'user_activate', methods: ['GET'])]
     public function activate(Request $request, string $slug, EntityManagerInterface $entityManager, UserRepository $userRepository): Response
     {
-        $user = $userRepository->findOneBy(['slug' => Uuid::fromString($slug) ]);
+        $user = $userRepository->findOneBy(['slug' => Uuid::fromString($slug)]);
         $user->setActivo(true);
         $entityManager->persist($user);
 
@@ -82,10 +88,11 @@ class UsuariosController extends AbstractController
         return $this->redirectToRoute('usuarios', [], Response::HTTP_SEE_OTHER);
 
     }
+
     #[Route('/usuario/{slug}/desactivar', name: 'user_deactivate', methods: ['GET'])]
     public function deactivate(Request $request, string $slug, EntityManagerInterface $entityManager, UserRepository $userRepository): Response
     {
-        $user = $userRepository->findOneBy(['slug' => Uuid::fromString($slug) ]);
+        $user = $userRepository->findOneBy(['slug' => Uuid::fromString($slug)]);
         $user->setActivo(false);
         $entityManager->persist($user);
 
@@ -102,8 +109,8 @@ class UsuariosController extends AbstractController
     public function update(Request $request, string $slug, UserPasswordHasherInterface $passwordHasher, EntityManagerInterface $entityManager, UserRepository $userRepository, PerfilesRepository $perfilesRepository): Response
     {
         $action = $request->request->get('action');
-        $user = $userRepository->findOneBy(['slug' => Uuid::fromString($slug) ]);
-        if (!$user){
+        $user = $userRepository->findOneBy(['slug' => Uuid::fromString($slug)]);
+        if (!$user) {
             $user = new User();
             $user->setSlug(Uuid::fromString($slug));
         }
@@ -146,7 +153,7 @@ class UsuariosController extends AbstractController
             );
             $email = new TemplatedEmail();
             $email->from(new Address('no-reply@novaclean.com.co', 'Novaclean Service S.A.S.'));
-            $email->to(new Address($user->getEmail(), $user->getNombre().' '.$user->getApellido()));
+            $email->to(new Address($user->getEmail(), $user->getNombre() . ' ' . $user->getApellido()));
             $email->subject('Please Confirm your Email');
             $email->htmlTemplate('registration/confirmation_email.html.twig');
             $email->context(['signedUrl' => $signatureComponents->getSignedUrl()]);
@@ -165,7 +172,7 @@ class UsuariosController extends AbstractController
     #[Route('/usuario/{slug}/borrar', name: 'user_delete', methods: ['POST'])]
     public function delete(Request $request, string $slug, UserRepository $userRepository, EntityManagerInterface $entityManager): Response
     {
-        $user = $userRepository->findOneBy(['slug' => Uuid::fromString($slug) ]);
+        $user = $userRepository->findOneBy(['slug' => Uuid::fromString($slug)]);
         $entityManager->remove($user);
         $entityManager->flush();
 
@@ -191,7 +198,6 @@ class UsuariosController extends AbstractController
 
         // actually executes the queries (i.e. the INSERT query)
         $entityManager->flush();
-
 
 
         // @TODO Change the redirect on success and handle or remove the flash message in your templates

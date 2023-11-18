@@ -98,13 +98,13 @@
             {% endif %}
             {% if is_granted('VIEW', 'CLIENTES')  %}
 
-                <li class="sidebar-item  has-sub">
+                <li class="sidebar-item {{ is_active('clientes') }}  has-sub">
                     <a href="#" class='sidebar-link'>
                         <i class="bi  bi-c-square"></i>
                         <span>Clientes</span>
                     </a>
-                    <ul class="submenu ">
-                        <li class="submenu-item ">
+                    <ul class="submenu {{ is_active('cliente_index') }}">
+                        <li class="submenu-item {{ is_active('clientes') }} ">
                             <a href="{{ path('cliente_index') }}">Lista</a>
                         </li>
                     </ul>

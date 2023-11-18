@@ -1,0 +1,49 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Personal Contrato{% endblock %}
+{% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('datatables') }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('datatables') }}
+{% endblock %}
+
+{% block content %}
+    <h2>Personal Contrato {{ contrato.contrato_id }} {{ contrato.cliente }}</h2>
+    <div class="row my-3">
+        <div class="offset-10 col-2">
+            <a class="btn btn-primary w-100" href=" {{ path('personal_new') }} ">Agregar Personal</a>
+        </div>
+    </div>
+
+    <table class="table" id="personalContratoDatatable" data-url="{{ path('lista_contrato_personal', {'slug': contrato.slug.toRfc4122()}) }} ">
+        <thead>
+        <tr>
+            <th>Nombre(s)</th>
+            <th>Apellido(s)</th>
+            <th>Cargo</th>
+            <th>Salario</th>
+            <th>Bono</th>
+            <th>Tipo Nómina</th>
+            <th>F ingreso</th>
+            <th></th>
+        </tr>
+        </thead>
+    </table>
+
+
+    <div class="row my-3">
+        <div class="col-2">
+            <a class="btn btn-primary w-100" href="{{ path('contrato_index') }}">Volver a la lista</a>
+        </div>
+    </div>
+    <div class="row my-3">
+        <div class="col-2">
+            <a class="btn btn-primary w-100" href="{{ path('contrato_edit', {'slug': contrato.slug.toRfc4122()}) }}">Editar contrato</a>
+        </div>
+    </div>
+
+{% endblock %}
