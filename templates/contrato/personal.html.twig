@@ -9,13 +9,14 @@
 {% block javascripts %}
     {{ parent() }}
     {{ encore_entry_script_tags('datatables') }}
+    {{ encore_entry_script_tags('search-personal') }}
 {% endblock %}
 
 {% block content %}
     <h2>Personal Contrato {{ contrato.contrato_id }} {{ contrato.cliente }}</h2>
     <div class="row my-3">
         <div class="offset-10 col-2">
-            <a class="btn btn-primary w-100" href=" {{ path('personal_new') }} ">Agregar Personal</a>
+            <button class="btn btn-primary w-100" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal">Agregar Personal</button>
         </div>
     </div>
 
@@ -46,4 +47,43 @@
         </div>
     </div>
 
+    <!-- Modal agregar personal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="container-fluid">
+                        <div class="row mb-3">
+                            <div class="col-12 form-group">
+                                <label for="search_personal" class="form-label">Buscar Personal</label>
+                                <input type="text" class="form-control" id="search_personal">
+                            </div>
+                        </div>
+                        <div class="row mb-3 d-none">
+                            <div class="col-12 form-group">
+                                <label for="personal_id" class="form-label">Personal</label>
+                                <select class="form-select" id="personal_id" aria-label="Default select example">
+                                    {#<option selected>Seleccione una opción</option>#}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-12">
+                                <label for="exampleFormControlInput1" class="form-label">Fecha de ingreso</label>
+                                <input type="date" class="form-control" id="exampleFormControlInput1">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}

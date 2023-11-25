@@ -39,6 +39,43 @@ class PersonalRepository extends ServiceEntityRepository
         }
     }
 
+    public function findPersonalByKeysearch($keysearch){
+        $qb = $this->getEntityManager()->createQueryBuilder();
+        $qb->select([
+            'p.id',
+            $qb->expr()->concat('p.nombre', $qb->expr()->concat($qb->expr()->literal(' '), 'p.apellido')).' as nombreCompleto'
+        ])
+            ->from(Personal::class, 'p')
+            ->where($qb->expr()->orX(
+                $qb->expr()->like('p.nombre', ':nombresearch'),
+                $qb->expr()->like('p.apellido', ':apellidosearch')
+            ))
+            ->setParameter('nombresearch', '%'.$keysearch.'%')
+            ->setParameter('apellidosearch', '%'.$keysearch.'%')
+            ->orderBy('p.nombre', 'ASC');
+        $query = $qb->getQuery();
+
+// SHOW SQL:
+//        echo $query->getSQL();
+//// Show Parameters:
+//        echo $query->getParameters();
+//        die;
+        return $query->execute();
+    }
+
+    public function findPersonalByKeysearch2($keysearch){
+        $entityManager = $this->getEntityManager();
+
+        $query = $entityManager->createQuery(
+            "SELECT p.id, CONCAT(p.nombre, ' ', p.apellido) nombreCompleto
+            FROM App\Entity\Personal p
+            WHERE p.nombre LIKE :search_nombre OR p.apellido LIKE :search_nombre
+            ORDER BY p.nombre ASC"
+        )->setParameter('search_nombre', '%'.$keysearch.'%');
+
+        // returns an array of Product objects
+        return $query->getResult();
+    }
 //    /**
 //     * @return Personal[] Returns an array of Personal objects
 //     */

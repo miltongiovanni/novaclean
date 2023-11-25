@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Repository\PersonalRepository;
 use App\Service\Utilidades;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -26,5 +27,12 @@ class HomeController extends AbstractController
         $nitValid = $utilidades->getNit($numero);
 
         return $this->json(['nitValid' => $nitValid]);
+    }
+    #[Route('/buscar-personal', name: 'buscar-personal')]
+    public function buscarPersonal(Request $request, PersonalRepository $personalRepository): JsonResponse
+    {
+        $q = $request->request->get('q');
+        $personal_encontrado =  $personalRepository->findPersonalByKeysearch2($q);
+        return $this->json($personal_encontrado);
     }
 }

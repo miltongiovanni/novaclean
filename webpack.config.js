@@ -35,6 +35,7 @@ Encore
     .addEntry('app', './assets/app.js')
     .addEntry('parsley', './assets/js/pages/parsley.js')
     .addEntry('cliente', './assets/js/pages/cliente.js')
+    .addEntry('search-personal', './assets/js/pages/search-personal.js')
     .addEntry('sweetalert2', './assets/js/pages/sweetalert2.js')
     .addEntry('datatables', './assets/js/pages/datatables.js')
     .addStyleEntry('auth', './assets/styles/pages/auth.scss')
