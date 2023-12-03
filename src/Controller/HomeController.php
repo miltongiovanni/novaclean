@@ -31,8 +31,8 @@ class HomeController extends AbstractController
     #[Route('/buscar-personal', name: 'buscar-personal')]
     public function buscarPersonal(Request $request, PersonalRepository $personalRepository): JsonResponse
     {
-        $q = $request->request->get('q');
-        $personal_encontrado =  $personalRepository->findPersonalByKeysearch2($q);
+        $q = $request->request->get('searchTerm');
+        $personal_encontrado =  $personalRepository->findPersonalDisponibleByKeysearch($q);
         return $this->json($personal_encontrado);
     }
 }

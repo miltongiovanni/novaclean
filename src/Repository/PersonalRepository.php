@@ -67,7 +67,7 @@ class PersonalRepository extends ServiceEntityRepository
         $entityManager = $this->getEntityManager();
 
         $query = $entityManager->createQuery(
-            "SELECT p.id, CONCAT(p.nombre, ' ', p.apellido) nombreCompleto
+            "SELECT p.id, CONCAT(p.nombre, ' ', p.apellido) text
             FROM App\Entity\Personal p
             WHERE p.nombre LIKE :search_nombre OR p.apellido LIKE :search_nombre
             ORDER BY p.nombre ASC"
@@ -75,6 +75,20 @@ class PersonalRepository extends ServiceEntityRepository
 
         // returns an array of Product objects
         return $query->getResult();
+    }
+    public function findPersonalDisponibleByKeysearch($keysearch){
+        $conn = $this->getEntityManager()->getConnection();
+
+        $sql = "SELECT p.id, CONCAT(p.nombre, ' ', p.apellido) as text
+                FROM personal p
+                LEFT JOIN contrato_personal cp on p.id = cp.personal_id
+                WHERE cp.personal_id IS NULL
+                AND  (p.nombre LIKE :search_nombre OR p.apellido LIKE :search_nombre)";
+
+        $resultSet = $conn->executeQuery($sql, ['search_nombre' => '%'.$keysearch.'%']);
+
+        // returns an array of arrays (i.e. a raw data set)
+        return $resultSet->fetchAllAssociative();
     }
 //    /**
 //     * @return Personal[] Returns an array of Personal objects

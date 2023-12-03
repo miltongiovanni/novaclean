@@ -4,23 +4,24 @@
 {% block stylesheets %}
     {{ parent() }}
     {{ encore_entry_link_tags('datatables') }}
+    {{ encore_entry_link_tags('personal-contrato') }}
 {% endblock %}
 
 {% block javascripts %}
     {{ parent() }}
     {{ encore_entry_script_tags('datatables') }}
-    {{ encore_entry_script_tags('search-personal') }}
+    {{ encore_entry_script_tags('personal-contrato') }}
 {% endblock %}
 
 {% block content %}
     <h2>Personal Contrato {{ contrato.contrato_id }} {{ contrato.cliente }}</h2>
     <div class="row my-3">
         <div class="offset-10 col-2">
-            <button class="btn btn-primary w-100" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal">Agregar Personal</button>
+            <button class="btn btn-primary w-100" type="button" id="agregar_personal" data-bs-toggle="modal" data-bs-target="#personalContratoModal">Agregar Personal</button>
         </div>
     </div>
 
-    <table class="table" id="personalContratoDatatable" data-url="{{ path('lista_contrato_personal', {'slug': contrato.slug.toRfc4122()}) }} ">
+    <table class="table" id="personalContratoDatatable" data-url="{{ path('lista_contrato_personal', {'slug': contrato.slug}) }} ">
         <thead>
         <tr>
             <th>Nombre(s)</th>
@@ -43,40 +44,79 @@
     </div>
     <div class="row my-3">
         <div class="col-2">
-            <a class="btn btn-primary w-100" href="{{ path('contrato_edit', {'slug': contrato.slug.toRfc4122()}) }}">Editar contrato</a>
+            <a class="btn btn-primary w-100" href="{{ path('contrato_edit', {'slug': contrato.slug}) }}">Editar contrato</a>
         </div>
     </div>
 
     <!-- Modal agregar personal -->
-    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="personalContratoModal" tabindex="-1" aria-labelledby="titleModalPersonalContrato" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+                    <h1 class="modal-title fs-5" id="titleModalPersonalContrato"></h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <div class="container-fluid">
-                        <div class="row mb-3">
-                            <div class="col-12 form-group">
-                                <label for="search_personal" class="form-label">Buscar Personal</label>
-                                <input type="text" class="form-control" id="search_personal">
+                        <form id="addEditPersonalContratoForm">
+                            <input type="hidden" value="{{ contrato.slug }}" name="contrato_slug">
+                            <input type="hidden" value="" name="personal_slug">
+                            <div class="row">
+                                <div class="col-12 form-group">
+                                    <label for="personal_id2" class="form-label">Personal</label>
+                                    <select class="form-select select2-personal" style="width: 100%" name="personal_id" id="personal_id" aria-label="Default select example">
+                                        <option></option>
+                                        {#<option selected disabled value="">Seleccione un(a) empleado(a)</option>#}
+                                        {#{% for empleado in personal %}
+                                            <option value="{{ empleado.id }}">{{ empleado.nombre~' '~empleado.apellido }}</option>
+                                        {% endfor %}#}
+                                    </select>
+                                </div>
                             </div>
-                        </div>
-                        <div class="row mb-3 d-none">
-                            <div class="col-12 form-group">
-                                <label for="personal_id" class="form-label">Personal</label>
-                                <select class="form-select" id="personal_id" aria-label="Default select example">
-                                    {#<option selected>Seleccione una opción</option>#}
-                                </select>
+                            <div class="row  d-none">
+                                <div class="col-12 form-group">
+                                    <input type="hidden" name="personal_id" id="personal_id_edit">
+                                    <label for="personal_name" class="form-label">Personal</label>
+                                    <input class="form-control" id="personal_name" readonly>
+                                </div>
                             </div>
-                        </div>
-                        <div class="row mb-3">
-                            <div class="col-12">
-                                <label for="exampleFormControlInput1" class="form-label">Fecha de ingreso</label>
-                                <input type="date" class="form-control" id="exampleFormControlInput1">
+                            <div class="row mb-3">
+                                <div class="col-12 form-group">
+                                    <label for="fecha_ingreso" class="form-label">Fecha de ingreso</label>
+                                    <input type="date" class="form-control" name="fecha_ingreso" id="fecha_ingreso">
+                                </div>
                             </div>
-                        </div>
+                            <div class="row mb-3">
+                                <div class="col-12 form-group">
+                                    <label for="tipo_nomina" class="form-label">Tipo Nómina</label>
+                                    <select class="form-select" aria-label="Default select example" name="tipo_nomina" id="tipo_nomina">
+                                        <option selected>Seleccione una optción</option>
+                                        {% for tipoNomina in tiposNomina %}
+                                            <option value="{{ tipoNomina.id }}">{{ tipoNomina.nombre }}</option>
+                                        {% endfor %} %
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row ">
+                                <div class="col-12 form-group">
+                                    <label for="salario_basico" class="form-label">Salario básico</label>
+                                    <div class="input-group ">
+                                        <span class="input-group-text">$</span>
+                                        <input type="text" class="form-control" name="salario_basico" id="salario_basico">
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="row ">
+                                <div class="col-12 form-group">
+                                    <label for="bono" class="form-label">Bono</label>
+                                    <div class="input-group ">
+                                        <span class="input-group-text">$</span>
+                                        <input type="text" class="form-control" name="bono" id="bono">
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
                     </div>
                 </div>
                 <div class="modal-footer">

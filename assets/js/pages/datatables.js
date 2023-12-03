@@ -500,7 +500,26 @@ $(document).ready(function () {
             {data: 'nombre'},
             {data: 'apellido'},
             {data: 'cargo'},
-            {data: 'salario'},
+            {
+                data: 'salario',
+                render: function (data, type) {
+                    var number = DataTable.render
+                        .number(',', '.', 0, '$')
+                        .display(data);
+
+                    if (type === 'display') {
+                        let color = 'green';
+                        if (data < 250000) {
+                            color = 'red';
+                        } else if (data < 500000) {
+                            color = 'orange';
+                        }
+                        return `<span style="color:${color}">${number}</span>`;
+                    }
+
+                    return number;
+                }
+            },
             {data: 'bono'},
             {data: 'tipo_nomina'},
             {data: 'fechaIngreso'},

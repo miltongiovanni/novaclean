@@ -4,7 +4,7 @@
             <div class="card-content">
                 <div class="card-body">
                     <form class="form form-vertical" method="post" data-parsley-validate
-                          action="{% if contrato.id is defined %}{{ path('contrato_update', {'id':  contrato.id }) }}{% else %}{{ path('contrato_update', {'id':  0 }) }}{% endif %}"
+                          action="{% if contrato.slug is defined %}{{ path('contrato_update', {'slug':  contrato.slug }) }}{% else %}{{ path('contrato_update', {'slug':  slug }) }}{% endif %}"
                     >
                         <input type="hidden" name="action" id="action" value="{{ action }}">
                         <div class="form-body">

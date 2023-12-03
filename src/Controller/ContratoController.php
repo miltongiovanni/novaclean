@@ -8,6 +8,7 @@ use App\Repository\ClienteRepository;
 use App\Repository\ContratoPersonalRepository;
 use App\Repository\ContratoRepository;
 use App\Repository\PersonalRepository;
+use App\Repository\TipoNominaRepository;
 use Carbon\Carbon;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -75,19 +76,24 @@ class ContratoController extends AbstractController
     {
         $supervisores = $personalRepository->findBy(['cargo' => self::SUPERVISOR_ID], ['nombre' => 'asc']);
         $clientes = $clienteRepository->findBy(['estado' => true], ['nombre' => 'asc']);
+        $slug = Uuid::v7();
         return $this->render('contrato/new.html.twig', [
             'supervisores' => $supervisores,
             'clientes' => $clientes,
+            'slug' => $slug,
             'action' => 'insert',
         ]);
     }
 
     #[Route('/{slug}/personal', name: 'contrato_personal', methods: ['GET'])]
-    public function contrato_personal(string $slug, ContratoRepository $contratoRepository, ContratoPersonalRepository $contratoPersonalRepository): Response
+    public function contrato_personal(string $slug, ContratoRepository $contratoRepository, TipoNominaRepository $tipoNominaRepository, PersonalRepository $personalRepository): Response
     {
         $contrato = $contratoRepository->findOneBy(['slug' => Uuid::fromString($slug) ]);
+        $tiposNomina = $tipoNominaRepository->findAll();
         return $this->render('contrato/personal.html.twig', [
             'contrato' => $contrato->toArray(),
+            'personal' => $personalRepository->findAll(),
+            'tiposNomina' => $tiposNomina,
         ]);
     }
     #[Route('/{slug}/personal/lista', name: 'lista_contrato_personal', methods: ['POST'])]
@@ -124,14 +130,13 @@ class ContratoController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}/actualizar', name: 'contrato_update', methods: ['POST'])]
-    public function update(int $id, Request $request,  ContratoRepository $contratoRepository, ClienteRepository $clienteRepository, PersonalRepository $personalRepository): Response
+    #[Route('/{slug}/actualizar', name: 'contrato_update', methods: ['POST'])]
+    public function update(string $slug, Request $request, EntityManagerInterface $entityManager, ContratoRepository $contratoRepository, ClienteRepository $clienteRepository, PersonalRepository $personalRepository): Response
     {
-        if ($id == 0) {
+        $contrato = $contratoRepository->findOneBy(['slug' => Uuid::fromString($slug) ]);
+        if (!$contrato){
             $contrato = new Contrato();
-            $contrato->setSlug(Uuid::v7());
-        } else {
-            $contrato = $contratoRepository->find($id);
+            $contrato->setSlug(Uuid::fromString($slug));
         }
         $action = $request->request->get('action');
         $contrato->setNContrato($request->request->get('contrato_id'));
@@ -153,15 +158,16 @@ class ContratoController extends AbstractController
         $tiene_poliza_cumplimiento = $request->request->get('tiene_poliza_cumplimiento', 0);
         $contrato->setPolizaCumplimiento($tiene_poliza_cumplimiento);
 
+        $entityManager->persist($contrato);
 
-        dd($contrato, $tiene_poliza_salario, $tiene_poliza_cumplimiento );
-        $supervisores = $personalRepository->findBy(['cargo' => self::SUPERVISOR_ID], ['nombre' => 'asc']);
-
-        return $this->render('contrato/edit.html.twig', [
-            'contrato' => $contrato,
-            'supervisores' => $supervisores,
-            'action' => 'update',
-        ]);
+        // actually executes the queries (i.e. the INSERT query)
+        $entityManager->flush();
+        if ($action == 'insert') {
+            $this->addFlash('success', 'Contrato creado correctamente');
+        } else {
+            $this->addFlash('success', 'Contrato actualizado correctamente');
+        }
+        return $this->redirectToRoute('contrato_index', [], Response::HTTP_SEE_OTHER);
     }
 
     #[Route('/{id}', name: 'contrato_delete', methods: ['POST'])]

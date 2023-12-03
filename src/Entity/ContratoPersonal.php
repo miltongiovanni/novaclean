@@ -136,15 +136,15 @@ class ContratoPersonal
             'apellido' => $this->personal->getApellido(),
             'cargo' => $this->personal->getCargo()->getDescripcion(),
             'activo' => $this->personal->isActivo(),
-            'slug' => $this->personal->getSlug(),
-            'fechaIngreso' => $this->getFechaIngreso() != null ? $this->getFechaIngreso()->format('d/m/Y') : $this->getFechaIngreso(),
+            'slug_personal' => $this->personal->getSlug()->toRfc4122(),
+            'fechaIngreso' => $this->getFechaIngreso() != null ? $this->getFechaIngreso()->format('Y-m-d') : $this->getFechaIngreso(),
             'salario' => $this->getSalarioBasico(),
             'bono' => $this->getBono(),
             'tipo_nomina' => $this->getTipoNomina()->getNombre(),
             'tipo_nomina_id' => $this->getTipoNomina()->getId(),
             'contrato_id' => $this->contrato->getNContrato(),
             'contrato_cliente' => $this->contrato->getCliente()->getNombre(),
-            'contrato_slug' => $this->contrato->getSlug(),
+            'contrato_slug' => $this->contrato->getSlug()->toRfc4122(),
         ];
 
     }

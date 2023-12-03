@@ -34,6 +34,7 @@
         "parsleyjs": "^2.9.2",
         "pdfmake": "^0.2.7",
         "perfect-scrollbar": "^1.5.5",
+        "select2": "^4.1.0-rc.0",
         "sweetalert2": "^11.6.16"
     }
 }
