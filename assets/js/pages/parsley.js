@@ -1,11 +1,13 @@
-import parsley from "parsleyjs/dist/parsley";
-require('parsleyjs/dist/i18n/es')
+import Parsley from "parsleyjs/dist/parsley";
+require('parsleyjs/dist/i18n/es');
 $.extend(window.Parsley.options, {
   focus: "first",
   excluded:
     "input[type=button], input[type=submit], input[type=reset], .search, .ignore",
   triggerAfterFailure: "change blur",
-  errorsContainer: function (element) {},
+  errorsContainer: function (el) {
+    return el.$element.closest(".form-group")
+  },
   trigger: "change",
   successClass: "is-valid",
   errorClass: "is-invalid",
@@ -34,7 +36,7 @@ Parsley.on("field:validated", function (el) {
         if (errorNode.length > 0) {
           var lblText = lblNode.text()
           if (lblText) {
-            errorNode.html(lblText + " is required.")
+            errorNode.html(lblText + " es requerido.")
           }
         }
       }

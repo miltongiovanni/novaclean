@@ -127,3 +127,7 @@ body .bi::before, [class^=bi-]::before, [class*=" bi-"]::before {
 .select2-container--default .select2-selection--single .select2-selection__placeholder {
   color: #607080 !important;
 }
+
+.parsley-error span{
+  font-size: 12px;
+}

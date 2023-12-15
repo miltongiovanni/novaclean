@@ -1,0 +1,24 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Contrato{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('sweetalert2') }}
+    {{ encore_entry_link_tags('personal-contrato') }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('parsley') }}
+    {{ encore_entry_script_tags('sweetalert2') }}
+    {{ encore_entry_script_tags('personal-contrato') }}
+{% endblock %}
+
+{% block content %}
+    <h2>Agregar personal al contrato {{ contrato.contrato_id }} - {{ contrato.cliente }}</h2>
+
+    {{ include('contrato/_personal.form.html.twig') }}
+
+    <a href="{{ path('contrato_index') }}">back to list</a>
+{% endblock %}

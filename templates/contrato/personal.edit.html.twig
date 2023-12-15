@@ -1,0 +1,29 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Modificar Contrato{% endblock %}
+{% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('contrato-personal') }}
+    {{ encore_entry_link_tags('sweetalert2') }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('parsley') }}
+    {{ encore_entry_script_tags('contrato-personal') }}
+    {{ encore_entry_script_tags('sweetalert2') }}
+{% endblock %}
+
+{% block content %}
+    <h2 class="ps-3">Editar personal contrato {{ contrato.contrato_id }} - {{ contrato.cliente }}</h2>
+
+    {{ include('contrato/_personal.form.html.twig') }}
+
+    <div class="row my-3">
+        <div class="col-2">
+            <a class="btn btn-primary w-100" href="{{ path('contrato_index') }}">Volver a la lista</a>
+        </div>
+    </div>
+
+    {{ include('contrato/_delete_form.html.twig') }}
+{% endblock %}

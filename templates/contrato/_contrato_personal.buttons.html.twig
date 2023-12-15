@@ -5,6 +5,7 @@
     </a>
     <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
         <li>
+            <a class="dropdown-item" href="{{ {{ path('contrato_personal_edit', {'slug':  contrato.slug }) }} }}">Editar personal</a>
             <button class="dropdown-item" id="editar_personal_contrato" data-bs-toggle="modal" data-bs-target="#personalContratoModal" data-id="{{ personal_contrato.id }}" data-nombre-completo="{{ personal_contrato.nombre~' '~personal_contrato.apellido }}"
                     data-fecha-ingreso="{{ personal_contrato.fechaIngreso }}" data-salario="{{ personal_contrato.salario }}" data-bono="{{ personal_contrato.bono }}"
                     data-tipo-nomina-id="{{ personal_contrato.tipo_nomina_id }}">Editar personal

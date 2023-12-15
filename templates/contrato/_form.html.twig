@@ -26,7 +26,7 @@
                             <div class="row">
                                 <div class="col-2 mb-3">
                                     <div class="form-group">
-                                        <label for="contrato_id">No. Contrato</label>
+                                        <label for="contrato_id" class="form-label">No. Contrato</label>
                                         <div class="position-relative has-validation">
                                             <input type="text" class="form-control" id="contrato_id" name="contrato_id" required data-parsley-required="true"
                                                    value="{{ contrato.contrato_id ?? '' }}">
@@ -36,8 +36,8 @@
                                 <div class="col-6 mb-3">
                                     <div class="form-group">
                                         <label for="cliente_id">Cliente</label>
-                                        <fieldset class="form-group">
-                                            <select class="form-select" id="cliente_id" name="cliente_id" required>
+                                        <div class="position-relative has-validation">
+                                            <select class="form-select" id="cliente_id" name="cliente_id" data-parsley required>
                                                 <option value="" disabled {% if action=='insert' %}selected{% endif %}>
                                                     Escoja el cliente
                                                 </option>
@@ -45,22 +45,20 @@
                                                     <option value="{{ cliente.id }}" {{ contrato.cliente_id is defined and contrato.cliente_id == cliente.id ? 'selected' : '' }} >{{ cliente.nombre }} </option>
                                                 {% endfor %}
                                             </select>
-                                        </fieldset>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="col-4 mb-3">
                                     <div class="form-group">
                                         <label for="supervisor_id">Supervisor</label>
-                                        <fieldset class="form-group">
-                                            <select class="form-select" id="supervisor_id" name="supervisor_id" required>
-                                                <option value="" disabled {% if action=='insert' %}selected{% endif %}>
-                                                    Escoja el/la supervisor(a)
-                                                </option>
-                                                {% for supervisor in supervisores %}
-                                                    <option value="{{ supervisor.id }}" {{ contrato.supervisor_id is defined and contrato.supervisor_id == supervisor.id ? 'selected' : '' }} >{{ supervisor.nombre ~ ' ' ~ supervisor.apellido }} </option>
-                                                {% endfor %}
-                                            </select>
-                                        </fieldset>
+                                        <select class="form-select" id="supervisor_id" name="supervisor_id" required>
+                                            <option value="" disabled {% if action=='insert' %}selected{% endif %}>
+                                                Escoja el/la supervisor(a)
+                                            </option>
+                                            {% for supervisor in supervisores %}
+                                                <option value="{{ supervisor.id }}" {{ contrato.supervisor_id is defined and contrato.supervisor_id == supervisor.id ? 'selected' : '' }} >{{ supervisor.nombre ~ ' ' ~ supervisor.apellido }} </option>
+                                            {% endfor %}
+                                        </select>
                                     </div>
                                 </div>
                                 <div class="col-2 mb-3">

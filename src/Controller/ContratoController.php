@@ -170,6 +170,82 @@ class ContratoController extends AbstractController
         return $this->redirectToRoute('contrato_index', [], Response::HTTP_SEE_OTHER);
     }
 
+
+    #[Route('/{slug}/personal/agregar', name: 'contrato_personal_new', methods: ['GET'])]
+    public function contrato_personal_new(string $slug, Request $request, TipoNominaRepository $tipoNominaRepository, ContratoRepository $contratoRepository): Response
+    {
+        $contrato = $contratoRepository->findOneBy(['slug' => Uuid::fromString($slug) ]);
+        $tiposNomina = $tipoNominaRepository->findAll();
+        return $this->render('contrato/personal.new.html.twig', [
+            'contrato' => $contrato->toArray(),
+            'tiposNomina' => $tiposNomina,
+            'slug' => $slug,
+            'action' => 'insert',
+        ]);
+    }
+
+    #[Route('/{slug}/personal/editar', name: 'contrato_personal_edit', methods: ['GET'])]
+    public function contrato_personal_edit(Request $request, string $slug, ContratoRepository $contratoRepository, ClienteRepository $clienteRepository, PersonalRepository $personalRepository): Response
+    {
+        $contrato = $contratoRepository->findOneBy(['slug' => Uuid::fromString($slug) ]);
+        $supervisores = $personalRepository->findBy(['cargo' => self::SUPERVISOR_ID], ['nombre' => 'asc']);
+        $clientes = $clienteRepository->findBy(['estado' => true], ['nombre' => 'asc']);
+        return $this->render('contrato/personal.edit.html.twig', [
+            'contrato' => $contrato->toArray(),
+            'supervisores' => $supervisores,
+            'clientes' => $clientes,
+            'action' => 'update',
+        ]);
+    }
+    #[Route('/{slug}/personal/actualizar', name: 'contrato_personal_update', methods: ['POST'])]
+    public function contrato_personal_update(string $slug, Request $request, EntityManagerInterface $entityManager, ContratoRepository $contratoRepository, ClienteRepository $clienteRepository, PersonalRepository $personalRepository): JsonResponse
+    {
+        $contrato = $contratoRepository->findOneBy(['slug' => Uuid::fromString($slug) ]);
+        dd($contrato, $request->request->all() );
+        if (!$contrato){
+            $contrato = new Contrato();
+            $contrato->setSlug(Uuid::fromString($slug));
+        }
+        $action = $request->request->get('action');
+        $contrato->setNContrato($request->request->get('contrato_id'));
+        $cliente = $clienteRepository->find($request->request->get('cliente_id'));
+        $contrato->setCliente($cliente);
+        $supervisor = $personalRepository->find($request->request->get('cliente_id'));
+        $contrato->setPersonal($supervisor);
+        $contrato->setUser($this->getUser());
+        $f_inicio = $request->request->get('f_inicio');
+        if ($f_inicio != ''){
+            $contrato->setFInicio(Carbon::createFromFormat('Y-m-d', $f_inicio));
+        }
+        $f_fin = $request->request->get('f_fin');
+        if ($f_fin != ''){
+            $contrato->setFFin(Carbon::createFromFormat('Y-m-d', $f_fin));
+        }
+        $tiene_poliza_salario = $request->request->get('tiene_poliza_salario', 0);
+        $contrato->setPolizaSalario($tiene_poliza_salario);
+        $tiene_poliza_cumplimiento = $request->request->get('tiene_poliza_cumplimiento', 0);
+        $contrato->setPolizaCumplimiento($tiene_poliza_cumplimiento);
+
+        $entityManager->persist($contrato);
+
+        // actually executes the queries (i.e. the INSERT query)
+        $entityManager->flush();
+        if ($action == 'insert') {
+            $this->addFlash('success', 'Contrato creado correctamente');
+        } else {
+            $this->addFlash('success', 'Contrato actualizado correctamente');
+        }
+
+        $return = [
+            'draw' => 0,
+            'recordsTotal' => count($contratosToArray),
+            'recordsFiltered' => count($contratosToArray),
+            'data' => $contratosToArray
+        ];
+
+        return $this->json($return);
+    }
+
     #[Route('/{id}', name: 'contrato_delete', methods: ['POST'])]
     public function delete(Request $request, Contrato $contrato, ContratoRepository $contratoRepository): Response
     {

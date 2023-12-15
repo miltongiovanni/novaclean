@@ -17,6 +17,7 @@
     <h2>Personal Contrato {{ contrato.contrato_id }} {{ contrato.cliente }}</h2>
     <div class="row my-3">
         <div class="offset-10 col-2">
+            <a class="btn btn-primary w-100" href="{{ path('contrato_personal_new', {'slug': contrato.slug}) }}">Agregar Personal</a>
             <button class="btn btn-primary w-100" type="button" id="agregar_personal" data-bs-toggle="modal" data-bs-target="#personalContratoModal">Agregar Personal</button>
         </div>
     </div>
@@ -58,18 +59,13 @@
                 </div>
                 <div class="modal-body">
                     <div class="container-fluid">
-                        <form id="addEditPersonalContratoForm">
-                            <input type="hidden" value="{{ contrato.slug }}" name="contrato_slug">
-                            <input type="hidden" value="" name="personal_slug">
+                        <form id="addEditPersonalContratoForm" action="{{ path('contrato_personal_new', {'slug':  contrato.slug }) }}" >
+                            <input type="hidden" value="insert" name="action" id="action">
                             <div class="row">
                                 <div class="col-12 form-group">
                                     <label for="personal_id2" class="form-label">Personal</label>
                                     <select class="form-select select2-personal" style="width: 100%" name="personal_id" id="personal_id" aria-label="Default select example">
                                         <option></option>
-                                        {#<option selected disabled value="">Seleccione un(a) empleado(a)</option>#}
-                                        {#{% for empleado in personal %}
-                                            <option value="{{ empleado.id }}">{{ empleado.nombre~' '~empleado.apellido }}</option>
-                                        {% endfor %}#}
                                     </select>
                                 </div>
                             </div>
@@ -83,14 +79,14 @@
                             <div class="row mb-3">
                                 <div class="col-12 form-group">
                                     <label for="fecha_ingreso" class="form-label">Fecha de ingreso</label>
-                                    <input type="date" class="form-control" name="fecha_ingreso" id="fecha_ingreso">
+                                    <input type="date" class="form-control" name="fecha_ingreso" id="fecha_ingreso" data-parsley-group="block1" data-parsley-required="true" required>
                                 </div>
                             </div>
                             <div class="row mb-3">
                                 <div class="col-12 form-group">
                                     <label for="tipo_nomina" class="form-label">Tipo Nómina</label>
-                                    <select class="form-select" aria-label="Default select example" name="tipo_nomina" id="tipo_nomina">
-                                        <option selected>Seleccione una optción</option>
+                                    <select class="form-select" aria-label="Default select example" data-parsley-group="block1" name="tipo_nomina" id="tipo_nomina" data-parsley-required="true" required>
+                                        <option selected>Seleccione una opción</option>
                                         {% for tipoNomina in tiposNomina %}
                                             <option value="{{ tipoNomina.id }}">{{ tipoNomina.nombre }}</option>
                                         {% endfor %} %
@@ -102,7 +98,7 @@
                                     <label for="salario_basico" class="form-label">Salario básico</label>
                                     <div class="input-group ">
                                         <span class="input-group-text">$</span>
-                                        <input type="text" class="form-control" name="salario_basico" id="salario_basico">
+                                        <input type="text" class="form-control" name="salario_basico" id="salario_basico" data-parsley-group="block1" data-parsley-required="true" required>
                                     </div>
 
                                 </div>
@@ -112,7 +108,7 @@
                                     <label for="bono" class="form-label">Bono</label>
                                     <div class="input-group ">
                                         <span class="input-group-text">$</span>
-                                        <input type="text" class="form-control" name="bono" id="bono">
+                                        <input type="text" class="form-control" name="bono" data-parsley-group="block1" data-parsley-required="false" id="bono">
                                     </div>
                                 </div>
                             </div>
@@ -120,8 +116,8 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Save changes</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Anular</button>
+                    <button type="submit" class="btn btn-primary" id="submit_contrato_personal">Guardar</button>
                 </div>
             </div>
         </div>
