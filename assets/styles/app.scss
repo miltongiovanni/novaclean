@@ -131,3 +131,12 @@ body .bi::before, [class^=bi-]::before, [class*=" bi-"]::before {
 .parsley-error span{
   font-size: 12px;
 }
+
+.form-group.is-invalid .select2-container--default .select2-selection--single {
+  color: #dc3545;
+  border-color: #dc3545 !important;
+}
+
+.form-group.is-invalid .select2-selection__placeholder{
+  color: #dc3545 !important;
+}

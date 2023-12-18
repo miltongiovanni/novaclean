@@ -131,7 +131,8 @@ class ContratoPersonal
     public function toArray()
     {
         return [
-            'id' => $this->personal->getId(),
+            'id' => $this->getId(),
+            'personal_id' => $this->personal->getId(),
             'nombre' => $this->personal->getNombre(),
             'apellido' => $this->personal->getApellido(),
             'cargo' => $this->personal->getCargo()->getDescripcion(),

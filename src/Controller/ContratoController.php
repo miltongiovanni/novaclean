@@ -184,23 +184,24 @@ class ContratoController extends AbstractController
         ]);
     }
 
-    #[Route('/{slug}/personal/editar', name: 'contrato_personal_edit', methods: ['GET'])]
-    public function contrato_personal_edit(Request $request, string $slug, ContratoRepository $contratoRepository, ClienteRepository $clienteRepository, PersonalRepository $personalRepository): Response
+    #[Route('/{slugcontrato}/personal/{slugpersonal}/editar', name: 'contrato_personal_edit', methods: ['GET'])]
+    public function contrato_personal_edit(Request $request, string $slugcontrato, string $slugpersonal, ContratoRepository $contratoRepository, ClienteRepository $clienteRepository, PersonalRepository $personalRepository, TipoNominaRepository $tipoNominaRepository, ContratoPersonalRepository $contratoPersonalRepository): Response
     {
-        $contrato = $contratoRepository->findOneBy(['slug' => Uuid::fromString($slug) ]);
-        $supervisores = $personalRepository->findBy(['cargo' => self::SUPERVISOR_ID], ['nombre' => 'asc']);
-        $clientes = $clienteRepository->findBy(['estado' => true], ['nombre' => 'asc']);
+        $contrato = $contratoRepository->findOneBy(['slug' => Uuid::fromString($slugcontrato) ]);
+        $personal = $personalRepository->findOneBy(['slug' => Uuid::fromString($slugpersonal) ]);
+        $personal_contrato = $contratoPersonalRepository->findOneBy(['personal' => $personal, 'contrato' => $contrato]);
+        $tiposNomina = $tipoNominaRepository->findAll();
         return $this->render('contrato/personal.edit.html.twig', [
             'contrato' => $contrato->toArray(),
-            'supervisores' => $supervisores,
-            'clientes' => $clientes,
+            'personal_contrato' => $personal_contrato->toArray(),
+            'tiposNomina' => $tiposNomina,
             'action' => 'update',
         ]);
     }
-    #[Route('/{slug}/personal/actualizar', name: 'contrato_personal_update', methods: ['POST'])]
-    public function contrato_personal_update(string $slug, Request $request, EntityManagerInterface $entityManager, ContratoRepository $contratoRepository, ClienteRepository $clienteRepository, PersonalRepository $personalRepository): JsonResponse
+    #[Route('/{slugcontrato}/personal/{slugpersonal}/actualizar', name: 'contrato_personal_update', methods: ['POST'])]
+    public function contrato_personal_update(string $slugcontrato, string $slugpersonal, Request $request, EntityManagerInterface $entityManager, ContratoRepository $contratoRepository, ClienteRepository $clienteRepository, PersonalRepository $personalRepository): JsonResponse
     {
-        $contrato = $contratoRepository->findOneBy(['slug' => Uuid::fromString($slug) ]);
+        $contrato = $contratoRepository->findOneBy(['slug' => Uuid::fromString($slugcontrato) ]);
         dd($contrato, $request->request->all() );
         if (!$contrato){
             $contrato = new Contrato();
