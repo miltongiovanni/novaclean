@@ -3,8 +3,6 @@ import 'select2/dist/css/select2.min.css';
 import 'select2/dist/js/i18n/es';
 
 
-
-
 $(document).ready(function () {
     $('.select2-personal').select2(
         {
@@ -35,29 +33,22 @@ $(document).ready(function () {
     );
 });
 
-// $(document).on('click', '#submit_contrato_personal', function () {
-//     let form = document.getElementById('addEditPersonalContratoForm');
-//
-//     console.log(formValidate.isValid());
-//     let url = form.getAttribute('action');
-//     let formData = new FormData(form);
-//     if (formValidate.isValid()){
-//         $.ajax({
-//             url: url,
-//             type: 'POST',
-//             data: formData,
-//             dataType: 'json',
-//             processData: false,
-//             contentType: false,
-//             success: function (response) {
-//
-//             },
-//             error: function () {
-//                 alert("Vous avez un GROS problème");
-//             }
-//         });
-//     }
-//
-//
-//
-// });
+$(document).on('change', '#personal_id', function () {
+    let slug_contrato = document.getElementById('updatePersonalContratoForm').dataset.contratoSlug;
+    let formData = new FormData();
+    formData.append('personal_id', $(this).val());
+    $.ajax({
+        url: '/buscar-personal-slug',
+        type: 'POST',
+        data: formData,
+        dataType: 'json',
+        processData: false,
+        contentType: false,
+        success: function (response) {
+            document.getElementById('updatePersonalContratoForm').action = '/contrato/' + slug_contrato + '/personal/' + response.slug + '/actualizar';
+        },
+        error: function () {
+            alert("Vous avez un GROS problème");
+        }
+    });
+});

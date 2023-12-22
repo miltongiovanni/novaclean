@@ -3,7 +3,7 @@
         <div class="card">
             <div class="card-content">
                 <div class="card-body">
-                    <form class="form form-vertical" method="post" data-contrato-slug="{{ contrato.slug }}" id="updatePersonalContratoForm" data-parsley-validate action="{{ action == 'update' ? path('contrato_personal_update', {'slug':  contrato.slug }) : '' }}">
+                    <form class="form form-vertical" method="post" data-contrato-slug="{{ contrato.slug }}" id="updatePersonalContratoForm" data-parsley-validate action="{{ action == 'update' ? path('contrato_personal_update', {'slugcontrato':  personal_contrato.contrato_slug, 'slugpersonal':  personal_contrato.slug_personal }) : '' }}">
                         <input type="hidden" name="action" id="action" value="{{ action }}">
                         <div class="form-body">
                             {% if action == 'insert' %}

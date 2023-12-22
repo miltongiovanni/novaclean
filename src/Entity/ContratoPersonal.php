@@ -19,7 +19,7 @@ class ContratoPersonal
     private ?Personal $personal = null;
 
     #[ORM\ManyToOne(inversedBy: 'contratoPersonals', targetEntity: Contrato::class)]
-    #[ORM\JoinColumn(nullable: false, name: 'id')]
+    #[ORM\JoinColumn(nullable: false)]
     private ?Contrato $contrato = null;
 
     #[ORM\Column]

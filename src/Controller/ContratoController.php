@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Contrato;
+use App\Entity\ContratoPersonal;
 use App\Form\ContratoType;
 use App\Repository\ClienteRepository;
 use App\Repository\ContratoPersonalRepository;
@@ -199,52 +200,39 @@ class ContratoController extends AbstractController
         ]);
     }
     #[Route('/{slugcontrato}/personal/{slugpersonal}/actualizar', name: 'contrato_personal_update', methods: ['POST'])]
-    public function contrato_personal_update(string $slugcontrato, string $slugpersonal, Request $request, EntityManagerInterface $entityManager, ContratoRepository $contratoRepository, ClienteRepository $clienteRepository, PersonalRepository $personalRepository): JsonResponse
+    public function contrato_personal_update(string $slugcontrato, string $slugpersonal, Request $request, EntityManagerInterface $entityManager, ContratoRepository $contratoRepository, ContratoPersonalRepository $contratoPersonalRepository, PersonalRepository $personalRepository, TipoNominaRepository $tipoNominaRepository): Response
     {
         $contrato = $contratoRepository->findOneBy(['slug' => Uuid::fromString($slugcontrato) ]);
-        dd($contrato, $request->request->all() );
-        if (!$contrato){
-            $contrato = new Contrato();
-            $contrato->setSlug(Uuid::fromString($slug));
+        $personal = $personalRepository->findOneBy(['slug' => Uuid::fromString($slugpersonal) ]);
+        $personal_contrato = $contratoPersonalRepository->findOneBy(['personal' => $personal, 'contrato' => $contrato]);
+        if (!$personal_contrato){
+            $personal_contrato = new ContratoPersonal();
+            $personal_contrato->setContrato($contrato);
+            $personal_contrato->setPersonal($personal);
         }
+        $salario_basico = $request->request->get('salario_basico');
+        if ($salario_basico){
+            $personal_contrato->setSalarioBasico($salario_basico);
+        }
+        $bono = $request->request->get('bono');
+        if ($bono){
+            $personal_contrato->setBono($bono);
+        }
+        $tipoNomina = $tipoNominaRepository->find($request->request->get('tipo_nomina'));
+        $personal_contrato->setTipoNomina($tipoNomina);
+        $personal_contrato->setFechaIngreso(Carbon::createFromFormat('Y-m-d', trim($request->request->get('fecha_ingreso'))));
         $action = $request->request->get('action');
-        $contrato->setNContrato($request->request->get('contrato_id'));
-        $cliente = $clienteRepository->find($request->request->get('cliente_id'));
-        $contrato->setCliente($cliente);
-        $supervisor = $personalRepository->find($request->request->get('cliente_id'));
-        $contrato->setPersonal($supervisor);
-        $contrato->setUser($this->getUser());
-        $f_inicio = $request->request->get('f_inicio');
-        if ($f_inicio != ''){
-            $contrato->setFInicio(Carbon::createFromFormat('Y-m-d', $f_inicio));
-        }
-        $f_fin = $request->request->get('f_fin');
-        if ($f_fin != ''){
-            $contrato->setFFin(Carbon::createFromFormat('Y-m-d', $f_fin));
-        }
-        $tiene_poliza_salario = $request->request->get('tiene_poliza_salario', 0);
-        $contrato->setPolizaSalario($tiene_poliza_salario);
-        $tiene_poliza_cumplimiento = $request->request->get('tiene_poliza_cumplimiento', 0);
-        $contrato->setPolizaCumplimiento($tiene_poliza_cumplimiento);
-
-        $entityManager->persist($contrato);
+        $entityManager->persist($personal_contrato);
 
         // actually executes the queries (i.e. the INSERT query)
         $entityManager->flush();
         if ($action == 'insert') {
-            $this->addFlash('success', 'Contrato creado correctamente');
+            $this->addFlash('success', 'Personal agreado al Contrato correctamente');
         } else {
-            $this->addFlash('success', 'Contrato actualizado correctamente');
+            $this->addFlash('success', 'Personal actualizado al Contrato correctamente');
         }
 
-        $return = [
-            'draw' => 0,
-            'recordsTotal' => count($contratosToArray),
-            'recordsFiltered' => count($contratosToArray),
-            'data' => $contratosToArray
-        ];
-
-        return $this->json($return);
+        return $this->redirectToRoute('contrato_personal', [ 'slug' => $slugcontrato ], Response::HTTP_SEE_OTHER);
     }
 
     #[Route('/{id}', name: 'contrato_delete', methods: ['POST'])]
