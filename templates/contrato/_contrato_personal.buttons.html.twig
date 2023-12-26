@@ -5,12 +5,13 @@
     </a>
     <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
         <li>
-            <a class="dropdown-item" href="{{ path('contrato_personal_edit', {'slugcontrato':  personal_contrato.contrato_slug, 'slugpersonal':  personal_contrato.slug_personal })  }}">Editar personal</a>
+            <a class="dropdown-item" href="{{ path('contrato_personal_edit', {'slugcontrato':  personal_contrato.contrato_slug, 'slugpersonal':  personal_contrato.slug_personal }) }}">Editar
+                personal</a>
         </li>
         <li>
-            <button class="dropdown-item" data-bs-toggle="modal" data-bs-target="#personalContratoModal" id="retirar_personal_contrato" data-id="{{ personal_contrato.id }}" data-nombre-completo="{{ personal_contrato.nombre~' '~personal_contrato.apellido }}"
-                    data-fecha-ingreso="{{ personal_contrato.fechaIngreso }}" data-salario="{{ personal_contrato.salario }}" data-bono="{{ personal_contrato.bono }}"
-                    data-tipo-nomina-id="{{ personal_contrato.tipo_nomina_id }}">Retirar personal
+            <button class="dropdown-item" data-bs-toggle="modal" data-bs-target="#personalContratoModal" id="retirar_personal_contrato"
+                    onclick="$('#id_personal').val('{{ personal_contrato.personal_id }}'); $('#nombre_personal').val('{{ personal_contrato.nombre~' '~personal_contrato.apellido }}');$('#id_personal_contrato').val('{{ personal_contrato.personal_id }}');">
+                Retirar personal
             </button>
         </li>
     </ul>

@@ -1,5 +1,5 @@
 <form method="post" action="{{ path('user_delete', {'slug': user.slug}) }}" id="deleteUserForm" >
     <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ user.id) }}">
-    <button class="btn btn-danger mt-3 ms-3" type="button" id="delete-user" >Borrar usuario</button>
+    <button class="btn btn-danger mt-3" type="button" id="delete-user" >Borrar usuario</button>
 </form>
 

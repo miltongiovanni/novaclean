@@ -52,3 +52,25 @@ $(document).on('change', '#personal_id', function () {
         }
     });
 });
+
+$(document).on('change', '#fecha_retiro', function () {
+    let slug_contrato = document.getElementById('retirarPersonalContrato').dataset.contratoSlug;
+    let personal_id = document.getElementById('id_personal').value;
+    let formData = new FormData();
+    formData.append('personal_id', personal_id);
+    $.ajax({
+        url: '/buscar-personal-slug',
+        type: 'POST',
+        data: formData,
+        dataType: 'json',
+        processData: false,
+        contentType: false,
+        success: function (response) {
+            document.getElementById('retirarPersonalContrato').action = '/contrato/' + slug_contrato + '/personal/' + response.slug + '/retirar';
+            $('#submit_retirar_contrato_personal').prop('disabled', false);
+        },
+        error: function () {
+            alert("Vous avez un GROS problème");
+        }
+    });
+});

@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Modificar Contrato{% endblock %}
+{% block title %}{% if action == 'renovar' %}Renovar Contrato{% else %}Modificar Contrato{% endif %}{% endblock %}
 {% block stylesheets %}
     {{ parent() }}
     {{ encore_entry_link_tags('contrato') }}
@@ -15,7 +15,7 @@
 {% endblock %}
 
 {% block content %}
-    <h2 class="ps-3">Editar Contrato</h2>
+    <h2 class="ps-3">{% if action == 'renovar' %}Renovar Contrato{% else %}Editar Contrato{% endif %}</h2>
 
     {{ include('contrato/_form.html.twig', {'button_label': 'Update'}) }}
 
@@ -25,5 +25,5 @@
         </div>
     </div>
 
-    {{ include('contrato/_delete_form.html.twig') }}
+    {#{{ include('contrato/_delete_form.html.twig') }}#}
 {% endblock %}

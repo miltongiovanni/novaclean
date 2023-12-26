@@ -8,7 +8,10 @@
             <a class="dropdown-item" href="{{ path('contrato_edit', {'slug': contrato.slug}) }}">Editar</a>
         </li>
         <li>
-            <a class="dropdown-item" href="{{ path('contrato_personal', {'slug': contrato.slug}) }}">Personal contrato</a>
+            <a class="dropdown-item" href="{{ path('contrato_personal', {'slug': contrato.slug}) }}">Personal</a>
+        </li>
+        <li>
+            <a class="dropdown-item" href="{{ path('contrato_renovar', {'slug': contrato.slug}) }}">Renovar</a>
         </li>
     </ul>
 </div>

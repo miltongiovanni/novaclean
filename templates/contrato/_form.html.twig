@@ -8,7 +8,7 @@
                     >
                         <input type="hidden" name="action" id="action" value="{{ action }}">
                         <div class="form-body">
-                            <div class="row">
+                            <div class="row  {{ action == 'renovar' ? 'd-none' : '' }}">
                                 <div class="col-12 mb-3">
                                     <div class="form-check form-switch">
                                         <input class="form-check-input" type="checkbox" name="activo"
@@ -18,7 +18,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="row my-3">
+                            <div class="row my-3 {{ action == 'renovar' ? 'd-none' : '' }}">
                                 <div class="col-12">
                                     <h4>Información general</h4>
                                 </div>
@@ -29,7 +29,7 @@
                                         <label for="contrato_id" class="form-label">No. Contrato</label>
                                         <div class="position-relative has-validation">
                                             <input type="text" class="form-control" id="contrato_id" name="contrato_id" required data-parsley-required="true"
-                                                   value="{{ contrato.contrato_id ?? '' }}">
+                                                   value="{{ contrato.contrato_id ?? '' }}" {{ action == 'renovar' ? 'readonly' : '' }}>
                                         </div>
                                     </div>
                                 </div>
@@ -37,7 +37,7 @@
                                     <div class="form-group">
                                         <label for="cliente_id">Cliente</label>
                                         <div class="position-relative has-validation">
-                                            <select class="form-select" id="cliente_id" name="cliente_id" data-parsley required>
+                                            <select class="form-select" id="cliente_id" name="cliente_id" data-parsley {{ action == 'renovar' ? 'disabled' : '' }} required>
                                                 <option value="" disabled {% if action=='insert' %}selected{% endif %}>
                                                     Escoja el cliente
                                                 </option>
@@ -51,7 +51,7 @@
                                 <div class="col-4 mb-3">
                                     <div class="form-group">
                                         <label for="supervisor_id">Supervisor</label>
-                                        <select class="form-select" id="supervisor_id" name="supervisor_id" required>
+                                        <select class="form-select" id="supervisor_id" name="supervisor_id" {{ action == 'renovar' ? 'disabled' : '' }} required>
                                             <option value="" disabled {% if action=='insert' %}selected{% endif %}>
                                                 Escoja el/la supervisor(a)
                                             </option>
@@ -61,7 +61,7 @@
                                         </select>
                                     </div>
                                 </div>
-                                <div class="col-2 mb-3">
+                                <div class="col-2 mb-3 {{ action == 'renovar' ? 'd-none' : '' }}">
                                     <div class="form-group">
                                         <label for="f_inicio">Fecha inicio</label>
                                         <div class="position-relative has-validation">
@@ -77,21 +77,21 @@
                                         <div class="position-relative has-validation">
                                             <input type="date" class="form-control" id="f_fin" name="f_fin" required data-parsley-required="true" min="1940-01-01"
                                                    max="3000-12-31"
-                                                   value="{{ contrato.f_fin is defined ? contrato.f_fin|date("Y-m-d") : '' }}">
+                                                   value="{{ action != 'renovar' and contrato.f_fin is defined ? contrato.f_fin|date("Y-m-d") : '' }}">
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="row my-3">
+                            <div class="row my-3  {{ action == 'renovar' ? 'd-none' : '' }}">
                                 <div class="col-12">
                                     <h4>Información seguros</h4>
                                 </div>
                             </div>
-                            <div class="row">
+                            <div class="row  {{ action == 'renovar' ? 'd-none' : '' }}">
                                 <div class="col-3 mb-3">
                                     <div class="form-check form-switch">
                                         <input class="form-check-input" type="checkbox" name="tiene_poliza_salario"
-                                               value="1" {{ personal.tiene_poliza_salario is defined and personal.tiene_poliza_salario == true ? 'checked' : '' }} role="switch"
+                                               value="1" {{ contrato.tiene_poliza_salario is defined and contrato.tiene_poliza_salario == true ? 'checked' : '' }} role="switch"
                                                id="tiene_poliza_salario">
                                         <label class="form-check-label" for="tiene_poliza_salario">Póliza salario</label>
                                     </div>
@@ -99,13 +99,13 @@
                                 <div class="col-3 mb-3">
                                     <div class="form-check form-switch">
                                         <input class="form-check-input" type="checkbox" name="tiene_poliza_cumplimiento"
-                                               value="1" {{ personal.tiene_poliza_cumplimiento is defined and personal.tiene_poliza_cumplimiento == true ? 'checked' : '' }}
+                                               value="1" {{ contrato.tiene_poliza_cumplimiento is defined and contrato.tiene_poliza_cumplimiento == true ? 'checked' : '' }}
                                                role="switch" id="tiene_poliza_cumplimiento">
                                         <label class="form-check-label" for="tiene_poliza_cumplimiento">Póliza cumplimiento</label>
                                     </div>
                                 </div>
                             </div>
-                            <div class="row">
+                            <div class="row  {{ action == 'renovar' ? 'd-none' : '' }}">
                                 <div class="col-2 mb-3">
                                     <div class="form-group">
                                         <label for="no_poliza">No. Póliza</label>
@@ -132,13 +132,13 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="row my-3">
+                            <div class="row my-3  {{ action == 'renovar' ? 'd-none' : '' }}">
                                 <div class="col-12">
                                     <h4>Otros</h4>
                                 </div>
                             </div>
-                            <div class="row">
-                                <div class="col-12 mb-3">
+                            <div class="row ">
+                                <div class="col-12 mb-3  {{ action == 'renovar' ? 'd-none' : '' }}">
                                     <div class="form-group">
                                         <label for="observaciones">Observaciones</label>
                                         <textarea class="form-control" id="observaciones" name="observaciones" rows="3">{{ contrato.observaciones ?? '' }}</textarea>

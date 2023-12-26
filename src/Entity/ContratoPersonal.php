@@ -139,6 +139,7 @@ class ContratoPersonal
             'activo' => $this->personal->isActivo(),
             'slug_personal' => $this->personal->getSlug()->toRfc4122(),
             'fechaIngreso' => $this->getFechaIngreso() != null ? $this->getFechaIngreso()->format('Y-m-d') : $this->getFechaIngreso(),
+            'fechaRetiro' => $this->getFechaRetiro() != null ? $this->getFechaRetiro()->format('Y-m-d') : $this->getFechaRetiro(),
             'salario' => $this->getSalarioBasico(),
             'bono' => $this->getBono(),
             'tipo_nomina' => $this->getTipoNomina()->getNombre(),

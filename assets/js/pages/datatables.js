@@ -435,7 +435,7 @@ $(document).ready(function () {
                 },
                 {
                     "targets": [8, 9],
-                    "className": 'dt-body-right'
+                    "className": 'dt-body-left'
                 },
                 {
                     "targets": [0, 7, 9],
@@ -523,12 +523,13 @@ $(document).ready(function () {
             {data: 'bono'},
             {data: 'tipo_nomina'},
             {data: 'fechaIngreso'},
+            {data: 'fechaRetiro'},
             {data: 'actions'}
         ],
         "columnDefs":
             [
                 {
-                    "targets": [6, 7],
+                    "targets": [8],
                     "className": 'dt-body-center'
                 },
                 {

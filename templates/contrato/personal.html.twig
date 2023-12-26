@@ -31,6 +31,7 @@
             <th>Bono</th>
             <th>Tipo Nómina</th>
             <th>F ingreso</th>
+            <th>F retiro</th>
             <th></th>
         </tr>
         </thead>
@@ -58,14 +59,28 @@
                 </div>
                 <div class="modal-body">
                     <div class="container-fluid">
-                        <div class="row">
+                        <form id="retirarPersonalContrato" data-contrato-slug="{{ contrato.slug }}" method="post">
+                            <div class="row mb-3">
+                                <div class="col-12 form-group">
+                                    <input type="hidden" id="id_personal" name="id_personal">
+                                    <input type="hidden" id="id_personal_contrato" name="id_personal_contrato">
+                                    <label for="nombre_personal">Nombre del trabajador</label>
+                                    <input class="form-control" type="text" id="nombre_personal" name="nombre_personal" readonly>
+                                </div>
 
-                        </div>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col-12 form-group">
+                                    <label for="fecha_retiro" class="form-label">Fecha de retiro</label>
+                                    <input type="date" class="form-control" name="fecha_retiro" id="fecha_retiro" value="" data-parsley-required="true" required>
+                                </div>
+                            </div>
+                        </form>
                     </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Anular</button>
-                    <button type="submit" class="btn btn-primary" id="submit_contrato_personal">Guardar</button>
+                    <button type="submit" form="retirarPersonalContrato" class="btn btn-primary" disabled id="submit_retirar_contrato_personal">Confirmar</button>
                 </div>
             </div>
         </div>
