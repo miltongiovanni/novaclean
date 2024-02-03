@@ -127,11 +127,22 @@ class Personal
     #[ORM\Column(type: UuidType::NAME, nullable: true)]
     private ?Uuid $slug;
 
+    #[ORM\Column(nullable: true)]
+    private ?int $coorserpark = null;
+
+    #[ORM\OneToMany(mappedBy: 'personal', targetEntity: Prestamo::class)]
+    private Collection $prestamos;
+
+    #[ORM\OneToMany(mappedBy: 'personal_id', targetEntity: NovedadesNomina::class)]
+    private Collection $novedadesNominas;
+
     public function __construct()
     {
         $this->contratos = new ArrayCollection();
         $this->contratoPersonals = new ArrayCollection();
         $this->slug = Uuid::v7();
+        $this->prestamos = new ArrayCollection();
+        $this->novedadesNominas = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -587,6 +598,78 @@ class Personal
     public function setSlug(?Uuid $slug): static
     {
         $this->slug = $slug;
+
+        return $this;
+    }
+
+    public function getCoorserpark(): ?int
+    {
+        return $this->coorserpark;
+    }
+
+    public function setCoorserpark(?int $coorserpark): static
+    {
+        $this->coorserpark = $coorserpark;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Prestamo>
+     */
+    public function getPrestamos(): Collection
+    {
+        return $this->prestamos;
+    }
+
+    public function addPrestamo(Prestamo $prestamo): static
+    {
+        if (!$this->prestamos->contains($prestamo)) {
+            $this->prestamos->add($prestamo);
+            $prestamo->setPersonal($this);
+        }
+
+        return $this;
+    }
+
+    public function removePrestamo(Prestamo $prestamo): static
+    {
+        if ($this->prestamos->removeElement($prestamo)) {
+            // set the owning side to null (unless already changed)
+            if ($prestamo->getPersonal() === $this) {
+                $prestamo->setPersonal(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, NovedadesNomina>
+     */
+    public function getNovedadesNominas(): Collection
+    {
+        return $this->novedadesNominas;
+    }
+
+    public function addNovedadesNomina(NovedadesNomina $novedadesNomina): static
+    {
+        if (!$this->novedadesNominas->contains($novedadesNomina)) {
+            $this->novedadesNominas->add($novedadesNomina);
+            $novedadesNomina->setPersonalId($this);
+        }
+
+        return $this;
+    }
+
+    public function removeNovedadesNomina(NovedadesNomina $novedadesNomina): static
+    {
+        if ($this->novedadesNominas->removeElement($novedadesNomina)) {
+            // set the owning side to null (unless already changed)
+            if ($novedadesNomina->getPersonalId() === $this) {
+                $novedadesNomina->setPersonalId(null);
+            }
+        }
 
         return $this;
     }
