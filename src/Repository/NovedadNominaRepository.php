@@ -2,23 +2,23 @@
 
 namespace App\Repository;
 
-use App\Entity\NovedadesNomina;
+use App\Entity\NovedadNomina;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @extends ServiceEntityRepository<NovedadesNomina>
+ * @extends ServiceEntityRepository<NovedadNomina>
  *
- * @method NovedadesNomina|null find($id, $lockMode = null, $lockVersion = null)
- * @method NovedadesNomina|null findOneBy(array $criteria, array $orderBy = null)
- * @method NovedadesNomina[]    findAll()
- * @method NovedadesNomina[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method NovedadNomina|null find($id, $lockMode = null, $lockVersion = null)
+ * @method NovedadNomina|null findOneBy(array $criteria, array $orderBy = null)
+ * @method NovedadNomina[]    findAll()
+ * @method NovedadNomina[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class NovedadesNominaRepository extends ServiceEntityRepository
+class NovedadNominaRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, NovedadesNomina::class);
+        parent::__construct($registry, NovedadNomina::class);
     }
 
 //    /**

@@ -1,0 +1,64 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Parámetros Nómina{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('datatables') }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('datatables') }}
+{% endblock %}
+
+{% block content %}
+    <h2>Parámetros Nómina</h2>
+    <div class="row my-3">
+        <div class="offset-10 col-2">
+            <a class="btn btn-primary w-100" href="{{ path('parametro_new') }}">Crear parámetro</a>
+        </div>
+    </div>
+
+    <table class="table" id="parametrosNominaDatatable">
+        <thead>
+        <tr>
+            <th>Id</th>
+            <th>Parámetro</th>
+            <th>Valor</th>
+            <th>Fecha creación</th>
+            <th>Fecha actualización</th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for parametro in parametros %}
+            <tr>
+                <td>{{ parametro.id }}</td>
+                <td>{{ parametro.parametro }}</td>
+                <td>{{ parametro.valor }}</td>
+                <td>{{ parametro.fechaCreacion ? parametro.fechaCreacion|date('d-m-Y') : '' }}</td>
+                <td>{{ parametro.fechaActualizacion ? parametro.fechaActualizacion|date('d-m-Y') : '' }}</td>
+                <td class="pe-0">
+                    <div class="dropdown">
+                        <a class="btn btn-primary dropdown-toggle w-100" href="#" role="button" id="dropdownMenuLink"
+                           data-bs-toggle="dropdown" aria-expanded="false">
+                            Acciones
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                            <li>
+                                <a class="dropdown-item" href="{{ path('parametro_edit', {'id': parametro.id}) }}">Editar</a>
+                            </li>
+                        </ul>
+                    </div>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="9" class="text-center">No hay registros</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}

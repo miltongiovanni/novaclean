@@ -2,12 +2,12 @@
 
 namespace App\Entity;
 
-use App\Repository\ParametrosNominaRepository;
+use App\Repository\ParametroNominaRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: ParametrosNominaRepository::class)]
-class ParametrosNomina
+#[ORM\Entity(repositoryClass: ParametroNominaRepository::class)]
+class ParametroNomina
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]

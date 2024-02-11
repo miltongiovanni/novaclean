@@ -2,12 +2,12 @@
 
 namespace App\Entity;
 
-use App\Repository\NovedadesNominaRepository;
+use App\Repository\NovedadNominaRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: NovedadesNominaRepository::class)]
-class NovedadesNomina
+#[ORM\Entity(repositoryClass: NovedadNominaRepository::class)]
+class NovedadNomina
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]

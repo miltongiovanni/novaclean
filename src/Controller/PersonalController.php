@@ -235,6 +235,8 @@ class PersonalController extends AbstractController
             $personal->setCursoEspecializado($cursoEspecializadoRepository->find($curso_especializado));
         }
 
+        $coorserpark = trim($request->request->get('coorserpark'));
+        $personal->setCoorserpark($coorserpark != '' ? $coorserpark : null);
 
         if ($action == 'insert') {
             $personal->setFechaCreacion(Carbon::now());

@@ -123,6 +123,19 @@
                     </ul>
                 </li>
             {% endif %}
+            {% if is_granted('VIEW', 'NÓMINA')  %}
+                <li class="sidebar-item  {{ is_active('parametros_nomina') }}  has-sub">
+                    <a href="#" class='sidebar-link'>
+                        <i class="bi bi-coin"></i>
+                        <span>Nómina</span>
+                    </a>
+                    <ul class="submenu {{ is_active('parametros_nomina') }}">
+                        <li class="submenu-item {{ is_active('parametros_nomina') }}">
+                            <a href="{{ path('parametros_nomina') }}">Parámetros</a>
+                        </li>
+                    </ul>
+                </li>
+            {% endif %}
             {% if is_granted('VIEW', 'COMPRAS')  %}
             <li class="sidebar-item  has-sub">
                 <a href="#" class='sidebar-link'>

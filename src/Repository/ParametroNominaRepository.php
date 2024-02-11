@@ -2,23 +2,23 @@
 
 namespace App\Repository;
 
-use App\Entity\ParametrosNomina;
+use App\Entity\ParametroNomina;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @extends ServiceEntityRepository<ParametrosNomina>
+ * @extends ServiceEntityRepository<ParametroNomina>
  *
- * @method ParametrosNomina|null find($id, $lockMode = null, $lockVersion = null)
- * @method ParametrosNomina|null findOneBy(array $criteria, array $orderBy = null)
- * @method ParametrosNomina[]    findAll()
- * @method ParametrosNomina[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method ParametroNomina|null find($id, $lockMode = null, $lockVersion = null)
+ * @method ParametroNomina|null findOneBy(array $criteria, array $orderBy = null)
+ * @method ParametroNomina[]    findAll()
+ * @method ParametroNomina[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class ParametrosNominaRepository extends ServiceEntityRepository
+class ParametroNominaRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, ParametrosNomina::class);
+        parent::__construct($registry, ParametroNomina::class);
     }
 
 //    /**

@@ -96,7 +96,7 @@
                                     <div class="form-group">
                                         <label for="telefono">Teléfono</label>
                                         <div class="position-relative has-validation">
-                                            <input type="text" class="form-control" id="telefono" name="telefono" value="{{ personal.telefono ?? '' }}">
+                                            <input type="text" class="form-control" id="telefono"  name="telefono" value="{{ personal.telefono ?? '' }}">
                                         </div>
                                     </div>
                                 </div>
@@ -187,23 +187,6 @@
                                         </div>
                                     </div>
                                 </div>
-                                {#<div class="col-2 mb-3">
-                                    <div class="form-group">
-                                        <label for="salario_basico">Salario Básico</label>
-                                        <div class="position-relative has-validation">
-                                            <input type="text" class="form-control" id="salario_basico" name="salario_basico" required data-parsley-required="true"
-                                                   value="{{ personal.salarioBasico ?? '' }}">
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-2 mb-3">
-                                    <div class="form-group">
-                                        <label for="bono">Bono</label>
-                                        <div class="position-relative has-validation">
-                                            <input type="text" class="form-control" id="bono" name="bono"  value="{{ personal.bono ?? '' }}">
-                                        </div>
-                                    </div>
-                                </div>#}
                                 <div class="col-2 mb-3">
                                     <div class="form-group">
                                         <label for="tipo_cuenta">Tipo de cuenta</label>
@@ -243,21 +226,6 @@
                                         </fieldset>
                                     </div>
                                 </div>
-                                {#<div class="col-2 mb-3">
-                                    <div class="form-group">
-                                        <label for="tipo_nomina">Tipo de nómina</label>
-                                        <fieldset class="form-group">
-                                            <select class="form-select" id="tipo_nomina" name="tipo_nomina" required>
-                                                <option value="" disabled {% if action=='insert' %}selected{% endif %}>
-                                                    Escoja tipo de nómina
-                                                </option>
-                                                {% for tipoNomina in tiposNomina %}
-                                                    <option value="{{ tipoNomina.id }}" {{ personal is defined and personal.tipoNomina.id == tipoNomina.id ? 'selected' : '' }} >{{ tipoNomina.nombre }} </option>
-                                                {% endfor %}
-                                            </select>
-                                        </fieldset>
-                                    </div>
-                                </div>#}
                             </div>
                             <div class="row my-3">
                                 <div class="col-12">
@@ -375,6 +343,14 @@
                                                 {% endfor %}
                                             </select>
                                         </fieldset>
+                                    </div>
+                                </div>
+                                <div class="col-2 mb-3">
+                                    <div class="form-group">
+                                        <label for="coorserpark">Coorserpark</label>
+                                        <div class="position-relative has-validation">
+                                            <input type="text" data-parsley-type="digits" class="form-control" id="coorserpark" name="coorserpark" value="{{ personal.coorserpark ?? '' }}">
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="col-12 d-flex justify-content-end mt-3">

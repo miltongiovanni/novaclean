@@ -133,7 +133,7 @@ class Personal
     #[ORM\OneToMany(mappedBy: 'personal', targetEntity: Prestamo::class)]
     private Collection $prestamos;
 
-    #[ORM\OneToMany(mappedBy: 'personal_id', targetEntity: NovedadesNomina::class)]
+    #[ORM\OneToMany(mappedBy: 'personal_id', targetEntity: NovedadNomina::class)]
     private Collection $novedadesNominas;
 
     public function __construct()
@@ -645,14 +645,14 @@ class Personal
     }
 
     /**
-     * @return Collection<int, NovedadesNomina>
+     * @return Collection<int, NovedadNomina>
      */
     public function getNovedadesNominas(): Collection
     {
         return $this->novedadesNominas;
     }
 
-    public function addNovedadesNomina(NovedadesNomina $novedadesNomina): static
+    public function addNovedadesNomina(NovedadNomina $novedadesNomina): static
     {
         if (!$this->novedadesNominas->contains($novedadesNomina)) {
             $this->novedadesNominas->add($novedadesNomina);
@@ -662,7 +662,7 @@ class Personal
         return $this;
     }
 
-    public function removeNovedadesNomina(NovedadesNomina $novedadesNomina): static
+    public function removeNovedadesNomina(NovedadNomina $novedadesNomina): static
     {
         if ($this->novedadesNominas->removeElement($novedadesNomina)) {
             // set the owning side to null (unless already changed)

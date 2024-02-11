@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Crear parámetro nómina{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('parsley') }}
+
+{% endblock %}
+
+{% block content %}
+    <h2 class="ps-3">Crear parámetro nómina</h2>
+
+    {{ include('nomina/_form_parametro_nomina.html.twig') }}
+
+    <div class="row my-3">
+        <div class="offset-4 col-2">
+            <a class="btn btn-primary w-100" href="{{ path('parametros_nomina') }}">Volver a la lista</a>
+        </div>
+    </div>
+
+{% endblock %}
