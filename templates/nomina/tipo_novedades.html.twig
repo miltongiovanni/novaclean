@@ -13,32 +13,32 @@
 {% endblock %}
 
 {% block content %}
-    <h2>Parámetros Nómina</h2>
+    <h2>Tipo novedad Nómina</h2>
     <div class="row my-3">
         <div class="offset-10 col-2">
-            <a class="btn btn-primary w-100" href="{{ path('parametro_new') }}">Crear parámetro</a>
+            <a class="btn btn-primary w-100" href="{{ path('tipo_novedad_nomina_new') }}">Crear parámetro</a>
         </div>
     </div>
 
-    <table class="table table-striped" id="parametrosNominaDatatable">
+    <table class="table table-striped" id="tiposNovedadesNominaDatatable">
         <thead>
         <tr>
             <th>Id</th>
-            <th>Parámetro</th>
-            <th>Valor</th>
+            <th>Descripción</th>
+            <th>Modificado por</th>
             <th>Fecha creación</th>
             <th>Fecha actualización</th>
             <th></th>
         </tr>
         </thead>
         <tbody>
-        {% for parametro in parametros %}
+        {% for tipo_novedad in tipos_novedades %}
             <tr>
-                <td>{{ parametro.id }}</td>
-                <td>{{ parametro.parametro }}</td>
-                <td>{{ parametro.valor }}</td>
-                <td>{{ parametro.fechaCreacion ? parametro.fechaCreacion|date('d-m-Y') : '' }}</td>
-                <td>{{ parametro.fechaActualizacion ? parametro.fechaActualizacion|date('d-m-Y') : '' }}</td>
+                <td>{{ tipo_novedad.id }}</td>
+                <td>{{ tipo_novedad.descripcion }}</td>
+                <td>{{ tipo_novedad.user.nombre~' '~ tipo_novedad.user.apellido}}</td>
+                <td>{{ tipo_novedad.fechaCreacion ? tipo_novedad.fechaCreacion|date('d-m-Y') : '' }}</td>
+                <td>{{ tipo_novedad.fechaActualizacion ? tipo_novedad.fechaActualizacion|date('d-m-Y') : '' }}</td>
                 <td class="pe-0">
                     <div class="dropdown">
                         <a class="btn btn-primary dropdown-toggle w-100" href="#" role="button" id="dropdownMenuLink"
@@ -47,7 +47,7 @@
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
                             <li>
-                                <a class="dropdown-item" href="{{ path('parametro_edit', {'id': parametro.id}) }}">Editar</a>
+                                <a class="dropdown-item" href="{{ path('tipo_novedad_nomina_edit', {'id': tipo_novedad.id}) }}">Editar</a>
                             </li>
                         </ul>
                     </div>

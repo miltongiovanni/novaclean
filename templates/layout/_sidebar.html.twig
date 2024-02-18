@@ -124,14 +124,17 @@
                 </li>
             {% endif %}
             {% if is_granted('VIEW', 'NÓMINA')  %}
-                <li class="sidebar-item  {{ is_active('parametros_nomina') }}  has-sub">
+                <li class="sidebar-item  {{ is_active('parametros_nomina') }} {{ is_active('tipos_novedad_nomina') }} has-sub">
                     <a href="#" class='sidebar-link'>
                         <i class="bi bi-coin"></i>
                         <span>Nómina</span>
                     </a>
-                    <ul class="submenu {{ is_active('parametros_nomina') }}">
+                    <ul class="submenu {{ is_active('parametros_nomina') }} {{ is_active('tipos_novedad_nomina') }}">
                         <li class="submenu-item {{ is_active('parametros_nomina') }}">
                             <a href="{{ path('parametros_nomina') }}">Parámetros</a>
+                        </li>
+                        <li class="submenu-item {{ is_active('tipos_novedad_nomina') }}">
+                            <a href="{{ path('tipos_novedad_nomina') }}">Tipo novedad</a>
                         </li>
                     </ul>
                 </li>

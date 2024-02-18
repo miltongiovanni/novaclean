@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Editar parámetro de nómina{% endblock %}
+{% block title %}Editar tipo novedad de nómina{% endblock %}
 
 {% block stylesheets %}
     {{ parent() }}
@@ -16,11 +16,11 @@
 {% block content %}
     <div class="row">
         <div class="col-12">
-            <h2 class="ps-4">Editar parámetro de nómina</h2>
+            <h2 class="ps-4">Editar tipo novedad de nómina</h2>
         </div>
     </div>
 
-    {{ include('nomina/_form_parametro_nomina.html.twig', {'button_label': 'Update'}) }}
+    {{ include('nomina/_form_tipo_novedad_nomina.html.twig', {'button_label': 'Update'}) }}
 
     <div class="row my-3">
         <div class="col-2">

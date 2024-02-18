@@ -558,5 +558,40 @@ $(document).ready(function () {
 
         },
     });
+
+    let tiposNovedadesNominaDatatable = $("#tiposNovedadesNominaDatatable").DataTable({
+        "columnDefs":
+            [
+                {
+                    "targets": [0, 3, 4, 5],
+                    "className": 'dt-body-center'
+                },
+                {
+                    "targets": [5],
+                    "orderable": false,
+                    "className": 'col-2'
+                },
+            ],
+        lengthMenu: [
+            [10, 30, 50, -1],
+            [10, 30, 50, 'Todo'],
+        ],
+        "language": {
+            "lengthMenu": "Mostrando _MENU_ datos por página",
+            "zeroRecords": "Lo siento no encontró nada",
+            "info": "Mostrando página _PAGE_ de _PAGES_",
+            "infoEmpty": "No hay datos disponibles",
+            "search": "Búsqueda:",
+            "paginate": {
+                "first": "Primero",
+                "last": "Último",
+                "next": "Siguiente",
+                "previous": "Anterior"
+            },
+            "infoFiltered": "(Filtrado de _MAX_ en total)"
+
+        },
+    });
+
 });
 
