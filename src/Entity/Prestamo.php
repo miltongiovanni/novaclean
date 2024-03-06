@@ -30,11 +30,14 @@ class Prestamo
     #[ORM\JoinColumn(nullable: false)]
     private ?User $responsable = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $estado = null;
+    #[ORM\Column]
+    private ?bool $estado = null;
 
     #[ORM\OneToMany(mappedBy: 'prestamo', targetEntity: AbonoPrestamo::class)]
     private Collection $abonoPrestamos;
+
+    #[ORM\Column]
+    private ?int $cuotas = null;
 
     public function __construct()
     {
@@ -94,12 +97,12 @@ class Prestamo
         return $this;
     }
 
-    public function getEstado(): ?string
+    public function isEstado(): ?bool
     {
         return $this->estado;
     }
 
-    public function setEstado(string $estado): static
+    public function setEstado(bool $estado): self
     {
         $this->estado = $estado;
 
@@ -132,6 +135,18 @@ class Prestamo
                 $abonoPrestamo->setPrestamo(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getCuotas(): ?int
+    {
+        return $this->cuotas;
+    }
+
+    public function setCuotas(int $cuotas): static
+    {
+        $this->cuotas = $cuotas;
 
         return $this;
     }

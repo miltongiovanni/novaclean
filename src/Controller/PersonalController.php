@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Personal;
+use App\Entity\Prestamo;
 use App\Form\PersonalType;
 use App\Repository\AfcRepository;
 use App\Repository\AfpRepository;
@@ -10,6 +11,7 @@ use App\Repository\CargoRepository;
 use App\Repository\CursoEspecializadoRepository;
 use App\Repository\EpsRepository;
 use App\Repository\PersonalRepository;
+use App\Repository\PrestamoRepository;
 use App\Repository\SexoRepository;
 use App\Repository\TallaBotasRepository;
 use App\Repository\TallaCalzadoRepository;
@@ -32,10 +34,13 @@ use Symfony\Component\Uid\Uuid;
 class PersonalController extends AbstractController
 {
     private PersonalRepository $personalRepository;
+    private PrestamoRepository $prestamoRepository;
 
-    public function __construct(PersonalRepository $personalRepository)
+
+    public function __construct(PersonalRepository $personalRepository, PrestamoRepository $prestamoRepository)
     {
         $this->personalRepository = $personalRepository;
+        $this->prestamoRepository = $prestamoRepository;
     }
 
     #[Route('/', name: 'personal_index', methods: ['GET'])]
@@ -48,7 +53,7 @@ class PersonalController extends AbstractController
         ]);
     }
 
-    #[Route('/nuevo', name: 'personal_new', methods: ['GET', 'POST'])]
+    #[Route('/nuevo/', name: 'personal_new', methods: ['GET', 'POST'])]
     public function new(Request                      $request, SexoRepository $sexoRepository, TipoNominaRepository $tipoNominaRepository, AfpRepository $afpRepository,
                         EpsRepository                $epsRepository, AfcRepository $afcRepository, TipoCuentaRepository $tipoCuentaRepository, TallaUniformeRepository $tallaUniformeRepository,
                         TallaBotasRepository         $tallaBotasRepository, CargoRepository $cargoRepository, TallaGuantesRepository $tallaGuantesRepository,
@@ -88,7 +93,7 @@ class PersonalController extends AbstractController
         ]);
     }
 
-    #[Route('/{slug}', name: 'personal_show', methods: ['GET'])]
+    #[Route('/{slug}/ver', name: 'personal_show', methods: ['GET'])]
     public function show(string $slug): Response
     {
         $personal = $this->personalRepository->findOneBy(['slug' => Uuid::fromString($slug) ]);
@@ -97,7 +102,7 @@ class PersonalController extends AbstractController
         ]);
     }
 
-    #[Route('/lista', name: 'personal_lista', methods: ['POST'])]
+    #[Route('/lista/', name: 'personal_lista', methods: ['POST'])]
     public function lista(): JsonResponse
     {
         $personals = $this->personalRepository->findAll();
@@ -124,7 +129,7 @@ class PersonalController extends AbstractController
         return $this->json($return);
     }
 
-    #[Route('/{slug}/editar', name: 'personal_edit', methods: ['GET'])]
+    #[Route('/{slug}/editar/', name: 'personal_edit', methods: ['GET'])]
     public function edit(Request                      $request, string $slug, SexoRepository $sexoRepository, AfpRepository $afpRepository,
                          EpsRepository                $epsRepository, AfcRepository $afcRepository, TipoCuentaRepository $tipoCuentaRepository, TallaUniformeRepository $tallaUniformeRepository,
                          TallaBotasRepository         $tallaBotasRepository, CargoRepository $cargoRepository, TallaGuantesRepository $tallaGuantesRepository,
@@ -167,7 +172,7 @@ class PersonalController extends AbstractController
     }
 
 
-    #[Route('/{slug}/actualizar', name: 'personal_update', methods: ['POST'])]
+    #[Route('/{slug}/actualizar/', name: 'personal_update', methods: ['POST'])]
     public function update(Request               $request, string $slug, PersonalRepository $personalRepository, EntityManagerInterface $entityManager, SexoRepository $sexoRepository,
                            AfpRepository $afpRepository, EpsRepository $epsRepository, AfcRepository $afcRepository,
                            TipoCuentaRepository  $tipoCuentaRepository, TallaUniformeRepository $tallaUniformeRepository, TallaBotasRepository $tallaBotasRepository,
@@ -255,7 +260,7 @@ class PersonalController extends AbstractController
         return $this->redirectToRoute('personal_index', [], Response::HTTP_SEE_OTHER);
     }
 
-    #[Route('/{slug}/activar', name: 'personal_activate', methods: ['GET'])]
+    #[Route('/{slug}/activar/', name: 'personal_activate', methods: ['GET'])]
     public function activate(Request $request, string $slug, EntityManagerInterface $entityManager, PersonalRepository $personalRepository): Response
     {
         $personal = $personalRepository->findOneBy(['slug' => Uuid::fromString($slug) ]);
@@ -270,7 +275,7 @@ class PersonalController extends AbstractController
         return $this->redirectToRoute('personal_index', [], Response::HTTP_SEE_OTHER);
 
     }
-    #[Route('/{slug}/desactivar', name: 'personal_deactivate', methods: ['GET'])]
+    #[Route('/{slug}/desactivar/', name: 'personal_deactivate', methods: ['GET'])]
     public function deactivate(Request $request, string $slug, EntityManagerInterface $entityManager, PersonalRepository $personalRepository): Response
     {
         $personal = $personalRepository->findOneBy(['slug' => Uuid::fromString($slug) ]);
@@ -285,7 +290,7 @@ class PersonalController extends AbstractController
         return $this->redirectToRoute('personal_index', [], Response::HTTP_SEE_OTHER);
 
     }
-    #[Route('/{slug}/borrar', name: 'personal_delete', methods: ['POST'])]
+    #[Route('/{slug}/borrar/', name: 'personal_delete', methods: ['POST'])]
     public function delete(Request $request, string $slug, PersonalRepository $personalRepository): Response
     {
         $personal = $this->personalRepository->findOneBy(['slug' => Uuid::fromString($slug) ]);
@@ -297,7 +302,7 @@ class PersonalController extends AbstractController
     }
 
 
-    #[Route('/{idContrato}/lista', name: 'personal_contrato_lista', methods: ['POST'])]
+    #[Route('/{idContrato}/lista/', name: 'personal_contrato_lista', methods: ['POST'])]
     public function lista_contrato(): JsonResponse
     {
         $personals = $this->personalRepository->findAll();
@@ -323,4 +328,70 @@ class PersonalController extends AbstractController
 
         return $this->json($return);
     }
+
+
+    #[Route('/prestamo/', name: 'prestamo_personal_index', methods: ['GET'])]
+    public function prestamo_index(): Response
+    {
+        $prestamos = $this->prestamoRepository->findPrestamos();
+        return $this->render('personal/prestamo_index.html.twig', [
+            'prestamos' => $prestamos,
+        ]);
+    }
+    #[Route('/prestamo/nuevo/', name: 'prestamo_personal_new', methods: ['GET', 'POST'])]
+    public function prestamo_personal_new(Request $request): Response
+    {
+
+        return $this->render('personal/prestamo_new.html.twig', [
+            'action' => 'insert',
+            'id' => 0,
+        ]);
+    }
+
+    #[Route('/{id}/editar/', name: 'prestamo_personal_edit', methods: ['GET'])]
+    public function prestamo_personal_edit(Request $request, int $id): Response
+    {
+        $prestamo = $this->prestamoRepository->find($id);
+
+dd($prestamo);
+
+        return $this->render('personal/prestamo_edit.html.twig', [
+            'prestamo' => $prestamo,
+            'id' => $id,
+            'action' => 'update',
+        ]);
+    }
+
+
+    #[Route('/prestamo/{id}/actualizar/', name: 'prestamo_personal_update', methods: ['POST'])]
+    public function prestamo_personal_update(Request $request, EntityManagerInterface $entityManager, int $id): Response
+    {
+        $personal_id = trim($request->request->get('personal_id'));
+        $personal = $this->personalRepository->find($personal_id);
+
+        $prestamo = $this->prestamoRepository->find($id);
+        if (!$prestamo){
+            $prestamo = new Prestamo();
+        }
+        $prestamo->setPersonal($personal);
+        $prestamo->setFechaPrestamo(Carbon::createFromFormat('Y-m-d', trim($request->request->get('fecha_prestamo'))));
+        $prestamo->setMonto(trim($request->request->get('monto')));
+        $prestamo->setResponsable($this->getUser());
+        $prestamo->setEstado(true);
+        $prestamo->setCuotas(trim($request->request->get('cuotas')));
+        $action = $request->request->get('action');
+
+        $entityManager->persist($prestamo);
+
+        // actually executes the queries (i.e. the INSERT query)
+        $entityManager->flush();
+        if ($action == 'insert') {
+            $this->addFlash('success', 'Préstamo creado correctamente');
+        } else {
+            $this->addFlash('success', 'Préstamo actualizado correctamente');
+        }
+        return $this->redirectToRoute('prestamo_personal_index', [], Response::HTTP_SEE_OTHER);
+    }
+
+
 }

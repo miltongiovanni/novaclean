@@ -84,21 +84,23 @@
             </li>
             {% endif %}
             {% if is_granted('VIEW', 'PERSONAL')  %}
-                <li class="sidebar-item  {{ is_active('personal') }}  has-sub">
+                <li class="sidebar-item  {{ is_active('personal_index') }} {{ is_active('prestamo_personal_index') }} has-sub">
                     <a href="#" class='sidebar-link'>
                         <i class="bi bi-stack"></i>
                         <span>Personal</span>
                     </a>
-                    <ul class="submenu {{ is_active('personal_index') }}">
-                        <li class="submenu-item {{ is_active('personal') }}">
+                    <ul class="submenu {{ is_active('personal_index') }} {{ is_active('prestamo_personal_index') }}">
+                        <li class="submenu-item {{ is_active('personal_index') }}">
                             <a href="{{ path('personal_index') }}">Lista</a>
+                        </li>
+                        <li class="submenu-item {{ is_active('prestamo_personal_index') }}">
+                            <a href="{{ path('prestamo_personal_index') }}">Préstamos</a>
                         </li>
                     </ul>
                 </li>
             {% endif %}
             {% if is_granted('VIEW', 'CLIENTES')  %}
-
-                <li class="sidebar-item {{ is_active('clientes') }}  has-sub">
+                <li class="sidebar-item {{ is_active('clientes') }} has-sub">
                     <a href="#" class='sidebar-link'>
                         <i class="bi  bi-c-square"></i>
                         <span>Clientes</span>

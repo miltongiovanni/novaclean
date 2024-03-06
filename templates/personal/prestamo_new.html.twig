@@ -1,0 +1,28 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Creación Personal{% endblock %}
+{% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('sweetalert2') }}
+    {{ encore_entry_link_tags('prestamo-personal') }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('parsley') }}
+    {{ encore_entry_script_tags('sweetalert2') }}
+    {{ encore_entry_script_tags('prestamo-personal') }}
+{% endblock %}
+
+{% block content %}
+    <h2 class="ps-3">Creación de un préstamo personal</h2>
+
+    {{ include('personal/_prestamo.form.html.twig') }}
+
+    <div class="row my-3">
+        <div class="col-2">
+            <a class="btn btn-primary w-100" href="{{ path('prestamo_personal_index') }}">Volver a la lista</a>
+        </div>
+    </div>
+
+{% endblock %}

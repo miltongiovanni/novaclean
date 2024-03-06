@@ -1,0 +1,92 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Usuarios{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('datatables') }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('datatables') }}
+{% endblock %}
+
+{% block content %}
+    <h2>Lista de préstamos</h2>
+    <div class="row my-3">
+        <div class="offset-10 col-2">
+            <a class="btn btn-primary w-100" href="{{ path('prestamo_personal_new') }}">Agregar préstamo</a>
+        </div>
+        {% for flash_error in app.flashes('verify_email_error') %}
+            <div class="alert alert-danger" role="alert">{{ flash_error }}</div>
+        {% endfor %}
+    </div>
+
+    <table class="table table-striped" id="prestamoPersonalDatatable">
+        <thead>
+        <tr>
+            <th>Nombre completo</th>
+            <th>Fecha del préstamo</th>
+            <th>Monto</th>
+            <th>Cuotas</th>
+            <th>No. abonos</th>
+            <th>Valor abonos</th>
+            <th>Saldo</th>
+            <th>Cuotas pendientes</th>
+            <th class="text-center">Estado</th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for prestamo in prestamos %}
+            <tr>
+                <td>{{ prestamo.nombre_personal }}</td>
+                <td class="text-center">{{ prestamo.fecha_prestamo|date("Y-m-d") }}</td>
+                <td>{{ '$ ' }}{{ prestamo.monto|number_format  }}</td>
+                <td class="text-center">{{ prestamo.cuotas }}</td>
+                <td class="text-center">{{ prestamo.no_abonos }}</td>
+                <td>{{ '$ ' }}{{ prestamo.valor_abonos|number_format }}</td>
+                <td>{{ '$ ' }}{{ prestamo.saldo|number_format }}</td>
+                <td class="text-center">{{ prestamo.cuotas_pendientes }}</td>
+                <td class="text-center">
+                    {% if prestamo.estado == 1 %}
+                        <i class="bi bi-check-circle-fill activo"></i>
+                    {% else %}
+                        <i class="bi bi-x-circle-fill inactivo"></i>
+                    {% endif %}
+                </td>
+                <td class="pe-0">
+                    <div class="dropdown">
+                        <a class="btn btn-primary dropdown-toggle w-100" href="#" role="button" id="dropdownMenuLink"
+                           data-bs-toggle="dropdown" aria-expanded="false">
+                            Acciones
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                           {# {% if user.activo == 1 %}
+                                <li>
+                                    <a class="dropdown-item" href=" {{ path('user_deactivate', {'slug': user.slug.toRfc4122()}) }} ">Desactivar</a>
+                                </li>
+                            {% else %}
+                                <li>
+                                    <a class="dropdown-item" href=" {{ path('user_activate', {'slug': user.slug.toRfc4122()}) }} ">Activar</a>
+                                </li>
+                            {% endif %}
+                            <li>
+                                <a class="dropdown-item" href=" {{ path('user_edit', {'slug': user.slug.toRfc4122()}) }} ">Editar</a>
+                            </li>#}
+                        </ul>
+
+                    </div>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+
+{% endblock %}
