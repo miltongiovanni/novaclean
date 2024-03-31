@@ -348,13 +348,10 @@ class PersonalController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}/editar/', name: 'prestamo_personal_edit', methods: ['GET'])]
+    #[Route('/prestamo/{id}/editar/', name: 'prestamo_personal_edit', methods: ['GET'])]
     public function prestamo_personal_edit(Request $request, int $id): Response
     {
         $prestamo = $this->prestamoRepository->find($id);
-
-dd($prestamo);
-
         return $this->render('personal/prestamo_edit.html.twig', [
             'prestamo' => $prestamo,
             'id' => $id,

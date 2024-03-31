@@ -1,6 +1,6 @@
-{% extends '../base.html.twig' %}
+{% extends 'base.html.twig' %}
 
-{% block title %}Modificar Personal{% endblock %}
+{% block title %}Modificar Préstamo Personal{% endblock %}
 {% block stylesheets %}
     {{ parent() }}
     {{ encore_entry_link_tags('sweetalert2') }}
@@ -16,7 +16,7 @@
 {% block content %}
     <h2 class="ps-3">Modificar Personal</h2>
 
-    {{ include('personal/_form.html.twig', {'button_label': 'Update'}) }}
+    {{ include('personal/_prestamo.form.html.twig') }}
 
     <div class="row my-3">
         <div class="col-2">
