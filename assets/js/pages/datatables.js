@@ -12,7 +12,7 @@ $(document).ready(function () {
         "columnDefs":
             [
                 {
-                    "targets": [ 5, 6],
+                    "targets": [5, 6],
                     "className": 'dt-body-center'
                 },
                 {
@@ -20,20 +20,8 @@ $(document).ready(function () {
                     "orderable": false
                 }
             ],
-        "language": {
-            "lengthMenu": "Mostrando _MENU_ datos por página",
-            "zeroRecords": "Lo siento no encontró nada",
-            "info": "Mostrando página _PAGE_ de _PAGES_",
-            "infoEmpty": "No hay datos disponibles",
-            "search": "Búsqueda:",
-            "paginate": {
-                "first": "Primero",
-                "last": "Último",
-                "next": "Siguiente",
-                "previous": "Anterior"
-            },
-            "infoFiltered": "(Filtrado de _MAX_ en total)"
-
+        language: {
+            url: '//cdn.datatables.net/plug-ins/2.0.3/i18n/es-CO.json',
         },
     });
     let afcDatatable = $("#afcDatatable").DataTable({
@@ -48,21 +36,9 @@ $(document).ready(function () {
                     "orderable": false
                 }
             ],
-        "language": {
-            "lengthMenu": "Mostrando _MENU_ datos por página",
-            "zeroRecords": "Lo siento no encontró nada",
-            "info": "Mostrando página _PAGE_ de _PAGES_",
-            "infoEmpty": "No hay datos disponibles",
-            "search": "Búsqueda:",
-            "paginate": {
-                "first": "Primero",
-                "last": "Último",
-                "next": "Siguiente",
-                "previous": "Anterior"
-            },
-            "infoFiltered": "(Filtrado de _MAX_ en total)"
-
-        },
+        language: {
+        url: '//cdn.datatables.net/plug-ins/2.0.3/i18n/es-CO.json',
+    },
     });
     let afpDatatable = $("#afpDatatable").DataTable({
         "columnDefs":
@@ -76,20 +52,8 @@ $(document).ready(function () {
                     "orderable": false
                 }
             ],
-        "language": {
-            "lengthMenu": "Mostrando _MENU_ datos por página",
-            "zeroRecords": "Lo siento no encontró nada",
-            "info": "Mostrando página _PAGE_ de _PAGES_",
-            "infoEmpty": "No hay datos disponibles",
-            "search": "Búsqueda:",
-            "paginate": {
-                "first": "Primero",
-                "last": "Último",
-                "next": "Siguiente",
-                "previous": "Anterior"
-            },
-            "infoFiltered": "(Filtrado de _MAX_ en total)"
-
+        language: {
+            url: '//cdn.datatables.net/plug-ins/2.0.3/i18n/es-CO.json',
         },
     });
     let epsDatatable = $("#epsDatatable").DataTable({
@@ -108,20 +72,8 @@ $(document).ready(function () {
             [15, 30, 50, -1],
             [15, 30, 50, 'Todo'],
         ],
-        "language": {
-            "lengthMenu": "Mostrando _MENU_ datos por página",
-            "zeroRecords": "Lo siento no encontró nada",
-            "info": "Mostrando página _PAGE_ de _PAGES_",
-            "infoEmpty": "No hay datos disponibles",
-            "search": "Búsqueda:",
-            "paginate": {
-                "first": "Primero",
-                "last": "Último",
-                "next": "Siguiente",
-                "previous": "Anterior"
-            },
-            "infoFiltered": "(Filtrado de _MAX_ en total)"
-
+        language: {
+            url: '//cdn.datatables.net/plug-ins/2.0.3/i18n/es-CO.json',
         },
     });
     let cargoDatatable = $("#cargoDatatable").DataTable({
@@ -141,20 +93,8 @@ $(document).ready(function () {
             [15, 30, 50, -1],
             [15, 30, 50, 'Todo'],
         ],
-        "language": {
-            "lengthMenu": "Mostrando _MENU_ datos por página",
-            "zeroRecords": "Lo siento no encontró nada",
-            "info": "Mostrando página _PAGE_ de _PAGES_",
-            "infoEmpty": "No hay datos disponibles",
-            "search": "Búsqueda:",
-            "paginate": {
-                "first": "Primero",
-                "last": "Último",
-                "next": "Siguiente",
-                "previous": "Anterior"
-            },
-            "infoFiltered": "(Filtrado de _MAX_ en total)"
-
+        language: {
+            url: '//cdn.datatables.net/plug-ins/2.0.3/i18n/es-CO.json',
         },
     });
 
@@ -187,7 +127,7 @@ $(document).ready(function () {
 
     let personalDatatable = $("#personalDatatable").DataTable({
         ajax: {
-            url: '/personal/lista',
+            url: '/personal/lista/',
             type: "POST",
             dataType: "json"
         },
@@ -228,13 +168,13 @@ $(document).ready(function () {
         "columnDefs":
             [
                 {
-                    "targets": [ 0, 7, 8],
+                    "targets": [0, 7, 8],
                     "className": 'dt-body-center'
                 },
-               /* {
-                    "targets": [6, 7],
-                    "className": 'dt-body-right'
-                },*/
+                /* {
+                     "targets": [6, 7],
+                     "className": 'dt-body-right'
+                 },*/
                 {
                     "targets": [0, 7, 8],
                     "orderable": false,
@@ -288,7 +228,6 @@ $(document).ready(function () {
     });
 
 
-
     /* Formatting function for row details - modify as you need */
     function formatCliente(d) {
 
@@ -329,13 +268,13 @@ $(document).ready(function () {
         "columnDefs":
             [
                 {
-                    "targets": [ 0, 5, 6],
+                    "targets": [0, 5, 6],
                     "className": 'dt-body-center'
                 },
-               /* {
-                    "targets": [6, 7],
-                    "className": 'dt-body-right'
-                },*/
+                /* {
+                     "targets": [6, 7],
+                     "className": 'dt-body-right'
+                 },*/
                 {
                     "targets": [0, 5, 6],
                     "orderable": false,
@@ -346,20 +285,8 @@ $(document).ready(function () {
             [15, 30, 50, 'Todo'],
         ],
         "order": [[2, 'asc']],
-        "language": {
-            "lengthMenu": "Mostrando _MENU_ datos por página",
-            "zeroRecords": "Lo siento no encontró nada",
-            "info": "Mostrando página _PAGE_ de _PAGES_",
-            "infoEmpty": "No hay datos disponibles",
-            "search": "Búsqueda:",
-            "paginate": {
-                "first": "Primero",
-                "last": "Último",
-                "next": "Siguiente",
-                "previous": "Anterior"
-            },
-            "infoFiltered": "(Filtrado de _MAX_ en total)"
-
+        language: {
+            url: '//cdn.datatables.net/plug-ins/2.0.3/i18n/es-CO.json',
         },
         dom: 'Bfrtip',
         buttons: [
@@ -395,10 +322,10 @@ $(document).ready(function () {
         return (
             '<table style="padding-left:50px; width: 100%">' +
             '<tr>' +
-            '<th>Póliza de cumplimiento</th>' +'<th>Póliza de salario</th>' +'<th>Aseguradora</th>' +'<th>No. de póliza</th>' +'<th>Vencimiento póliza</th>' +
+            '<th>Póliza de cumplimiento</th>' + '<th>Póliza de salario</th>' + '<th>Aseguradora</th>' + '<th>No. de póliza</th>' + '<th>Vencimiento póliza</th>' +
             '</tr>' +
             '<tr>' +
-            '<td class="py-3">' + (d.tiene_poliza_cumplimiento === true ? 'SI' : 'NO') + '</td>' +'<td>' + (d.tiene_poliza_salario === true ? 'SI' : 'NO') + '</td>' +'<td>' + d.aseguradora + '</td>' +'<td>' + d.no_poliza + '</td>' +'<td>' + (d.vencimiento_poliza ?? '') + '</td>' +
+            '<td class="py-3">' + (d.tiene_poliza_cumplimiento === true ? 'SI' : 'NO') + '</td>' + '<td>' + (d.tiene_poliza_salario === true ? 'SI' : 'NO') + '</td>' + '<td>' + d.aseguradora + '</td>' + '<td>' + d.no_poliza + '</td>' + '<td>' + (d.vencimiento_poliza ?? '') + '</td>' +
             '</tr>' +
             '</table>'
         );
@@ -447,20 +374,8 @@ $(document).ready(function () {
             [15, 30, 50, 'Todo'],
         ],
         "order": [[1, 'asc']],
-        "language": {
-            "lengthMenu": "Mostrando _MENU_ datos por página",
-            "zeroRecords": "Lo siento no encontró nada",
-            "info": "Mostrando página _PAGE_ de _PAGES_",
-            "infoEmpty": "No hay datos disponibles",
-            "search": "Búsqueda:",
-            "paginate": {
-                "first": "Primero",
-                "last": "Último",
-                "next": "Siguiente",
-                "previous": "Anterior"
-            },
-            "infoFiltered": "(Filtrado de _MAX_ en total)"
-
+        language: {
+            url: '//cdn.datatables.net/plug-ins/2.0.3/i18n/es-CO.json',
         },
         dom: 'Bfrtip',
         buttons: [
@@ -468,7 +383,7 @@ $(document).ready(function () {
                 extend: 'excelHtml5',
                 text: 'Exportar a excel',
                 exportOptions: {
-                    columns: [ 1, 2, 3, 4, 5, 6, 7, 8 ]
+                    columns: [1, 2, 3, 4, 5, 6, 7, 8]
                 }
             }
         ]
@@ -542,20 +457,8 @@ $(document).ready(function () {
             [15, 30, 50, -1],
             [15, 30, 50, 'Todo'],
         ],
-        "language": {
-            "lengthMenu": "Mostrando _MENU_ datos por página",
-            "zeroRecords": "Lo siento no encontró nada",
-            "info": "Mostrando página _PAGE_ de _PAGES_",
-            "infoEmpty": "No hay datos disponibles",
-            "search": "Búsqueda:",
-            "paginate": {
-                "first": "Primero",
-                "last": "Último",
-                "next": "Siguiente",
-                "previous": "Anterior"
-            },
-            "infoFiltered": "(Filtrado de _MAX_ en total)"
-
+        language: {
+            url: '//cdn.datatables.net/plug-ins/2.0.3/i18n/es-CO.json',
         },
     });
 
@@ -576,20 +479,8 @@ $(document).ready(function () {
             [10, 30, 50, -1],
             [10, 30, 50, 'Todo'],
         ],
-        "language": {
-            "lengthMenu": "Mostrando _MENU_ datos por página",
-            "zeroRecords": "Lo siento no encontró nada",
-            "info": "Mostrando página _PAGE_ de _PAGES_",
-            "infoEmpty": "No hay datos disponibles",
-            "search": "Búsqueda:",
-            "paginate": {
-                "first": "Primero",
-                "last": "Último",
-                "next": "Siguiente",
-                "previous": "Anterior"
-            },
-            "infoFiltered": "(Filtrado de _MAX_ en total)"
-
+        language: {
+            url: '//cdn.datatables.net/plug-ins/2.0.3/i18n/es-CO.json',
         },
     });
 
