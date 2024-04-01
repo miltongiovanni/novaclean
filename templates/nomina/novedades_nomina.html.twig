@@ -3,23 +3,23 @@
 {% block title %}Personal Contrato{% endblock %}
 {% block stylesheets %}
     {{ parent() }}
-    {{ encore_entry_link_tags('personal-contrato') }}
+    {{ encore_entry_link_tags('novedades-nomina') }}
 {% endblock %}
 
 {% block javascripts %}
     {{ parent() }}
-    {{ encore_entry_script_tags('personal-contrato') }}
+    {{ encore_entry_script_tags('novedades-nomina') }}
 {% endblock %}
 
 {% block content %}
-    <h2>Personal Contrato {{ contrato.contrato_id }} {{ contrato.cliente }}</h2>
+    <h2>Novedades nómina</h2>
     <div class="row my-3">
         <div class="offset-10 col-2">
-            <a class="btn btn-primary w-100" href="{{ path('contrato_personal_new', {'slug': contrato.slug}) }}">Agregar Personal</a>
+            <a class="btn btn-primary w-100" href="{#{{ path('contrato_personal_new', {'slug': contrato.slug}) }}#}">Agregar Personal</a>
         </div>
     </div>
 
-    <table class="table table-striped" id="personalContratoDatatable" data-url="{{ path('lista_contrato_personal', {'slug': contrato.slug}) }} ">
+    <table class="table table-striped" id="personalContratoDatatable" data-url="{#{{ path('lista_contrato_personal', {'slug': contrato.slug}) }}#} ">
         <thead>
         <tr>
             <th>Nombre(s)</th>
@@ -43,7 +43,7 @@
     </div>
     <div class="row my-3">
         <div class="col-2">
-            <a class="btn btn-primary w-100" href="{{ path('contrato_edit', {'slug': contrato.slug}) }}">Editar contrato</a>
+            <a class="btn btn-primary w-100" href="{#{{ path('contrato_edit', {'slug': contrato.slug}) }}#}">Editar contrato</a>
         </div>
     </div>
 
@@ -52,12 +52,12 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h3 class="modal-title" id="titleModalPersonalContrato">Retirar personal del contrato {{ contrato.contrato_id }} {{ contrato.cliente }}</h3>
+                    <h3 class="modal-title" id="titleModalPersonalContrato">Retirar personal del contrato</h3>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <div class="container-fluid">
-                        <form id="retirarPersonalContrato" data-contrato-slug="{{ contrato.slug }}" method="post">
+                        <form id="retirarPersonalContrato" data-contrato-slug="{#{{ contrato.slug }}#}" method="post">
                             <div class="row mb-3">
                                 <div class="col-12 form-group">
                                     <input type="hidden" id="id_personal" name="id_personal">

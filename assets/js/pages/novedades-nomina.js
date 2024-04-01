@@ -7,7 +7,6 @@ import 'datatables.net-buttons-bs5';
 import jsZip from 'jszip';
 import 'datatables.net-bs5/css/dataTables.bootstrap5.css';
 import 'datatables.net-buttons/js/buttons.html5.min.mjs';
-import languageEsCol from 'datatables.net-plugins/i18n/es-CO.mjs';
 
 // This line was the one missing
 window.JSZip = jsZip;
@@ -66,7 +65,9 @@ $(document).ready(function () {
             [15, 30, 50, -1],
             [15, 30, 50, 'Todo'],
         ],
-        language: languageEsCol,
+        language: {
+            url: '//cdn.datatables.net/plug-ins/2.0.3/i18n/es-CO.json',
+        },
     });
     $('.select2-personal').select2(
         {

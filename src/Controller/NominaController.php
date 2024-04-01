@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\ParametroNomina;
 use App\Entity\TipoNovedadNomina;
+use App\Repository\NovedadNominaRepository;
 use App\Repository\ParametroNominaRepository;
 use App\Repository\TipoNovedadNominaRepository;
 use Carbon\Carbon;
@@ -128,5 +129,13 @@ class NominaController extends AbstractController
             $this->addFlash('success', 'Tipo novedad de nómina actualizado correctamente');
         }
         return $this->redirectToRoute('tipos_novedad_nomina', [], Response::HTTP_SEE_OTHER);
+    }
+
+    #[Route('/novedades', name: 'novedades_nomina')]
+    public function novedades_nomina(NovedadNominaRepository $novedadNominaRepository): Response
+    {
+        return $this->render('nomina/novedades_nomina.html.twig', [
+
+        ]);
     }
 }

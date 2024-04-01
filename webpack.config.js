@@ -38,6 +38,7 @@ Encore
     .addEntry('contrato', './assets/js/pages/contrato.js')
     .addEntry('personal-contrato', './assets/js/pages/personal-contrato.js')
     .addEntry('prestamo-personal', './assets/js/pages/prestamo-personal.js')
+    .addEntry('novedades-nomina', './assets/js/pages/novedades-nomina.js')
     .addEntry('sweetalert2', './assets/js/pages/sweetalert2.js')
     .addEntry('datatables', './assets/js/pages/datatables.js')
     .addStyleEntry('auth', './assets/styles/pages/auth.scss')

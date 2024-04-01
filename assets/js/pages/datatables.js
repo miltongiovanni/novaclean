@@ -3,11 +3,13 @@ import 'datatables.net-buttons-bs5';
 import jsZip from 'jszip';
 import 'datatables.net-bs5/css/dataTables.bootstrap5.css';
 import 'datatables.net-buttons/js/buttons.html5.min.mjs';
+import languageEsCol from 'datatables.net-plugins/i18n/es-CO.mjs';
+
 
 // This line was the one missing
 window.JSZip = jsZip;
 
-$(document).ready(function () {
+$(function () {
     let usersDatatable = $("#usersDatatable").DataTable({
         "columnDefs":
             [
@@ -20,9 +22,7 @@ $(document).ready(function () {
                     "orderable": false
                 }
             ],
-        language: {
-            url: '//cdn.datatables.net/plug-ins/2.0.3/i18n/es-CO.json',
-        },
+        language: languageEsCol,
     });
     let afcDatatable = $("#afcDatatable").DataTable({
         "columnDefs":
@@ -52,9 +52,7 @@ $(document).ready(function () {
                     "orderable": false
                 }
             ],
-        language: {
-            url: '//cdn.datatables.net/plug-ins/2.0.3/i18n/es-CO.json',
-        },
+        language: languageEsCol,
     });
     let epsDatatable = $("#epsDatatable").DataTable({
         "columnDefs":
@@ -72,9 +70,7 @@ $(document).ready(function () {
             [15, 30, 50, -1],
             [15, 30, 50, 'Todo'],
         ],
-        language: {
-            url: '//cdn.datatables.net/plug-ins/2.0.3/i18n/es-CO.json',
-        },
+        language: languageEsCol,
     });
     let cargoDatatable = $("#cargoDatatable").DataTable({
         "columnDefs":
@@ -93,9 +89,7 @@ $(document).ready(function () {
             [15, 30, 50, -1],
             [15, 30, 50, 'Todo'],
         ],
-        language: {
-            url: '//cdn.datatables.net/plug-ins/2.0.3/i18n/es-CO.json',
-        },
+        language: languageEsCol,
     });
 
     /* Formatting function for row details - modify as you need */
@@ -285,9 +279,7 @@ $(document).ready(function () {
             [15, 30, 50, 'Todo'],
         ],
         "order": [[2, 'asc']],
-        language: {
-            url: '//cdn.datatables.net/plug-ins/2.0.3/i18n/es-CO.json',
-        },
+        language: languageEsCol,
         dom: 'Bfrtip',
         buttons: [
             {
@@ -374,9 +366,7 @@ $(document).ready(function () {
             [15, 30, 50, 'Todo'],
         ],
         "order": [[1, 'asc']],
-        language: {
-            url: '//cdn.datatables.net/plug-ins/2.0.3/i18n/es-CO.json',
-        },
+        language: languageEsCol,
         dom: 'Bfrtip',
         buttons: [
             {
@@ -405,62 +395,6 @@ $(document).ready(function () {
     });
 
 
-    let personalContratoDatatable = $("#personalContratoDatatable").DataTable({
-        ajax: {
-            url: $("#personalContratoDatatable").attr("data-url"),
-            type: "POST",
-            dataType: "json"
-        },
-        columns: [
-            {data: 'nombre'},
-            {data: 'apellido'},
-            {data: 'cargo'},
-            {
-                data: 'salario',
-                render: function (data, type) {
-                    var number = DataTable.render
-                        .number(',', '.', 0, '$')
-                        .display(data);
-
-                    if (type === 'display') {
-                        let color = 'green';
-                        if (data < 250000) {
-                            color = 'red';
-                        } else if (data < 500000) {
-                            color = 'orange';
-                        }
-                        return `<span style="color:${color}">${number}</span>`;
-                    }
-
-                    return number;
-                }
-            },
-            {data: 'bono'},
-            {data: 'tipo_nomina'},
-            {data: 'fechaIngreso'},
-            {data: 'fechaRetiro'},
-            {data: 'actions'}
-        ],
-        "columnDefs":
-            [
-                {
-                    "targets": [8],
-                    "className": 'dt-body-center'
-                },
-                {
-                    "targets": [2],
-                    "orderable": false,
-                    "className": 'col-2'
-                },
-            ],
-        lengthMenu: [
-            [15, 30, 50, -1],
-            [15, 30, 50, 'Todo'],
-        ],
-        language: {
-            url: '//cdn.datatables.net/plug-ins/2.0.3/i18n/es-CO.json',
-        },
-    });
 
     let tiposNovedadesNominaDatatable = $("#tiposNovedadesNominaDatatable").DataTable({
         "columnDefs":
@@ -479,9 +413,7 @@ $(document).ready(function () {
             [10, 30, 50, -1],
             [10, 30, 50, 'Todo'],
         ],
-        language: {
-            url: '//cdn.datatables.net/plug-ins/2.0.3/i18n/es-CO.json',
-        },
+        language: languageEsCol,
     });
 
 });
