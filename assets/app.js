@@ -61,6 +61,6 @@ require("./js/mazer")
 // import 'datatables.net-buttons/js/buttons.html5.min';
 
 
-$(document).ready(function() {
+$(function() {
     $('[data-toggle="popover"]').popover();
 });

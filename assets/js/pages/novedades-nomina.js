@@ -11,11 +11,11 @@ import 'datatables.net-buttons/js/buttons.html5.min.mjs';
 // This line was the one missing
 window.JSZip = jsZip;
 
-$(document).ready(function () {
+$(function () {
 
-    let personalContratoDatatable = $("#personalContratoDatatable").DataTable({
+    let novedadesNominaDatatable = $("#novedadesNominaDatatable").DataTable({
         ajax: {
-            url: $("#personalContratoDatatable").attr("data-url"),
+            url: $("#novedadesNominaDatatable").attr("data-url"),
             type: "POST",
             dataType: "json"
         },
@@ -69,6 +69,7 @@ $(document).ready(function () {
             url: '//cdn.datatables.net/plug-ins/2.0.3/i18n/es-CO.json',
         },
     });
+
     $('.select2-personal').select2(
         {
             placeholder: 'Seleccione un empleado',
@@ -94,6 +95,13 @@ $(document).ready(function () {
                 minimumInputLength: 1,
                 // Additional AJAX parameters go here; see the end of this chapter for the full code of this example
             }
+        }
+    );
+
+    $('#tipo_novedad_id').select2(
+        {
+            placeholder: 'Seleccione un tipo de novedad',
+            allowClear: true,
         }
     );
 });

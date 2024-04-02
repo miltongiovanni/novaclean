@@ -1,0 +1,28 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Agregar novedad nómina{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('novedades-nomina') }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('parsley') }}
+    {{ encore_entry_script_tags('novedades-nomina') }}
+
+{% endblock %}
+
+{% block content %}
+    <h2 class="ps-3">Agregar novedad nómina</h2>
+
+    {{ include('nomina/_form_novedad_nomina.html.twig') }}
+
+    <div class="row my-3">
+        <div class="offset-4 col-2">
+            <a class="btn btn-primary w-100" href="{{ path('novedades_nomina') }}">Volver a la lista</a>
+        </div>
+    </div>
+
+{% endblock %}

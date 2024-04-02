@@ -31,6 +31,15 @@ class NovedadNomina
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $observaciones = null;
 
+    #[ORM\Column]
+    private ?bool $activa = null;
+
+    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    private ?\DateTimeInterface $fecha_creacion = null;
+
+    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    private ?\DateTimeInterface $fecha_actualizacion = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -92,6 +101,58 @@ class NovedadNomina
     public function setObservaciones(?string $observaciones): static
     {
         $this->observaciones = $observaciones;
+
+        return $this;
+    }
+    public function toArray()
+    {
+        return [
+            'id' => $this->getId(),
+            'personal_id' => $this->getPersonalId()->getId(),
+            'personal' => $this->getPersonalId()->getNombre(). ' ' . $this->getPersonalId()->getApellido(),
+            'tipo_novedad_id' => $this->getTipoNovedad()->getId(),
+            'tipo_novedad' => $this->getTipoNovedad()->getDescripcion(),
+            'f_inicio' => $this->getFechaInicio()->format('Y-m-d'),
+            'f_fin' => $this->getFechaFin()->format('Y-m-d'),
+            'observaciones' => $this->getObservaciones() ?? '',
+            'activa' => $this->isActiva(),
+            'fecha_creacion' => $this->getFechaCreacion()->format('Y-m-d'),
+            'fecha_actualizacion' => $this->getFechaActualizacion()->format('Y-m-d'),
+        ];
+    }
+
+    public function isActiva(): ?bool
+    {
+        return $this->activa;
+    }
+
+    public function setActiva(bool $activa): static
+    {
+        $this->activa = $activa;
+
+        return $this;
+    }
+
+    public function getFechaCreacion(): ?\DateTimeInterface
+    {
+        return $this->fecha_creacion;
+    }
+
+    public function setFechaCreacion(\DateTimeInterface $fecha_creacion): static
+    {
+        $this->fecha_creacion = $fecha_creacion;
+
+        return $this;
+    }
+
+    public function getFechaActualizacion(): ?\DateTimeInterface
+    {
+        return $this->fecha_actualizacion;
+    }
+
+    public function setFechaActualizacion(\DateTimeInterface $fecha_actualizacion): static
+    {
+        $this->fecha_actualizacion = $fecha_actualizacion;
 
         return $this;
     }

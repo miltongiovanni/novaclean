@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\NovedadNomina;
 use App\Entity\ParametroNomina;
 use App\Entity\TipoNovedadNomina;
 use App\Repository\NovedadNominaRepository;
@@ -10,6 +11,7 @@ use App\Repository\TipoNovedadNominaRepository;
 use Carbon\Carbon;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -134,8 +136,83 @@ class NominaController extends AbstractController
     #[Route('/novedades', name: 'novedades_nomina')]
     public function novedades_nomina(NovedadNominaRepository $novedadNominaRepository): Response
     {
+
         return $this->render('nomina/novedades_nomina.html.twig', [
 
         ]);
     }
+
+    #[Route('/novedades/lista', name: 'lista_novedades_nomina', methods: ['POST'])]
+    public function lista_contrato_personal(NovedadNominaRepository $novedadNominaRepository): JsonResponse
+    {
+        $novedades_nomina = $novedadNominaRepository->findAll();
+        //To array
+        $novedadesNominaToArray = array_map(function ($novedadNomina) {
+            /** @var NovedadNomina $novedadNomina */
+            $arr = $novedadNomina->toArray();
+            return $arr;
+        }, $novedades_nomina);
+
+        foreach ($novedadesNominaToArray as $key => &$novedadNomina) {
+            $novedadesNominaToArray[$key]['actions'] = $this->renderView('nomina/_novedades_nomina.buttons.html.twig', ['novedadNomina' => $novedadNomina]);
+        }
+        $return = [
+            'draw' => 0,
+            'recordsTotal' => count($novedadesNominaToArray),
+            'recordsFiltered' => count($novedadesNominaToArray),
+            'data' => $novedadesNominaToArray
+        ];
+
+        return $this->json($return);
+    }
+
+
+    #[Route('/novedad/nueva', name: 'novedad_nomina_new', methods: ['GET', 'POST'])]
+    public function novedad_nomina_new(Request $request, TipoNovedadNominaRepository $tipoNovedadNominaRepository): Response
+    {
+        $tiposNovedadNomina = $tipoNovedadNominaRepository->findAll();
+        return $this->render('nomina/new_novedad_nomina.html.twig', [
+            'action' => 'insert',
+            'tiposNovedadNomina' => $tiposNovedadNomina
+        ]);
+    }
+
+
+    #[Route('/novedad/{id}/editar', name: 'novedad_nomina_edit', methods: ['GET'])]
+    public function novedad_nomina_edit(Request $request, NovedadNomina $novedadNomina, NovedadNominaRepository $novedadNominaRepository): Response
+    {
+        return $this->render('nomina/edit_tipo_novedad_nomina.html.twig', [
+            'novedadNomina' => $novedadNomina->toArray(),
+            'action' => 'update',
+        ]);
+    }
+
+    #[Route('/novedad/{id}/guardar', name: 'novedad_nomina_update', methods: ['POST'])]
+    public function novedad_nomina_update(Request $request, int $id, NovedadNominaRepository $novedadNominaRepository, EntityManagerInterface $entityManager): Response
+    {
+        if ($id == 0) {
+            $novedad_nomina = new NovedadNomina();
+            $novedad_nomina->setFechaCreacion(Carbon::today());
+        } else {
+            $novedad_nomina = $novedadNominaRepository->find($id);
+        }
+        dd($request->request->all());
+        $novedad_nomina->setUser($this->getUser());
+        $novedad_nomina->setFechaActualizacion(Carbon::today());
+        $novedad_nomina->setDescripcion(trim($request->request->get('descripcion')));
+        $action = $request->request->get('action');
+
+        dd($novedad_nomina);
+        $entityManager->persist($novedad_nomina);
+
+        // actually executes the queries (i.e. the INSERT query)
+        $entityManager->flush();
+        if ($action == 'insert') {
+            $this->addFlash('success', 'Novedad de nómina creada correctamente');
+        } else {
+            $this->addFlash('success', 'Novedad de nómina actualizada correctamente');
+        }
+        return $this->redirectToRoute('novedades_nomina', [], Response::HTTP_SEE_OTHER);
+    }
+
 }

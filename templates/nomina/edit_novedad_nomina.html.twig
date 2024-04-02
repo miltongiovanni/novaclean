@@ -4,11 +4,13 @@
 
 {% block stylesheets %}
     {{ parent() }}
+    {{ encore_entry_link_tags('novedades-nomina') }}
     {{ encore_entry_link_tags('sweetalert2') }}
 {% endblock %}
 
 {% block javascripts %}
     {{ parent() }}
+    {{ encore_entry_link_tags('novedades-nomina') }}
     {{ encore_entry_script_tags('parsley') }}
     {{ encore_entry_script_tags('sweetalert2') }}
 {% endblock %}
@@ -20,11 +22,11 @@
         </div>
     </div>
 
-    {{ include('nomina/_form_tipo_novedad_nomina.html.twig', {'button_label': 'Update'}) }}
+    {{ include('nomina/_form_novedad_nomina.html.twig', {'button_label': 'Update'}) }}
 
     <div class="row my-3">
         <div class="col-2">
-            <a class="btn btn-primary w-100" href="{{ path('tipos_novedad_nomina') }}">Volver a la lista</a>
+            <a class="btn btn-primary w-100" href="{{ path('novedades_nomina') }}">Volver a la lista</a>
         </div>
     </div>
 

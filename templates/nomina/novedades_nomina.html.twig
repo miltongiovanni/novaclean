@@ -15,11 +15,11 @@
     <h2>Novedades nómina</h2>
     <div class="row my-3">
         <div class="offset-10 col-2">
-            <a class="btn btn-primary w-100" href="{#{{ path('contrato_personal_new', {'slug': contrato.slug}) }}#}">Agregar Personal</a>
+            <a class="btn btn-primary w-100" href="{{ path('novedad_nomina_new') }}">Agregar Novedad</a>
         </div>
     </div>
 
-    <table class="table table-striped" id="personalContratoDatatable" data-url="{#{{ path('lista_contrato_personal', {'slug': contrato.slug}) }}#} ">
+    <table class="table table-striped" id="novedadesNominaDatatable" data-url="{{ path('lista_novedades_nomina') }}">
         <thead>
         <tr>
             <th>Nombre(s)</th>
