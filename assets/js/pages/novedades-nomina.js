@@ -7,10 +7,12 @@ import 'datatables.net-buttons-bs5';
 import jsZip from 'jszip';
 import 'datatables.net-bs5/css/dataTables.bootstrap5.css';
 import 'datatables.net-buttons/js/buttons.html5.min.mjs';
+import languageEsCol from 'datatables.net-plugins/i18n/es-CO.mjs';
 
 // This line was the one missing
 window.JSZip = jsZip;
-
+const DOMINGO_COMPENSADO = '7';
+const DOMINGO_SIN_COMPENSAR = '8';
 $(function () {
 
     let novedadesNominaDatatable = $("#novedadesNominaDatatable").DataTable({
@@ -20,54 +22,62 @@ $(function () {
             dataType: "json"
         },
         columns: [
-            {data: 'nombre'},
-            {data: 'apellido'},
-            {data: 'cargo'},
             {
-                data: 'salario',
-                render: function (data, type) {
-                    var number = DataTable.render
-                        .number(',', '.', 0, '$')
-                        .display(data);
-
-                    if (type === 'display') {
-                        let color = 'green';
-                        if (data < 250000) {
-                            color = 'red';
-                        } else if (data < 500000) {
-                            color = 'orange';
-                        }
-                        return `<span style="color:${color}">${number}</span>`;
-                    }
-
-                    return number;
-                }
+                data: 'personal',
+                width: '18%'
             },
-            {data: 'bono'},
-            {data: 'tipo_nomina'},
-            {data: 'fechaIngreso'},
-            {data: 'fechaRetiro'},
-            {data: 'actions'}
+            {
+                data: 'tipo_novedad',
+                width: '18%'
+            },
+            {
+                data: 'f_inicio',
+                width: '8%',
+                className: 'dt-body-center'
+            },
+            {
+                data: 'f_fin',
+                width: '8%',
+                className: 'dt-body-center'
+            },
+            {
+                data: 'observaciones',
+                width: '15%'
+            },
+            {
+                data: 'estado',
+                width: '5%',
+                className: 'dt-body-center'
+            },
+            {
+                data: 'fecha_creacion',
+                width: '10%',
+                className: 'dt-body-center'
+            },
+            {
+                data: 'fecha_actualizacion',
+                width: '10%',
+                className: 'dt-body-center'
+            },
+            {
+                data: 'actions',
+                width: '8%',
+                className: 'dt-body-center'
+            }
         ],
         "columnDefs":
             [
                 {
-                    "targets": [8],
-                    "className": 'dt-body-center'
-                },
-                {
-                    "targets": [2],
+                    "targets": [5 ,8],
                     "orderable": false,
-                    "className": 'col-2'
                 },
             ],
         lengthMenu: [
             [15, 30, 50, -1],
             [15, 30, 50, 'Todo'],
         ],
-        language: {
-            url: '//cdn.datatables.net/plug-ins/2.0.3/i18n/es-CO.json',
-        },
+        language: languageEsCol,
+        "order": [[2, 'asc']],
     });
 
     $('.select2-personal').select2(
@@ -106,44 +116,32 @@ $(function () {
     );
 });
 
-$(document).on('change', '#personal_id', function () {
-    let slug_contrato = document.getElementById('updatePersonalContratoForm').dataset.contratoSlug;
-    let formData = new FormData();
-    formData.append('personal_id', $(this).val());
-    $.ajax({
-        url: '/buscar-personal-slug',
-        type: 'POST',
-        data: formData,
-        dataType: 'json',
-        processData: false,
-        contentType: false,
-        success: function (response) {
-            document.getElementById('updatePersonalContratoForm').action = '/contrato/' + slug_contrato + '/personal/' + response.slug + '/actualizar';
-        },
-        error: function () {
-            alert("Vous avez un GROS problème");
-        }
-    });
-});
+// $(document).on('change', '#personal_id', function () {
+//     let slug_contrato = document.getElementById('updatePersonalContratoForm').dataset.contratoSlug;
+//     let formData = new FormData();
+//     formData.append('personal_id', $(this).val());
+//     $.ajax({
+//         url: '/buscar-personal-slug',
+//         type: 'POST',
+//         data: formData,
+//         dataType: 'json',
+//         processData: false,
+//         contentType: false,
+//         success: function (response) {
+//             document.getElementById('updatePersonalContratoForm').action = '/contrato/' + slug_contrato + '/personal/' + response.slug + '/actualizar';
+//         },
+//         error: function () {
+//             alert("Vous avez un GROS problème");
+//         }
+//     });
+// });
 
-$(document).on('change', '#fecha_retiro', function () {
-    let slug_contrato = document.getElementById('retirarPersonalContrato').dataset.contratoSlug;
-    let personal_id = document.getElementById('id_personal').value;
-    let formData = new FormData();
-    formData.append('personal_id', personal_id);
-    $.ajax({
-        url: '/buscar-personal-slug',
-        type: 'POST',
-        data: formData,
-        dataType: 'json',
-        processData: false,
-        contentType: false,
-        success: function (response) {
-            document.getElementById('retirarPersonalContrato').action = '/contrato/' + slug_contrato + '/personal/' + response.slug + '/retirar';
-            $('#submit_retirar_contrato_personal').prop('disabled', false);
-        },
-        error: function () {
-            alert("Vous avez un GROS problème");
-        }
-    });
+$(document).on('change', '#tipo_novedad_id', function () {
+    if ($(this).val() === DOMINGO_COMPENSADO || $(this).val() === DOMINGO_SIN_COMPENSAR) {
+        document.getElementById("fecha_inicio").type = "datetime-local";
+        document.getElementById("fecha_fin").type = "datetime-local";
+    } else {
+        document.getElementById("fecha_inicio").type = "date";
+        document.getElementById("fecha_fin").type = "date";
+    }
 });

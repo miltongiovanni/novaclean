@@ -36,6 +36,7 @@ Encore
     .addEntry('parsley', './assets/js/pages/parsley.js')
     .addEntry('cliente', './assets/js/pages/cliente.js')
     .addEntry('contrato', './assets/js/pages/contrato.js')
+    .addEntry('personal', './assets/js/pages/personal.js')
     .addEntry('personal-contrato', './assets/js/pages/personal-contrato.js')
     .addEntry('prestamo-personal', './assets/js/pages/prestamo-personal.js')
     .addEntry('novedades-nomina', './assets/js/pages/novedades-nomina.js')
@@ -94,5 +95,4 @@ Encore
     // uncomment if you're having problems with a jQuery plugin
     .autoProvidejQuery()
 ;
-
 module.exports = Encore.getWebpackConfig();

@@ -3,13 +3,13 @@
 {% block title %}Creación Personal{% endblock %}
 {% block stylesheets %}
     {{ parent() }}
-    {{ encore_entry_link_tags('sweetalert2') }}
+    {{ encore_entry_link_tags('personal') }}
 {% endblock %}
 
 {% block javascripts %}
     {{ parent() }}
     {{ encore_entry_script_tags('parsley') }}
-    {{ encore_entry_script_tags('sweetalert2') }}
+    {{ encore_entry_script_tags('personal') }}
 {% endblock %}
 
 {% block content %}

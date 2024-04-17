@@ -7,6 +7,7 @@ use App\Entity\ParametroNomina;
 use App\Entity\TipoNovedadNomina;
 use App\Repository\NovedadNominaRepository;
 use App\Repository\ParametroNominaRepository;
+use App\Repository\PersonalRepository;
 use App\Repository\TipoNovedadNominaRepository;
 use Carbon\Carbon;
 use Doctrine\ORM\EntityManagerInterface;
@@ -154,6 +155,7 @@ class NominaController extends AbstractController
         }, $novedades_nomina);
 
         foreach ($novedadesNominaToArray as $key => &$novedadNomina) {
+            $novedadesNominaToArray[$key]['estado'] = $novedadesNominaToArray[$key]['activa'] == true ? '<i class="bi bi-check-circle-fill activo"></i>' : '<i class="bi bi-x-circle-fill inactivo"></i>';
             $novedadesNominaToArray[$key]['actions'] = $this->renderView('nomina/_novedades_nomina.buttons.html.twig', ['novedadNomina' => $novedadNomina]);
         }
         $return = [
@@ -170,7 +172,7 @@ class NominaController extends AbstractController
     #[Route('/novedad/nueva', name: 'novedad_nomina_new', methods: ['GET', 'POST'])]
     public function novedad_nomina_new(Request $request, TipoNovedadNominaRepository $tipoNovedadNominaRepository): Response
     {
-        $tiposNovedadNomina = $tipoNovedadNominaRepository->findAll();
+        $tiposNovedadNomina = $tipoNovedadNominaRepository->findBy([], ['descripcion' => 'ASC']);
         return $this->render('nomina/new_novedad_nomina.html.twig', [
             'action' => 'insert',
             'tiposNovedadNomina' => $tiposNovedadNomina
@@ -188,23 +190,25 @@ class NominaController extends AbstractController
     }
 
     #[Route('/novedad/{id}/guardar', name: 'novedad_nomina_update', methods: ['POST'])]
-    public function novedad_nomina_update(Request $request, int $id, NovedadNominaRepository $novedadNominaRepository, EntityManagerInterface $entityManager): Response
+    public function novedad_nomina_update(Request $request, int $id, PersonalRepository $personalRepository, TipoNovedadNominaRepository $tipoNovedadNominaRepository, NovedadNominaRepository $novedadNominaRepository, EntityManagerInterface $entityManager): Response
     {
         if ($id == 0) {
             $novedad_nomina = new NovedadNomina();
             $novedad_nomina->setFechaCreacion(Carbon::today());
+            $novedad_nomina->setFechaActualizacion(Carbon::today());
         } else {
             $novedad_nomina = $novedadNominaRepository->find($id);
         }
-        dd($request->request->all());
-        $novedad_nomina->setUser($this->getUser());
-        $novedad_nomina->setFechaActualizacion(Carbon::today());
-        $novedad_nomina->setDescripcion(trim($request->request->get('descripcion')));
+        $personal = $personalRepository->find(trim($request->request->get('personal_id')));
+        $tipo_novedad = $tipoNovedadNominaRepository->find(trim($request->request->get('tipo_novedad_id')));
+        $novedad_nomina->setTipoNovedad($tipo_novedad);
+        $novedad_nomina->setPersonalId($personal);
+        $novedad_nomina->setFechaInicio(Carbon::parse(trim($request->request->get('fecha_inicio'))));
+        $novedad_nomina->setFechaFin(Carbon::parse(trim($request->request->get('fecha_fin'))));
+        $novedad_nomina->setActiva(trim($request->request->get('activa')));
+        $novedad_nomina->setObservaciones(trim($request->request->get('observaciones')));
         $action = $request->request->get('action');
-
-        dd($novedad_nomina);
         $entityManager->persist($novedad_nomina);
-
         // actually executes the queries (i.e. the INSERT query)
         $entityManager->flush();
         if ($action == 'insert') {

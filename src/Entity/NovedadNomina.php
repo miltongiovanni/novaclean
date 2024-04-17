@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\NovedadNominaRepository;
+use Carbon\Carbon;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -106,14 +107,24 @@ class NovedadNomina
     }
     public function toArray()
     {
+        if (Carbon::parse($this->getFechaInicio()) == Carbon::parse($this->getFechaInicio())->startOfDay()){
+            $fecha_inicio = $this->getFechaInicio()->format('Y-m-d');
+        }else{
+            $fecha_inicio = $this->getFechaInicio()->format('Y-m-d  h:i a');
+        }
+        if (Carbon::parse($this->getFechaFin()) == Carbon::parse($this->getFechaFin())->startOfDay()){
+            $fecha_fin = $this->getFechaFin()->format('Y-m-d');
+        }else{
+            $fecha_fin = $this->getFechaFin()->format('Y-m-d  h:i a');
+        }
         return [
             'id' => $this->getId(),
             'personal_id' => $this->getPersonalId()->getId(),
             'personal' => $this->getPersonalId()->getNombre(). ' ' . $this->getPersonalId()->getApellido(),
             'tipo_novedad_id' => $this->getTipoNovedad()->getId(),
             'tipo_novedad' => $this->getTipoNovedad()->getDescripcion(),
-            'f_inicio' => $this->getFechaInicio()->format('Y-m-d'),
-            'f_fin' => $this->getFechaFin()->format('Y-m-d'),
+            'f_inicio' => $fecha_inicio,
+            'f_fin' => $fecha_fin,
             'observaciones' => $this->getObservaciones() ?? '',
             'activa' => $this->isActiva(),
             'fecha_creacion' => $this->getFechaCreacion()->format('Y-m-d'),
