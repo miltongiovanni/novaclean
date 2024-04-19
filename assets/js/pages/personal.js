@@ -1,7 +1,4 @@
 import Swal from 'sweetalert2';
-import $ from 'jquery';
-import moment from 'moment';
-import daterangepicker  from 'daterangepicker';
 
 
 let deletePersonal = document.getElementById("delete-personal");
@@ -29,11 +26,3 @@ if (deletePersonal !== null) {
     })
 
 }
-
-$(function() {
-    $('input[name="fNacimiento"]').daterangepicker({
-        opens: 'left'
-    }, function(start, end, label) {
-        console.log("A new date selection was made: " + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
-    });
-});

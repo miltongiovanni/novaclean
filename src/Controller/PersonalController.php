@@ -105,25 +105,12 @@ class PersonalController extends AbstractController
     #[Route('/lista/', name: 'personal_lista', methods: ['POST'])]
     public function lista(): JsonResponse
     {
-        $personals = $this->personalRepository->findAll();
-        $personalsToArray = [];
-        foreach ($personals as $key => $personal) {
-            $personalsToArray[$key] = $personal->toArray();
-            $personalsToArray[$key]['estado'] = $personalsToArray[$key]['activo'] == true ? '<i class="bi bi-check-circle-fill activo"></i>' : '<i class="bi bi-x-circle-fill inactivo"></i>';
-            $personalsToArray[$key]['actions'] = $this->renderView('personal/_personal.buttons.html.twig', ['empleado' => $personalsToArray[$key]]);
-        }
-
-        //To array
-//        $personalsToArray = array_map(function ($personal) {
-//            /** @var Personal $personal */
-//            $arr = $personal->toArray();
-//            return $arr;
-//        }, $personals);
+        $personals = $this->personalRepository->getAllPersonal();
         $return = [
             'draw' => 0,
-            'recordsTotal' => count($personalsToArray),
-            'recordsFiltered' => count($personalsToArray),
-            'data' => $personalsToArray
+            'recordsTotal' => count($personals),
+            'recordsFiltered' => count($personals),
+            'data' => $personals
         ];
 
         return $this->json($return);

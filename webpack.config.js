@@ -37,6 +37,8 @@ Encore
     .addEntry('cliente', './assets/js/pages/cliente.js')
     .addEntry('contrato', './assets/js/pages/contrato.js')
     .addEntry('personal', './assets/js/pages/personal.js')
+    .addEntry('personal-list', './assets/js/pages/personal-list.js')
+    .addEntry('clientes-list', './assets/js/pages/clientes-list.js')
     .addEntry('personal-contrato', './assets/js/pages/personal-contrato.js')
     .addEntry('prestamo-personal', './assets/js/pages/prestamo-personal.js')
     .addEntry('novedades-nomina', './assets/js/pages/novedades-nomina.js')

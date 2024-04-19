@@ -562,6 +562,7 @@ class Personal
             'talla_guantes' => $this->getTallaGuantes() != null ? $this->getTallaGuantes()->getTalla() : $this->getTallaGuantes(),
             'curso_especializado' => $this->getCursoEspecializado() != null ? $this->getCursoEspecializado()->getNombre() : $this->getCursoEspecializado(),
             'activo' => $this->isActivo(),
+            'estado' => $this->isActivo() == true ? '<i class="bi bi-check-circle-fill activo"></i>' : '<i class="bi bi-x-circle-fill inactivo"></i>',
             'slug' => $this->getSlug()->toRfc4122()
         ];
     }

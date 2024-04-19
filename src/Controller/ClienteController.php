@@ -42,7 +42,7 @@ class ClienteController extends AbstractController
         foreach ($clientes as $key => $cliente) {
             $clientesToArray[$key] = $cliente->toArray();
             $clientesToArray[$key]['estado_show'] = $clientesToArray[$key]['estado'] == true ? '<i class="bi bi-check-circle-fill activo"></i>' : '<i class="bi bi-x-circle-fill inactivo"></i>';
-            $clientesToArray[$key]['actions'] = $this->renderView('cliente/_cliente.buttons.html.twig', ['cliente' => $clientesToArray[$key]]);
+            //$clientesToArray[$key]['actions'] = $this->renderView('cliente/_cliente.buttons.html.twig', ['cliente' => $clientesToArray[$key]]);
         }
 
         //To array

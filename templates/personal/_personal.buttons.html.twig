@@ -6,11 +6,11 @@
     <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
         {% if empleado.activo == 1 %}
             <li>
-                <a class="dropdown-item" href=" {{ path('personal_deactivate', {'slug': empleado.slug}) }} ">Desactivar</a>
+                <a class="dropdown-item" href="{{ path('personal_deactivate', {'slug': empleado.slug}) }}">Desactivar</a>
             </li>
         {% else %}
             <li>
-                <a class="dropdown-item" href=" {{ path('personal_activate', {'slug': empleado.slug}) }} ">Activar</a>
+                <a class="dropdown-item" href="{{ path('personal_activate', {'slug': empleado.slug}) }}">Activar</a>
             </li>
         {% endif %}
         <li>
