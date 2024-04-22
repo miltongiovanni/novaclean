@@ -143,6 +143,106 @@ class PersonalRepository extends ServiceEntityRepository
         // returns an array of arrays (i.e. a raw data set)
         return $resultSet->fetchAllAssociative();
     }
+    public function getTotalTablaPersonal($where, $bindings)
+    {
+        $conn = $this->getEntityManager()->getConnection();
+        $sql = "SELECT COUNT(*) c
+        FROM personal p
+                 LEFT JOIN afc a on p.afc_id = a.id
+                 LEFT JOIN afp a2 on a2.id = p.afp_id
+                 LEFT JOIN eps e on p.eps_id = e.id
+                 LEFT JOIN cargo c on p.cargo_id = c.id
+                 LEFT JOIN sexo s on p.sexo_id = s.id
+        LEFT JOIN curso_especializado ce on p.curso_especializado_id = ce.id
+        LEFT JOIN novaclean.talla_botas tb on p.talla_botas_id = tb.id
+        LEFT JOIN novaclean.talla_calzado tc on p.talla_calzado_id = tc.id
+        LEFT JOIN novaclean.talla_camisa t on p.talla_camisa_id = t.id
+        LEFT JOIN novaclean.talla_guantes tg on p.talla_guantes_id = tg.id
+        LEFT JOIN novaclean.talla_pantalon tp on p.talla_pantalon_id = tp.id
+        LEFT JOIN novaclean.talla_uniforme tu on p.talla_uniforme_id = tu.id
+        LEFT JOIN novaclean.tipo_cuenta tc2 on tc2.id = p.tipo_cuenta_id
+        $where
+        ";
+        $params = [];
+        // Bind parameters
+        if (is_array($bindings)){
+            foreach ($bindings as $key => $binding) {
+                $params[ltrim($binding['key'], $binding['key'][0] )] = $binding['val'];
+            }
+        }
+        $resultSet = $conn->executeQuery($sql, $params);
+        $result = $resultSet->fetchAssociative();
+        return $result['c'];
+    }
+    public function getTablaPersonal( $limit, $order, $where, $bindings)
+    {
+        $conn = $this->getEntityManager()->getConnection();
+        $sql = "SELECT p.id,
+               identificacion,
+               lugar_expedicion,
+               p.nombre,
+               apellido,
+               numero_cuenta,
+               direccion,
+               p.telefono,
+               correo_electronico,
+               p.celular,
+               f_nacimiento,
+               f_ingreso,
+               f_examen_ingreso,
+               activo,
+               IF(activo, '<i class=\"bi bi-check-circle-fill activo\"></i>', '<i class=\"bi bi-x-circle-fill inactivo\"></i>' ) estado,
+               LOWER(CONCAT(
+                  SUBSTR(HEX(slug), 1, 8), '-',
+                  SUBSTR(HEX(slug), 9, 4), '-',
+                  SUBSTR(HEX(slug), 13, 4), '-',
+                  SUBSTR(HEX(slug), 17, 4), '-',
+                  SUBSTR(HEX(slug), 21)
+                )) slug,
+               a.nombre      afc,
+               a2.nombre     afp,
+               e.nombre      eps,
+               c.descripcion cargo,
+               s.sexo,
+               ce.nombre curso_especializado,
+               tb.talla talla_botas,
+               tc.talla talla_calzado,
+               t.talla talla_camisa,
+               tg.talla talla_guantes,
+               tp.talla talla_pantalon,
+               tu.talla talla_uniforme,
+               tc2.nombre tipo_cuenta
+        FROM personal p
+                 LEFT JOIN afc a on p.afc_id = a.id
+                 LEFT JOIN afp a2 on a2.id = p.afp_id
+                 LEFT JOIN eps e on p.eps_id = e.id
+                 LEFT JOIN cargo c on p.cargo_id = c.id
+                 LEFT JOIN sexo s on p.sexo_id = s.id
+        LEFT JOIN curso_especializado ce on p.curso_especializado_id = ce.id
+        LEFT JOIN novaclean.talla_botas tb on p.talla_botas_id = tb.id
+        LEFT JOIN novaclean.talla_calzado tc on p.talla_calzado_id = tc.id
+        LEFT JOIN novaclean.talla_camisa t on p.talla_camisa_id = t.id
+        LEFT JOIN novaclean.talla_guantes tg on p.talla_guantes_id = tg.id
+        LEFT JOIN novaclean.talla_pantalon tp on p.talla_pantalon_id = tp.id
+        LEFT JOIN novaclean.talla_uniforme tu on p.talla_uniforme_id = tu.id
+        LEFT JOIN novaclean.tipo_cuenta tc2 on tc2.id = p.tipo_cuenta_id
+        $where
+        $order
+        $limit
+        ";
+        $params = [];
+        // Bind parameters
+        if (is_array($bindings)){
+            foreach ($bindings as $key => $binding) {
+                $params[ltrim($binding['key'], $binding['key'][0] )] = $binding['val'];
+            }
+        }
+
+        $resultSet = $conn->executeQuery($sql, $params);
+        // Execute
+        // returns an array of arrays (i.e. a raw data set)
+        return $resultSet->fetchAllAssociative();
+    }
 
     public function findPersonalByKeysearch2($keysearch)
     {

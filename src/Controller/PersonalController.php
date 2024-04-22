@@ -21,6 +21,7 @@ use App\Repository\TallaPantalonRepository;
 use App\Repository\TallaUniformeRepository;
 use App\Repository\TipoCuentaRepository;
 use App\Repository\TipoNominaRepository;
+use App\Service\DataTablesServerSide;
 use Carbon\Carbon;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -105,12 +106,29 @@ class PersonalController extends AbstractController
     #[Route('/lista/', name: 'personal_lista', methods: ['POST'])]
     public function lista(): JsonResponse
     {
-        $personals = $this->personalRepository->getAllPersonal();
+        $columns = array(
+            array('db' => 'p.nombre', 'dt' => 'nombre'),
+            array('db' => 'p.apellido', 'dt' => 'apellido'),
+            array('db' => 'identificacion', 'dt' => 'identificacion'),
+            array('db' => 'lugar_expedicion', 'dt' => 'lugar_expedicion'),
+            array('db' => 'f_ingreso', 'dt' => 'f_ingreso'),
+            array('db' => 'c.descripcion', 'dt' => 'cargo'),
+            array('db' => 'estado', 'dt' => 'estado'),
+        );
+        $bindings = array();
+        $limit = DataTablesServerSide::limit($_POST, $columns);
+        $order = DataTablesServerSide::order($_POST, $columns);
+        $where = DataTablesServerSide::filter($_POST, $columns, $bindings);
+
+        $totalPersonal = $this->personalRepository->getTotalTablaPersonal($where, $bindings);
+        $personal = $this->personalRepository->getTablaPersonal($limit, $order, $where, $bindings);
         $return = [
-            'draw' => 0,
-            'recordsTotal' => count($personals),
-            'recordsFiltered' => count($personals),
-            'data' => $personals
+            "draw"            => isset ( $_POST['draw'] ) ?
+                intval( $_POST['draw'] ) :
+                0,
+            'recordsTotal' => $totalPersonal,
+            'recordsFiltered' => $totalPersonal,
+            'data' => $personal
         ];
 
         return $this->json($return);

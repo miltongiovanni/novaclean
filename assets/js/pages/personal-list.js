@@ -43,6 +43,11 @@ $(function () {
             type: "POST",
             dataType: "json"
         },
+        processing: true,
+        search: {
+            return: true
+        },
+        serverSide: true,
         columns: [
             {
                 className: 'dt-control',
@@ -90,6 +95,7 @@ $(function () {
                 {
                     "targets": [0, 7, 8],
                     "orderable": false,
+                    searchable: false,
                 },
             ],
         lengthMenu: [
