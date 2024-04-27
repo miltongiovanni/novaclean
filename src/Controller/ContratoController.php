@@ -41,19 +41,19 @@ class ContratoController extends AbstractController
     #[Route('/lista', name: 'contrato_lista', methods: ['POST'])]
     public function lista(): JsonResponse
     {
-        $contratos = $this->contratoRepository->findAll();
-        $now = new Carbon();
-        $contratosToArray = [];
-        foreach ($contratos as $key => $contrato) {
-            $contratosToArray[$key] = $contrato->toArray();
-            $end_contrato_date = Carbon::createFromFormat('Y-m-d', $contratosToArray[$key]['f_fin']);
-            if ($end_contrato_date->greaterThan($now)) {
-                $contratosToArray[$key]['estado'] = '<i class="bi bi-check-circle-fill activo"></i>';
-            } else {
-                $contratosToArray[$key]['estado'] = '<i class="bi bi-x-circle-fill inactivo"></i>';
-            }
-            $contratosToArray[$key]['actions'] = $this->renderView('contrato/_contrato.buttons.html.twig', ['contrato' => $contratosToArray[$key]]);
-        }
+        $contratos = $this->contratoRepository->getAllContratos();
+//        $now = new Carbon();
+//        $contratosToArray = [];
+//        foreach ($contratos as $key => $contrato) {
+//            $contratosToArray[$key] = $contrato->toArray();
+//            $end_contrato_date = Carbon::createFromFormat('Y-m-d', $contratosToArray[$key]['f_fin']);
+//            if ($end_contrato_date->greaterThan($now)) {
+//                $contratosToArray[$key]['estado'] = '<i class="bi bi-check-circle-fill activo"></i>';
+//            } else {
+//                $contratosToArray[$key]['estado'] = '<i class="bi bi-x-circle-fill inactivo"></i>';
+//            }
+//            $contratosToArray[$key]['actions'] = $this->renderView('contrato/_contrato.buttons.html.twig', ['contrato' => $contratosToArray[$key]]);
+//        }
 
         //To array
 //        $personalsToArray = array_map(function ($personal) {
@@ -63,9 +63,9 @@ class ContratoController extends AbstractController
 //        }, $personals);
         $return = [
             'draw' => 0,
-            'recordsTotal' => count($contratosToArray),
-            'recordsFiltered' => count($contratosToArray),
-            'data' => $contratosToArray
+            'recordsTotal' => count($contratos),
+            'recordsFiltered' => count($contratos),
+            'data' => $contratos
         ];
 
         return $this->json($return);
