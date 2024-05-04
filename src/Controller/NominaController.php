@@ -9,6 +9,7 @@ use App\Repository\NovedadNominaRepository;
 use App\Repository\ParametroNominaRepository;
 use App\Repository\PersonalRepository;
 use App\Repository\TipoNovedadNominaRepository;
+use App\Service\DataTablesServerSide;
 use Carbon\Carbon;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -144,25 +145,31 @@ class NominaController extends AbstractController
     }
 
     #[Route('/novedades/lista', name: 'lista_novedades_nomina', methods: ['POST'])]
-    public function lista_contrato_personal(NovedadNominaRepository $novedadNominaRepository): JsonResponse
+    public function lista_novedades_nomina(NovedadNominaRepository $novedadNominaRepository): JsonResponse
     {
-        $novedades_nomina = $novedadNominaRepository->findAll();
-        //To array
-        $novedadesNominaToArray = array_map(function ($novedadNomina) {
-            /** @var NovedadNomina $novedadNomina */
-            $arr = $novedadNomina->toArray();
-            return $arr;
-        }, $novedades_nomina);
+        $columns = array(
+            array('db' => 'p.nombre', 'dt' => 'personal'),
+            array('db' => 'tnn.descripcion', 'dt' => 'tipo_novedad'),
+            array('db' => 'nn.fecha_inicio', 'dt' => 'f_inicio'),
+            array('db' => 'nn.fecha_fin', 'dt' => 'f_fin'),
+            array('db' => 'nn.observaciones', 'dt' => 'observaciones'),
+            array('db' => 'nn.fecha_creacion', 'dt' => 'f_creacion'),
+            array('db' => 'nn.fecha_actualizacion', 'dt' => 'f_actualizacion'),
+        );
+        $bindings = array();
+        $limit = DataTablesServerSide::limit($_POST, $columns);
+        $order = DataTablesServerSide::order($_POST, $columns);
+        $where = DataTablesServerSide::filter($_POST, $columns, $bindings);
 
-        foreach ($novedadesNominaToArray as $key => &$novedadNomina) {
-            $novedadesNominaToArray[$key]['estado'] = $novedadesNominaToArray[$key]['activa'] == true ? '<i class="bi bi-check-circle-fill activo"></i>' : '<i class="bi bi-x-circle-fill inactivo"></i>';
-            $novedadesNominaToArray[$key]['actions'] = $this->renderView('nomina/_novedades_nomina.buttons.html.twig', ['novedadNomina' => $novedadNomina]);
-        }
+        $totalNovedadesNomina = $novedadNominaRepository->getTotalTablaNovedadesNomina($where, $bindings);
+        $novedades_nomina = $novedadNominaRepository->getTablaNovedadesNomina($limit, $order, $where, $bindings);
         $return = [
-            'draw' => 0,
-            'recordsTotal' => count($novedadesNominaToArray),
-            'recordsFiltered' => count($novedadesNominaToArray),
-            'data' => $novedadesNominaToArray
+            "draw"            => isset ( $_POST['draw'] ) ?
+                intval( $_POST['draw'] ) :
+                0,
+            'recordsTotal' => $totalNovedadesNomina,
+            'recordsFiltered' => $totalNovedadesNomina,
+            'data' => $novedades_nomina
         ];
 
         return $this->json($return);
@@ -181,11 +188,13 @@ class NominaController extends AbstractController
 
 
     #[Route('/novedad/{id}/editar', name: 'novedad_nomina_edit', methods: ['GET'])]
-    public function novedad_nomina_edit(Request $request, NovedadNomina $novedadNomina, NovedadNominaRepository $novedadNominaRepository): Response
+    public function novedad_nomina_edit(Request $request, NovedadNomina $novedadNomina, NovedadNominaRepository $novedadNominaRepository, TipoNovedadNominaRepository $tipoNovedadNominaRepository): Response
     {
-        return $this->render('nomina/edit_tipo_novedad_nomina.html.twig', [
+        $tiposNovedadNomina = $tipoNovedadNominaRepository->findBy([], ['descripcion' => 'ASC']);
+        return $this->render('nomina/edit_novedad_nomina.html.twig', [
             'novedadNomina' => $novedadNomina->toArray(),
             'action' => 'update',
+            'tiposNovedadNomina' => $tiposNovedadNomina
         ]);
     }
 
@@ -202,7 +211,7 @@ class NominaController extends AbstractController
         $personal = $personalRepository->find(trim($request->request->get('personal_id')));
         $tipo_novedad = $tipoNovedadNominaRepository->find(trim($request->request->get('tipo_novedad_id')));
         $novedad_nomina->setTipoNovedad($tipo_novedad);
-        $novedad_nomina->setPersonalId($personal);
+        $novedad_nomina->setPersonal($personal);
         $novedad_nomina->setFechaInicio(Carbon::parse(trim($request->request->get('fecha_inicio'))));
         $novedad_nomina->setFechaFin(Carbon::parse(trim($request->request->get('fecha_fin'))));
         $novedad_nomina->setActiva(trim($request->request->get('activa')));

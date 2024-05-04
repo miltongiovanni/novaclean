@@ -17,7 +17,7 @@ class NovedadNomina
 
     #[ORM\ManyToOne(inversedBy: 'novedadesNominas')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?Personal $personal_id = null;
+    private ?Personal $personal = null;
 
     #[ORM\ManyToOne]
     #[ORM\JoinColumn(nullable: false)]
@@ -46,14 +46,14 @@ class NovedadNomina
         return $this->id;
     }
 
-    public function getPersonalId(): ?Personal
+    public function getPersonal(): ?Personal
     {
-        return $this->personal_id;
+        return $this->personal;
     }
 
-    public function setPersonalId(?Personal $personal_id): static
+    public function setPersonal(?Personal $personal): static
     {
-        $this->personal_id = $personal_id;
+        $this->personal = $personal;
 
         return $this;
     }
@@ -110,17 +110,17 @@ class NovedadNomina
         if (Carbon::parse($this->getFechaInicio()) == Carbon::parse($this->getFechaInicio())->startOfDay()){
             $fecha_inicio = $this->getFechaInicio()->format('Y-m-d');
         }else{
-            $fecha_inicio = $this->getFechaInicio()->format('Y-m-d  h:i a');
+            $fecha_inicio = Carbon::parse($this->getFechaInicio())->toDateTimeLocalString();
         }
         if (Carbon::parse($this->getFechaFin()) == Carbon::parse($this->getFechaFin())->startOfDay()){
             $fecha_fin = $this->getFechaFin()->format('Y-m-d');
         }else{
-            $fecha_fin = $this->getFechaFin()->format('Y-m-d  h:i a');
+            $fecha_fin = Carbon::parse($this->getFechaFin())->toDateTimeLocalString();
         }
         return [
             'id' => $this->getId(),
-            'personal_id' => $this->getPersonalId()->getId(),
-            'personal' => $this->getPersonalId()->getNombre(). ' ' . $this->getPersonalId()->getApellido(),
+            'personal_id' => $this->getPersonal()->getId(),
+            'personal_nombre' => $this->getPersonal()->getNombre(). ' ' . $this->getPersonal()->getApellido(),
             'tipo_novedad_id' => $this->getTipoNovedad()->getId(),
             'tipo_novedad' => $this->getTipoNovedad()->getDescripcion(),
             'f_inicio' => $fecha_inicio,

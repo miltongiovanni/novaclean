@@ -21,6 +21,11 @@ $(function () {
             type: "POST",
             dataType: "json"
         },
+        processing: true,
+        search: {
+            return: true
+        },
+        serverSide: true,
         columns: [
             {
                 data: 'personal',
@@ -50,19 +55,33 @@ $(function () {
                 className: 'dt-body-center'
             },
             {
-                data: 'fecha_creacion',
+                data: 'f_creacion',
                 width: '10%',
                 className: 'dt-body-center'
             },
             {
-                data: 'fecha_actualizacion',
+                data: 'f_actualizacion',
                 width: '10%',
                 className: 'dt-body-center'
             },
             {
-                data: 'actions',
-                width: '8%',
-                className: 'dt-body-center'
+                data: 'null',
+                render: function (data, type, row) {
+                    return '<div class="dropdown">\n' +
+                        '    <a class="btn btn-primary dropdown-toggle w-100" href="#" role="button" id="dropdownMenuLink"\n' +
+                        '       data-bs-toggle="dropdown" aria-expanded="false">\n' +
+                        '        Acciones\n' +
+                        '    </a>\n' +
+                        '    <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">\n' +
+                        // '            <li>\n' +
+                        // (row.activa ? '<a class="dropdown-item" href="/nomina/novedad/'+ row.id +'/desactivar/">Desactivar</a>': '<a class="dropdown-item" href="/personal/'+ row.slug +'/activar/">Activar</a>') +
+                        // '            </li>\n' +
+                        '        <li>\n' +
+                        '            <a class="dropdown-item" href="/nomina/novedad/'+ row.id +'/editar/">Editar</a>\n' +
+                        '        </li>\n' +
+                        '    </ul>\n' +
+                        '</div>'
+                }
             }
         ],
         "columnDefs":
