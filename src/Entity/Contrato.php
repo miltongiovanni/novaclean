@@ -60,7 +60,7 @@ class Contrato
     #[ORM\OneToMany(mappedBy: 'contrato', targetEntity: ContratoPersonal::class)]
     private Collection $contratoPersonals;
 
-    #[ORM\Column(type: UuidType::NAME, nullable: true)]
+    #[ORM\Column(type: 'uuid', nullable: true)]
     private ?Uuid $slug;
 
     public function __construct()

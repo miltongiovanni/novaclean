@@ -54,7 +54,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
     private ?\DateTimeInterface $f_creacion = null;
 
-    #[ORM\Column(type: UuidType::NAME, nullable: true)]
+    #[ORM\Column(type: 'uuid', nullable: true)]
     private ?Uuid $slug;
 
     /**

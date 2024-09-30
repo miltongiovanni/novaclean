@@ -61,7 +61,7 @@ class Cliente
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $telefono2 = null;
 
-    #[ORM\Column(type: UuidType::NAME, nullable: true)]
+    #[ORM\Column(type: 'uuid', nullable: true)]
     private ?Uuid $slug;
 
     public function __construct()

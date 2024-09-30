@@ -124,7 +124,7 @@ class Personal
     #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
     private ?\DateTimeInterface $fecha_actualizacion = null;
 
-    #[ORM\Column(type: UuidType::NAME, nullable: true)]
+    #[ORM\Column(type: 'uuid', nullable: true)]
     private ?Uuid $slug;
 
     #[ORM\Column(nullable: true)]
