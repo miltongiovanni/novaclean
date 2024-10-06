@@ -51,7 +51,7 @@ class UsuariosController extends AbstractController
             return $this->redirectToRoute('home');
         }
         $perfiles = $perfilesRepository->findAll();
-        $slug = Uuid::v7();
+        $slug = Uuid::v6();
         return $this->render('usuarios/new.html.twig', [
             'action' => 'insert',
             'perfiles' => $perfiles,

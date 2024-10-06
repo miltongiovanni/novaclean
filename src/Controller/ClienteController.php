@@ -28,7 +28,7 @@ class ClienteController extends AbstractController
     #[Route('/nuevo', name: 'cliente_new', methods: ['GET', 'POST'])]
     public function new(Request $request, ClienteRepository $clienteRepository): Response
     {
-        $slug = Uuid::v7();
+        $slug = Uuid::v6();
         return $this->render('cliente/new.html.twig', [
             'action' => 'insert',
             'slug' => $slug,

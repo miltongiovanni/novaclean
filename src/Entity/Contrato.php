@@ -66,7 +66,7 @@ class Contrato
     public function __construct()
     {
         $this->contratoPersonals = new ArrayCollection();
-        $this->slug = Uuid::v7();
+        $this->slug = Uuid::v6();
     }
 
     public function getId(): ?int

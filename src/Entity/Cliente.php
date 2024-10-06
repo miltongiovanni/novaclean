@@ -67,7 +67,7 @@ class Cliente
     public function __construct()
     {
         $this->contratos = new ArrayCollection();
-        $this->slug = Uuid::v7();
+        $this->slug = Uuid::v6();
     }
 
     public function getId(): ?int

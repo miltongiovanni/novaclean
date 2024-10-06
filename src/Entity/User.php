@@ -62,7 +62,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     public function __construct()
     {
-        $this->slug = Uuid::v7();
+        $this->slug = Uuid::v6();
     }
 
 

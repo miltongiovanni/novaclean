@@ -77,7 +77,7 @@ class ContratoController extends AbstractController
     {
         $supervisores = $personalRepository->findBy(['cargo' => self::SUPERVISOR_ID], ['nombre' => 'asc']);
         $clientes = $clienteRepository->findBy(['estado' => true], ['nombre' => 'asc']);
-        $slug = Uuid::v7();
+        $slug = Uuid::v6();
         return $this->render('contrato/new.html.twig', [
             'supervisores' => $supervisores,
             'clientes' => $clientes,

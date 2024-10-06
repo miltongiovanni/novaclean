@@ -140,7 +140,7 @@ class Personal
     {
         $this->contratos = new ArrayCollection();
         $this->contratoPersonals = new ArrayCollection();
-        $this->slug = Uuid::v7();
+        $this->slug = Uuid::v6();
         $this->prestamos = new ArrayCollection();
         $this->novedadesNominas = new ArrayCollection();
     }

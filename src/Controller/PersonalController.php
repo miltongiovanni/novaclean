@@ -74,7 +74,7 @@ class PersonalController extends AbstractController
         $tallasCamisa = $tallaCamisaRepository->findAll();
         $tallasPantalon = $tallaPantalonRepository->findAll();
         $tallasCalzado = $tallaCalzadoRepository->findAll();
-        $slug = Uuid::v7();
+        $slug = Uuid::v6();
         return $this->render('personal/new.html.twig', [
             'action' => 'insert',
             'sexos' => $sexos,
