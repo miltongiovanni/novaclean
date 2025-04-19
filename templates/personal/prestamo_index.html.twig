@@ -42,10 +42,10 @@
         {% for prestamo in prestamos %}
             <tr>
                 <td>{{ prestamo.nombre_personal }}</td>
-                <td class="text-center">{{ prestamo.fecha_prestamo|date("Y-m-d") }}</td>
+                <td>{{ prestamo.fecha_prestamo|date("Y-m-d") }}</td>
                 <td>{{ '$ ' }}{{ prestamo.monto|number_format  }}</td>
-                <td class="text-center">{{ prestamo.cuotas }}</td>
-                <td class="text-center">{{ prestamo.no_abonos }}</td>
+                <td >{{ prestamo.cuotas }}</td>
+                <td >{{ prestamo.no_abonos }}</td>
                 <td>{{ '$ ' }}{{ prestamo.valor_abonos|number_format }}</td>
                 <td>{{ '$ ' }}{{ prestamo.saldo|number_format }}</td>
                 <td class="text-center">{{ prestamo.cuotas_pendientes }}</td>

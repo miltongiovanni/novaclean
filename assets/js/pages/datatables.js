@@ -1,13 +1,10 @@
 import DataTable from 'datatables.net-bs5';
-import 'datatables.net-buttons-bs5';
-import jsZip from 'jszip';
+
 import 'datatables.net-bs5/css/dataTables.bootstrap5.css';
-import 'datatables.net-buttons/js/buttons.html5.min.mjs';
+
 import languageEsCol from 'datatables.net-plugins/i18n/es-CO.mjs';
 
 
-// This line was the one missing
-window.JSZip = jsZip;
 
 $(function () {
     let usersDatatable = new DataTable("#usersDatatable",{
@@ -36,9 +33,7 @@ $(function () {
                     "orderable": false
                 }
             ],
-        language: {
-        url: '//cdn.datatables.net/plug-ins/2.0.3/i18n/es-CO.json',
-    },
+        language: languageEsCol,
     });
     let afpDatatable = $("#afpDatatable").DataTable({
         "columnDefs":
@@ -91,11 +86,25 @@ $(function () {
         ],
         language: languageEsCol,
     });
-
-
-
-
-
+    let prestamoPersonalDatatable = $("#prestamoPersonalDatatable").DataTable({
+        "columnDefs":
+            [
+                {
+                    "targets": [1, 3, 4],
+                    "className": 'dt-body-center'
+                },
+                {
+                    "targets": [8, 9],
+                    "orderable": false,
+                    "className": ''
+                },
+            ],
+        lengthMenu: [
+            [15, 30, 50, -1],
+            [15, 30, 50, 'Todo'],
+        ],
+        language: languageEsCol,
+    });
     let tiposNovedadesNominaDatatable = $("#tiposNovedadesNominaDatatable").DataTable({
         "columnDefs":
             [

@@ -1,9 +1,14 @@
-import DataTable from 'datatables.net-bs5';
-import 'datatables.net-buttons-bs5';
+
 import jsZip from 'jszip';
-import 'datatables.net-bs5/css/dataTables.bootstrap5.css';
+
+import 'datatables.net';
+import 'datatables.net-bs5';
+import 'datatables.net-buttons';
 import 'datatables.net-buttons/js/buttons.html5.min.mjs';
+import 'datatables.net-buttons-bs5/js/buttons.bootstrap5.js';
 import languageEsCol from 'datatables.net-plugins/i18n/es-CO.mjs';
+import 'datatables.net-bs5/css/dataTables.bootstrap5.css';
+import 'datatables.net-buttons-bs5/css/buttons.bootstrap5.css';
 
 
 // This line was the one missing
@@ -85,16 +90,23 @@ $(function () {
         ],
         "order": [[2, 'asc']],
         language: languageEsCol,
-        dom: 'Bfrtip',
-        buttons: [
-            {
-                extend: 'excelHtml5',
-                text: 'Exportar a excel',
-                exportOptions: {
-                    columns: [1, 2, 3, 4]
-                }
+        // dom: 'Bfrtip',
+        // buttons: [
+        //     {
+        //         extend: 'excelHtml5',
+        //         text: 'Exportar a excel',
+        //         exportOptions: {
+        //             columns: [1, 2, 3, 4]
+        //         }
+        //     }
+        // ],
+        layout: {
+            topStart: {
+                buttons: [
+                    'excel'
+                ]
             }
-        ]
+        }
     });
     // Add event listener for opening and closing details
     $('#clientesDatatable tbody').on('click', 'td.dt-control', function () {
