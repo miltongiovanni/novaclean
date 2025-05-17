@@ -3,16 +3,10 @@ import 'select2/dist/css/select2.min.css';
 import 'select2/dist/js/i18n/es';
 
 import DataTable from 'datatables.net-bs5';
-import 'datatables.net-buttons-bs5';
-import jsZip from 'jszip';
 import 'datatables.net-bs5/css/dataTables.bootstrap5.css';
-import 'datatables.net-buttons/js/buttons.html5.min.mjs';
 import languageEsCol from 'datatables.net-plugins/i18n/es-CO.mjs';
 
-// This line was the one missing
-window.JSZip = jsZip;
-
-$(document).ready(function () {
+jQuery(function () {
 
     let personalContratoDatatable = $("#personalContratoDatatable").DataTable({
         ajax: {
