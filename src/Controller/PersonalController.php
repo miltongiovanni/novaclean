@@ -25,6 +25,7 @@ use App\Service\DataTablesServerSide;
 use Carbon\Carbon;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -106,6 +107,48 @@ class PersonalController extends AbstractController
     #[Route('/lista/', name: 'personal_lista', methods: ['POST'])]
     public function lista(): JsonResponse
     {
+        $columns = array(
+            array('db' => 'p.nombre', 'dt' => 'nombre'),
+            array('db' => 'p.apellido', 'dt' => 'apellido'),
+            array('db' => 'identificacion', 'dt' => 'identificacion'),
+            array('db' => 'lugar_expedicion', 'dt' => 'lugar_expedicion'),
+            array('db' => 'f_ingreso', 'dt' => 'f_ingreso'),
+            array('db' => 'c.descripcion', 'dt' => 'cargo'),
+            array('db' => 'estado', 'dt' => 'estado'),
+        );
+        $bindings = array();
+        $limit = DataTablesServerSide::limit($_POST, $columns);
+        $order = DataTablesServerSide::order($_POST, $columns);
+        $where = DataTablesServerSide::filter($_POST, $columns, $bindings);
+
+        $totalPersonal = $this->personalRepository->getTotalTablaPersonal($where, $bindings);
+        $personal = $this->personalRepository->getTablaPersonal($limit, $order, $where, $bindings);
+        $return = [
+            "draw"            => isset ( $_POST['draw'] ) ?
+                intval( $_POST['draw'] ) :
+                0,
+            'recordsTotal' => $totalPersonal,
+            'recordsFiltered' => $totalPersonal,
+            'data' => $personal
+        ];
+
+        return $this->json($return);
+    }
+
+    #[Route('/exportar/', name: 'personal_lista_excel')]
+    public function personal_lista_excel(): BinaryFileResponse
+    {
+        $personal = $this->personalRepository->findBy(['activo' => 1], ['apellido' => 'ASC']);
+
+
+        //To array
+        $personalToArray = array_map(function ($person) {
+            /** @var Personal $person */
+            $arr = $person->toExportArray();
+            return $arr;
+        }, $personal);
+        $test = $this->personalRepository->find(1);
+        dd($personalToArray, $test->getContratos()->toArray(), $test->getContratoPersonals()->toArray() );
         $columns = array(
             array('db' => 'p.nombre', 'dt' => 'nombre'),
             array('db' => 'p.apellido', 'dt' => 'apellido'),

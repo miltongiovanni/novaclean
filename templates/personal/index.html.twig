@@ -13,8 +13,11 @@
 {% block content %}
     <h2>Lista de Personal</h2>
     <div class="row my-3">
-        <div class="offset-10 col-2">
-            <a class="btn btn-primary w-100" href=" {{ path('personal_new') }} ">Crear Personal</a>
+        <div class="offset-8 col-2">
+            <a class="btn btn-primary w-100" href="{{ path('personal_lista_excel') }}">Exportar a Excel</a>
+        </div>
+        <div class="col-2">
+            <a class="btn btn-primary w-100" href="{{ path('personal_new') }}">Crear Personal</a>
         </div>
     </div>
 

@@ -259,6 +259,21 @@ class PersonalRepository extends ServiceEntityRepository
         return $query->getResult();
     }
 
+    public function getAllPersonalExport($estado = 1)
+    {
+        $entityManager = $this->getEntityManager();
+
+        $query = $entityManager->createQuery(
+            "SELECT p.id as Id, p.nombre as Nombre, p.apellido as Apellido, p.identificacion as Identificacion
+            FROM App\Entity\Personal p
+            WHERE p.activo = :estado
+            ORDER BY p.nombre ASC"
+        )->setParameter('estado', $estado);
+
+        // returns an array of Product objects
+        return $query->getResult();
+    }
+
     public function findPersonalDisponibleByKeysearch($keysearch)
     {
         $conn = $this->getEntityManager()->getConnection();

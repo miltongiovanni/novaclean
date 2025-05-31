@@ -8,6 +8,7 @@ use App\Form\ContratoType;
 use App\Repository\ClienteRepository;
 use App\Repository\ContratoPersonalRepository;
 use App\Repository\ContratoRepository;
+use App\Repository\ParametroNominaRepository;
 use App\Repository\PersonalRepository;
 use App\Repository\TipoNominaRepository;
 use Carbon\Carbon;
@@ -215,14 +216,16 @@ class ContratoController extends AbstractController
 
 
     #[Route('/{slug}/personal/agregar', name: 'contrato_personal_new', methods: ['GET'])]
-    public function contrato_personal_new(string $slug, Request $request, TipoNominaRepository $tipoNominaRepository, ContratoRepository $contratoRepository): Response
+    public function contrato_personal_new(string $slug, Request $request, TipoNominaRepository $tipoNominaRepository, ParametroNominaRepository $parametroNominaRepository, ContratoRepository $contratoRepository): Response
     {
         $contrato = $contratoRepository->findOneBy(['slug' => Uuid::fromString($slug) ]);
         $tiposNomina = $tipoNominaRepository->findAll();
+        $salario_minimo = floatval($parametroNominaRepository->find(1)->getValor());
         return $this->render('contrato/personal.new.html.twig', [
             'contrato' => $contrato->toArray(),
             'tiposNomina' => $tiposNomina,
             'slug' => $slug,
+            'salario_minimo' => $salario_minimo,
             'action' => 'insert',
         ]);
     }

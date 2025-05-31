@@ -46,7 +46,7 @@
                                     <label for="salario_basico" class="form-label">Salario básico</label>
                                     <div class="input-group ">
                                         <span class="input-group-text">$</span>
-                                        <input type="text" class="form-control" name="salario_basico" id="salario_basico" value="{{ personal_contrato.salario ?? '' }}" data-parsley-required="true" required>
+                                        <input type="text" class="form-control" name="salario_basico" id="salario_basico" value="{{ personal_contrato.salario ?? salario_minimo }}" data-parsley-required="true" required>
                                     </div>
 
                                 </div>

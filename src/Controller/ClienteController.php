@@ -5,9 +5,11 @@ namespace App\Controller;
 use App\Entity\Cliente;
 use App\Form\ClienteType;
 use App\Repository\ClienteRepository;
+use App\Service\GenerarXls;
 use Carbon\Carbon;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -59,6 +61,21 @@ class ClienteController extends AbstractController
         ];
 
         return $this->json($return);
+    }
+    #[Route('/exportar', name: 'cliente_lista_excel')]
+    public function cliente_lista_excel(ClienteRepository $clienteRepository, GenerarXls $generarXls): BinaryFileResponse
+    {
+        $clientes = $clienteRepository->findBy([], ['nombre' => 'ASC']);
+        //To array
+        $clientesToArray = array_map(function ($cliente) {
+            /** @var Cliente $cliente */
+            $arr = $cliente->toArrayExport();
+            return $arr;
+        }, $clientes);
+        $file = $generarXls->crearXls($clientesToArray, 'Lista de Clientes');
+
+        // send the file contents and force the browser to download it
+        return $this->file($file);
     }
     #[Route('/{slug}/editar', name: 'cliente_edit', methods: ['GET'])]
     public function edit(Request $request, string $slug, ClienteRepository $clienteRepository): Response

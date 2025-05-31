@@ -293,4 +293,22 @@ class Cliente
             'slug' => $this->getSlug()->toRfc4122()
         ];
     }
+    public function toArrayExport()
+    {
+        return [
+            'Id' => $this->getId(),
+            'Nit' => $this->getNit(),
+            'Nombre' => $this->getNombre(),
+            'Dirección' => $this->getDireccion(),
+            'Teléfono 1' => $this->getTelefono(),
+            'Contacto' => $this->getContacto(),
+            'Celular' => $this->getCelular(),
+            'Correo electrónico' => $this->getCorreoElectronico(),
+            'Fecha creación' => $this->getFCreacion()->format('d/m/Y'),
+            'Fecha actualización' => $this->getFActualizacion()->format('d/m/Y'),
+            'Estado' => $this->isEstado() ? 'Activo' : 'Inactivo',
+            'Teléfono 2' => $this->getTelefono2(),
+            'Observaciones' => $this->getObservaciones()
+        ];
+    }
 }

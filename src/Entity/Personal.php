@@ -566,6 +566,42 @@ class Personal
             'slug' => $this->getSlug()->toRfc4122()
         ];
     }
+    public function toExportArray()
+    {
+        $contratos_personal = $this->contratoPersonals->toArray();
+        foreach ($contratos_personal as $contratoPersonal) {
+
+        }
+
+        return [
+            'Id' => $this->getId(),
+            'Identificación' => $this->getIdentificacion(),
+            'Lugar de expedición' => $this->getLugarExpedicion(),
+            'Nombre' => $this->getNombre(),
+            'Apellido' => $this->getApellido(),
+            'Cargo' => $this->getCargo()->getDescripcion(),
+            'Número de cuenta' => $this->getNumeroCuenta(),
+            'Dirección' => $this->getDireccion(),
+            'Teléfono' => $this->getTelefono(),
+            'Celular' => $this->getCelular(),
+            'Correo electrónico' => $this->getCorreoElectronico(),
+            'Fecha de nacimiento' => $this->getFNacimiento()->format('d/m/Y'),
+            'Fecha de ingreso' => $this->getFIngreso() != null ? $this->getFIngreso()->format('d/m/Y') : $this->getFIngreso(),
+            'Fecha examen de ingreso' => $this->getFExamenIngreso() != null ? $this->getFExamenIngreso()->format('d/m/Y') : $this->getFExamenIngreso(),
+            'Sexo' => $this->getSexo()->getSexo(),
+            'Afp' => $this->getAfp()->getNombre(),
+            'Eps' => $this->getEps()->getNombre(),
+            'Afc' => $this->getAfc()->getNombre(),
+            'Tipo de cuenta' => $this->getTipoCuenta()->getNombre(),
+            'Talla uniforme' => $this->getTallaUniforme() != null ? $this->getTallaUniforme()->getTalla() : $this->getTallaUniforme(),
+            'Talla botas' => $this->getTallaBotas() != null ? $this->getTallaBotas()->getTalla() : $this->getTallaBotas(),
+            'Talla pantalón' => $this->getTallaPantalon() != null ? $this->getTallaPantalon()->getTalla() : $this->getTallaPantalon(),
+            'Talla calzado' => $this->getTallaCalzado() != null ? $this->getTallaCalzado()->getTalla() : $this->getTallaCalzado(),
+            'Talla_guantes' => $this->getTallaGuantes() != null ? $this->getTallaGuantes()->getTalla() : $this->getTallaGuantes(),
+            'Curso especializado' => $this->getCursoEspecializado() != null ? $this->getCursoEspecializado()->getNombre() : $this->getCursoEspecializado(),
+            'Activo' => $this->isActivo(),
+        ];
+    }
 
     public function getFechaCreacion(): ?\DateTimeInterface
     {
