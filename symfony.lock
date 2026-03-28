@@ -322,11 +322,11 @@
             "repo": "github.com/symfony/recipes",
             "branch": "main",
             "version": "0.5",
-            "ref": "4fe7a892a9f6f052c64ca2d6ee600cf95716f974"
+            "ref": "22d0e16a9da4e209f8d643f87a5b5d694cd6462b"
         },
         "files": [
-            "./config/packages/symfonycasts_sass.yaml",
-            "./assets/styles/app.scss"
+            "assets/styles/app.scss",
+            "config/packages/symfonycasts_sass.yaml"
         ]
     },
     "symfonycasts/verify-email-bundle": {
