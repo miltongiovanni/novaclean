@@ -1,6 +1,36 @@
-import 'select2/dist/js/select2.full.min';
+
+import select2 from 'select2';
 import 'select2/dist/css/select2.min.css';
-import 'select2/dist/js/i18n/es';
+select2();
+let select2_es = {
+    errorLoading: function() {
+        return "No se pudieron cargar los resultados"
+    },
+    inputTooLong: function(e) {
+        var n = e.input.length - e.maximum
+            , r = "Por favor, elimine " + n + " car";
+        return r += 1 == n ? "ácter" : "acteres"
+    },
+    inputTooShort: function(e) {
+        var n = e.minimum - e.input.length
+            , r = "Por favor, introduzca " + n + " car";
+        return r += 1 == n ? "ácter" : "acteres"
+    },
+    loadingMore: function() {
+        return "Cargando más resultados…"
+    },
+    maximumSelected: function(e) {
+        var n = "Sólo puede seleccionar " + e.maximum + " elemento";
+        return 1 != e.maximum && (n += "s"),
+            n
+    },
+    noResults: function() {
+        return "No se encontraron resultados"
+    },
+    searching: function() {
+        return "Buscando…"
+    }
+};
 
 
 $(document).ready(function () {
@@ -8,11 +38,11 @@ $(document).ready(function () {
         {
             placeholder: 'Seleccione un empleado',
             allowClear: true,
+            language: select2_es,
             //dropdownParent: $('#personalContratoModal'),
             ajax: {
                 url: '/buscar-personal',
                 type: 'post',
-                lenguage: 'es',
                 dataType: 'json',
                 delay: 250,
                 data: function (params) {

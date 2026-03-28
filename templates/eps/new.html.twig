@@ -1,9 +1,12 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}Nueva Eps{% endblock %}
+{% block stylesheets %}
+    {{ parent() }}
+{% endblock %}
 {% block javascripts %}
     {{ parent() }}
-    {{ encore_entry_script_tags('parsley') }}
+    {% block importmap %}{{ importmap(['app', 'parsley' ]) }}{% endblock %}
 
 {% endblock %}
 

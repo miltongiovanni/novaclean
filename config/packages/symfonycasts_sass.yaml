@@ -1,0 +1,15 @@
+symfonycasts_sass:
+    root_sass:
+        - 'assets/styles/app.scss'
+        - 'assets/styles/pages/auth.scss'
+        - 'assets/styles/pages/chat.scss'
+        - 'assets/styles/widgets/chat2.scss'
+        - 'assets/styles/widgets/todo.scss'
+        - 'assets/styles/pages/datatables.scss'
+        - 'assets/styles/pages/dripicons.scss'
+        - 'assets/styles/pages/email.scss'
+        - 'assets/styles/pages/error.scss'
+        - 'assets/styles/pages/form-element-select.scss'
+        - 'assets/styles/pages/simple-datatables.scss'
+        - 'assets/styles/pages/summernote.scss'
+        - 'assets/styles/themes/dark/app-dark.scss'

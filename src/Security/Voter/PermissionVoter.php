@@ -4,6 +4,7 @@ namespace App\Security\Voter;
 
 use App\Repository\PermissionRepository;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
+use Symfony\Component\Security\Core\Authorization\Voter\Vote;
 use Symfony\Component\Security\Core\Authorization\Voter\VoterInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
@@ -18,7 +19,7 @@ class PermissionVoter implements VoterInterface
         $this->permissionRepository = $permissionRepository;
     }
 
-    public function vote(TokenInterface $token, $subject, array $attributes): int
+    public function vote(TokenInterface $token, $subject, array $attributes, ?Vote $vote = null): int
     {
         $attribute = $attributes[0];
         $user = $token->getUser();

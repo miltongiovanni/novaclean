@@ -3,12 +3,11 @@
 {% block title %}Lista de contratos{% endblock %}
 {% block stylesheets %}
     {{ parent() }}
-    {{ encore_entry_link_tags('contrato-list') }}
 {% endblock %}
 
 {% block javascripts %}
     {{ parent() }}
-    {{ encore_entry_script_tags('contrato-list') }}
+    {% block importmap %}{{ importmap(['app', 'contrato-list' ]) }}{% endblock %}
 {% endblock %}
 {% block content %}
     <h2>Lista de contratos</h2>
