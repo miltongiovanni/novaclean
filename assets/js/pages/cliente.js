@@ -1,9 +1,10 @@
-$("input").keyup(function(){
-    nitClientes();
-});
 
-function nitClientes() {
-    let numero = document.getElementById("numero").value;
+$(document).on('keyup', '#numero', function () {
+    this.value = this.value.replace(/[^0-9]/g, '');
+    nitClientes(this.value)
+});
+function nitClientes(numero) {
+
     $.ajax({
         url: '/validar-nit',
         type: 'POST',

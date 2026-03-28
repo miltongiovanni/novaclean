@@ -3,14 +3,11 @@
 {% block title %}Crear Cliente{% endblock %}
 {% block stylesheets %}
     {{ parent() }}
-    {{ encore_entry_link_tags('sweetalert2') }}
 {% endblock %}
 
 {% block javascripts %}
     {{ parent() }}
-    {{ encore_entry_script_tags('cliente') }}
-    {{ encore_entry_script_tags('parsley') }}
-    {{ encore_entry_script_tags('sweetalert2') }}
+    {% block importmap %}{{ importmap(['app', 'parsley', 'cliente', 'sweetalert22' ]) }}{% endblock %}
 {% endblock %}
 
 {% block content %}

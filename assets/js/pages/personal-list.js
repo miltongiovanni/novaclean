@@ -1,7 +1,7 @@
 //import jszip from 'jszip';
 import DataTable from 'datatables.net-bs5';
-import 'datatables.net-bs5/css/dataTables.bootstrap5.css';
-import 'datatables.net-buttons-bs5/css/buttons.bootstrap5.css';
+import 'datatables.net-bs5/css/dataTables.bootstrap5.min.css';
+import 'datatables.net-buttons-bs5/css/buttons.bootstrap5.min.css';
 //import 'datatables.net-buttons';
 //import 'datatables.net-buttons-bs5/js/buttons.bootstrap5.js';
 //import 'datatables.net-buttons/js/buttons.html5.min.mjs';

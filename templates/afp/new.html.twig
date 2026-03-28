@@ -2,10 +2,12 @@
 
 {% block title %}New Afp{% endblock %}
 
+{% block stylesheets %}
+    {{ parent() }}
+{% endblock %}
 {% block javascripts %}
     {{ parent() }}
-    {{ encore_entry_script_tags('parsley') }}
-
+    {% block importmap %}{{ importmap(['app', 'parsley' ]) }}{% endblock %}
 {% endblock %}
 
 {% block content %}

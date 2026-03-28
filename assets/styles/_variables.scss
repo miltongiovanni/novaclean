@@ -7,12 +7,12 @@
 
 @use 'sass:math';
 
-$dark-mode: false;
 
 
 // Mazer Variables
-@import "~bootstrap/scss/functions";
+@import '../../vendor/twbs/bootstrap/scss/functions';
 
+$dark-mode: false;
 $theme-colors-light: (
   'primary': #ebf3ff,
   'secondary': #E6EAEE,
@@ -209,7 +209,7 @@ $theme-colors: (
 // scss-docs-end theme-colors-map
 
 // scss-docs-start theme-colors-rgb
-$theme-colors-rgb: map-loop($theme-colors, to-rgb, "$value") !default !default;
+$theme-colors-rgb: map-loop($theme-colors, to-rgb, "$value") !default ;
 // scss-docs-end theme-colors-rgb
 
 // The contrast ratio to reach against white, to determine if color changes from "light" to "dark". Acceptable values for WCAG 2.0 are 3, 4.5 and 7.

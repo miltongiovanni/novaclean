@@ -3,12 +3,11 @@
 {% block title %}Personal Contrato{% endblock %}
 {% block stylesheets %}
     {{ parent() }}
-    {{ encore_entry_link_tags('personal-contrato') }}
 {% endblock %}
 
 {% block javascripts %}
     {{ parent() }}
-    {{ encore_entry_script_tags('personal-contrato') }}
+    {% block importmap %}{{ importmap(['app', 'personal-contrato' ]) }}{% endblock %}
 {% endblock %}
 
 {% block content %}

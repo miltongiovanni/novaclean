@@ -3,12 +3,11 @@
 {% block title %}Cliente index{% endblock %}
 {% block stylesheets %}
     {{ parent() }}
-    {{ encore_entry_link_tags('clientes-list') }}
 {% endblock %}
 
 {% block javascripts %}
     {{ parent() }}
-    {{ encore_entry_script_tags('clientes-list') }}
+    {% block importmap %}{{ importmap(['app' , 'clientes-list' ]) }}{% endblock %}
 {% endblock %}
 
 {% block content %}

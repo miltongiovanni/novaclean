@@ -1,6 +1,6 @@
 import DataTable from 'datatables.net-bs5';
 
-import 'datatables.net-bs5/css/dataTables.bootstrap5.css';
+import 'datatables.net-bs5/css/dataTables.bootstrap5.min.css';
 
 import languageEsCol from 'datatables.net-plugins/i18n/es-CO.mjs';
 

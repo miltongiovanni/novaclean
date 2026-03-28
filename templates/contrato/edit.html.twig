@@ -3,15 +3,11 @@
 {% block title %}{% if action == 'renovar' %}Renovar Contrato{% else %}Modificar Contrato{% endif %}{% endblock %}
 {% block stylesheets %}
     {{ parent() }}
-    {{ encore_entry_link_tags('contrato') }}
-    {{ encore_entry_link_tags('sweetalert2') }}
 {% endblock %}
 
 {% block javascripts %}
     {{ parent() }}
-    {{ encore_entry_script_tags('parsley') }}
-    {{ encore_entry_script_tags('contrato') }}
-    {{ encore_entry_script_tags('sweetalert2') }}
+    {% block importmap %}{{ importmap(['app', 'parsley', 'contrato', 'sweetalert22' ]) }}{% endblock %}
 {% endblock %}
 
 {% block content %}
