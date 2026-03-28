@@ -3,15 +3,11 @@
 {% block title %}Creación Personal{% endblock %}
 {% block stylesheets %}
     {{ parent() }}
-    {{ encore_entry_link_tags('sweetalert2') }}
-    {{ encore_entry_link_tags('prestamo-personal') }}
 {% endblock %}
 
 {% block javascripts %}
     {{ parent() }}
-    {{ encore_entry_script_tags('parsley') }}
-    {{ encore_entry_script_tags('sweetalert2') }}
-    {{ encore_entry_script_tags('prestamo-personal') }}
+    {% block importmap %}{{ importmap(['app', 'parsley', 'sweetalert22', 'prestamo-personal' ]) }}{% endblock %}
 {% endblock %}
 
 {% block content %}

@@ -1,11 +1,14 @@
 {% extends 'auth.html.twig' %}
 
 {% block title %}Login{% endblock %}
+{% block stylesheets %}
+    {{ parent() }}
+{% endblock %}
 {% block javascripts %}
     {{ parent() }}
-    {{ encore_entry_script_tags('parsley') }}
-
+    {% block importmap %}{{ importmap(['app', 'parsley' ]) }}{% endblock %}
 {% endblock %}
+
 {% block content %}
     <div class="row h-100">
         <div class="col-lg-5 col-12">

@@ -4,13 +4,10 @@
 
 {% block stylesheets %}
     {{ parent() }}
-    {{ encore_entry_link_tags('novedades-nomina') }}
 {% endblock %}
-
 {% block javascripts %}
     {{ parent() }}
-    {{ encore_entry_script_tags('parsley') }}
-    {{ encore_entry_script_tags('novedades-nomina') }}
+    {% block importmap %}{{ importmap(['app', 'parsley', 'novedades-nomina' ]) }}{% endblock %}
 
 {% endblock %}
 

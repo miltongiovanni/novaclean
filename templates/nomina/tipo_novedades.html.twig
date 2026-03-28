@@ -4,12 +4,11 @@
 
 {% block stylesheets %}
     {{ parent() }}
-    {{ encore_entry_link_tags('datatables') }}
 {% endblock %}
 
 {% block javascripts %}
     {{ parent() }}
-    {{ encore_entry_script_tags('datatables') }}
+    {% block importmap %}{{ importmap(['app', 'datatables' ]) }}{% endblock %}
 {% endblock %}
 
 {% block content %}

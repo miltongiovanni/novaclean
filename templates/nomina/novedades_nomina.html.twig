@@ -3,12 +3,11 @@
 {% block title %}Personal Contrato{% endblock %}
 {% block stylesheets %}
     {{ parent() }}
-    {{ encore_entry_link_tags('novedades-nomina') }}
 {% endblock %}
 
 {% block javascripts %}
     {{ parent() }}
-    {{ encore_entry_script_tags('novedades-nomina') }}
+    {% block importmap %}{{ importmap(['app', 'novedades-nomina' ]) }}{% endblock %}
 {% endblock %}
 
 {% block content %}

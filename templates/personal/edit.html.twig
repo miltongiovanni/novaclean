@@ -3,13 +3,11 @@
 {% block title %}Modificar Personal{% endblock %}
 {% block stylesheets %}
     {{ parent() }}
-    {{ encore_entry_link_tags('personal') }}
 {% endblock %}
 
 {% block javascripts %}
     {{ parent() }}
-    {{ encore_entry_script_tags('parsley') }}
-    {{ encore_entry_script_tags('personal') }}
+    {% block importmap %}{{ importmap(['app', 'parsley', 'personal' ]) }}{% endblock %}
 {% endblock %}
 {% block content %}
     <h2 class="ps-3">Modificar Personal</h2>
